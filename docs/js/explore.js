@@ -1,7 +1,7 @@
 // Página Início / Favoritos: feed de descoberta com filtros laterais, abas,
 // destaque do radar e cards de canal com mini-gráficos.
 
-import { esc, fmtN, fmtInt, fmtPct, fmtUSD, fmtAgo, fmtAge, countryName, signClass } from './format.js';
+import { esc, fmtN, fmtInt, fmtPct, fmtUSD, fmtAgo, fmtAge, countryName, languageName, signClass } from './format.js';
 import { CPM_TIERS } from './insights.js';
 import { UNTAGGED, tagsOf } from './metrics.js';
 import { sparkArea, viewsBars, scoreMeter, formatSplit, videoThumb, bindTooltips } from './minicharts.js';
@@ -12,6 +12,7 @@ const ex = {
   tab: 'todos',
   niches: new Set(),
   countries: new Set(),
+  languages: new Set(),
   size: 'all',
   cpm: new Set(),
   format: 'all',
@@ -81,6 +82,7 @@ function sideFilter(rows) {
   return rows.filter((r) => {
     if (ex.niches.size && !tagsOf(r.channel).some((t) => ex.niches.has(t))) return false;
     if (ex.countries.size && !ex.countries.has(r.meta.country ?? '—')) return false;
+    if (ex.languages.size && !ex.languages.has(r.language ?? '—')) return false;
     if (ex.size !== 'all' && (r.metrics.subs == null || r.metrics.subs < min || r.metrics.subs >= max)) return false;
     if (ex.cpm.size && !ex.cpm.has(r.cpm.tier)) return false;
     if (ex.format !== 'all' && formatOf(r) !== ex.format) return false;
@@ -142,12 +144,13 @@ function strip(r, ctx, compact = false) {
   return `<header class="cc-strip">
     <div class="cc-strip-text">
       ${compact ? '' : `<span>Nicho: <b>${esc(niche)}</b></span><i>|</i>`}
+      ${r.language ? `<span>${compact ? '' : 'Idioma: '}<b>${esc(languageName(r.language))}</b></span><i>|</i>` : ''}
       <span title="${esc(cpmTitle)}">CPM: <b>${CPM_TIERS[r.cpm.tier].label}</b></span><i>|</i>
       <span title="${esc(e.basis ? `Views/mês por ${e.basis} × RPM da faixa de CPM (estimativa)` : 'Sem dados de views ainda')}">${compact ? `<b>${money}</b>/mês` : `Ganhos mensais est.: <b>${money}</b> (estimativa)`}</span>
     </div>
     <div class="cc-actions">
       <button type="button" class="icon-btn pick" data-act="pick" aria-pressed="${r.pick}" aria-label="Canal que eu faria" data-tip="Marcar como “eu faria”">${ICONS.star}</button>
-      ${ctx.canEdit ? `<a class="icon-btn" href="${channelHref(r)}" aria-label="Editar tags e notas" data-tip="Editar tags e notas">${ICONS.edit}</a>` : ''}
+      ${ctx.canEdit ? `<a class="btn icon-btn" href="${channelHref(r)}" aria-label="Editar tags e notas" data-tip="Editar tags e notas">${ICONS.edit}</a>` : ''}
       ${ctx.canEdit ? `<button type="button" class="icon-btn" data-act="remove" aria-label="Remover do catálogo" data-tip="Remover do catálogo">${ICONS.trash}</button>` : ''}
       <button type="button" class="icon-btn fav" data-act="favorite" aria-pressed="${r.favorite}" aria-label="Favorito" data-tip="Favoritar">${ICONS.heart}</button>
     </div>
@@ -266,7 +269,8 @@ function cardGrid(r, ctx) {
         </div>
       </div>
       <div class="cc-badges">${pending ? `<span class="status">${r.status === 'erro' ? 'erro' : 'aguardando coleta'}</span>` : verdictBadge(r)}
-        ${(r.channel.tags ?? []).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+        ${(r.channel.tags ?? []).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}
+        ${r.language ? `<span class="tag tag-lang">${esc(languageName(r.language))}</span>` : ''}</div>
       ${
         pending
           ? ''
@@ -289,7 +293,8 @@ function spotlight(cands) {
   return `<section class="spot" aria-label="Destaque do radar">
     <div class="spot-body">
       <div class="spot-pills"><span class="spot-pill">✦ Radar de oportunidade • ${esc(r.verdict.label)}</span>
-        ${(r.channel.tags ?? []).slice(0, 2).map((t) => `<span class="spot-tag">${esc(t)}</span>`).join('')}</div>
+        ${(r.channel.tags ?? []).slice(0, 2).map((t) => `<span class="spot-tag">${esc(t)}</span>`).join('')}
+        ${r.language ? `<span class="spot-tag">${esc(languageName(r.language))}</span>` : ''}</div>
       <h2><a href="#/canal/${encodeURIComponent(r.ref)}">${esc(r.title)}</a> <span class="verdict v-${r.verdict.key}"><i></i>${r.verdict.label}</span></h2>
       <p class="spot-thesis">${esc(r.thesis)}</p>
     </div>
@@ -313,7 +318,14 @@ function sidebar(rows) {
     countries.set(c, (countries.get(c) ?? 0) + 1);
   }
   const countryList = [...countries].sort((a, b) => b[1] - a[1]);
-  const active = ex.niches.size + ex.countries.size + ex.cpm.size + (ex.size !== 'all') + (ex.format !== 'all');
+  const languages = new Map();
+  for (const r of rows) {
+    const l = r.language ?? '—';
+    languages.set(l, (languages.get(l) ?? 0) + 1);
+  }
+  const languageList = [...languages].sort((a, b) => b[1] - a[1]);
+  const active =
+    ex.niches.size + ex.countries.size + ex.languages.size + ex.cpm.size + (ex.size !== 'all') + (ex.format !== 'all');
   const chip = (group, value, label, on) =>
     `<button type="button" class="fchip" data-group="${group}" data-value="${esc(value)}" aria-pressed="${on}">${esc(label)}</button>`;
   return `<aside class="ex-side"><details class="fall" open>
@@ -330,6 +342,10 @@ function sidebar(rows) {
           )
           .join('') || '<p class="muted small">Nenhum nicho ainda.</p>'}
       </div>
+    </div>
+    <div class="fbox">
+      <h4>Idioma</h4>
+      <div class="fchips">${languageList.map(([l, n]) => chip('languages', l, `${l === '—' ? 'Não detectado' : languageName(l)} · ${n}`, ex.languages.has(l))).join('')}</div>
     </div>
     <div class="fbox">
       <h4>País do canal</h4>
@@ -484,6 +500,7 @@ export function renderExplore(ctx, { favoritesOnly = false, params } = {}) {
     if (e.target.closest('#clearFilters')) {
       ex.niches.clear();
       ex.countries.clear();
+      ex.languages.clear();
       ex.cpm.clear();
       ex.size = 'all';
       ex.format = 'all';

@@ -45,3 +45,12 @@ export function parseDuration(iso) {
   const [, d = 0, h = 0, min = 0, sec = 0] = m.map((x) => Number(x ?? 0));
   return d * 86400 + h * 3600 + min * 60 + sec;
 }
+
+// Chave para reconhecer o mesmo canal digitado de formas diferentes
+// (@Handle, youtube.com/@handle/videos, ID). Vídeos só são reconhecidos após a coleta.
+export function refKey(raw) {
+  const p = parseRef(raw);
+  if (p.type === 'id') return p.value;
+  if (p.type === 'handle') return p.value.toLowerCase();
+  return null;
+}

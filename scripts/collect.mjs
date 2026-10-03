@@ -7,7 +7,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { parseRef, parseDuration } from './lib/refs.mjs';
+import { parseRef, parseDuration } from '../docs/js/refs.js';
+import { normLang, detectLanguage } from '../docs/js/language.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHANNELS_FILE = path.join(ROOT, 'docs/data/channels.json');
@@ -86,15 +87,17 @@ async function recentUploads(uploadsPlaylistId) {
     .sort((a, b) => (a.d < b.d ? 1 : -1));
 }
 
-// Views e duração dos vídeos em lotes de 50 (1 unidade por lote).
+// Views, duração e idioma do áudio dos vídeos em lotes de 50 (1 unidade por lote).
 async function fillVideoStats(videos) {
   const byId = new Map(videos.map((v) => [v.id, v]));
   for (const batch of chunk([...byId.keys()], 50)) {
-    const r = await api('videos', { part: 'statistics,contentDetails', id: batch.join(','), maxResults: '50' });
+    const r = await api('videos', { part: 'snippet,statistics,contentDetails', id: batch.join(','), maxResults: '50' });
     for (const item of r.items ?? []) {
       const v = byId.get(item.id);
       v.v = Number(item.statistics?.viewCount ?? 0);
       v.s = parseDuration(item.contentDetails?.duration);
+      const l = normLang(item.snippet?.defaultAudioLanguage ?? item.snippet?.defaultLanguage);
+      if (l) v.l = l;
     }
   }
 }
@@ -169,6 +172,7 @@ async function collectInto(stats, refs, today) {
   // 2. Estatísticas em lotes de 50 (1 unidade de cota por lote).
   const found = new Set();
   const fresh = [];
+  const declared = new Map();
   for (const batch of chunk(ids, 50)) {
     const r = await api('channels', {
       part: 'snippet,statistics,contentDetails,brandingSettings',
@@ -198,10 +202,11 @@ async function collectInto(stats, refs, today) {
         publishedAt: item.snippet?.publishedAt?.slice(0, 10) ?? null,
         hiddenSubscribers: Boolean(s.hiddenSubscriberCount),
         lastUpload,
-        // [{ id, t: título, d: data, v: views, s: duração em segundos }], mais recente primeiro
+        // [{ id, t: título, d: data, v: views, s: duração em segundos, l: idioma do áudio }], mais recente primeiro
         recent: recent ?? prev.recent ?? [],
       };
       if (recent) fresh.push(...recent);
+      declared.set(item.id, item.snippet?.defaultLanguage ?? item.brandingSettings?.channel?.defaultLanguage ?? null);
       const row = [
         today,
         s.hiddenSubscriberCount ? null : Number(s.subscriberCount ?? 0),
@@ -221,6 +226,18 @@ async function collectInto(stats, refs, today) {
   } catch (err) {
     if (err instanceof QuotaError) throw err;
     console.warn(`Estatísticas dos vídeos: ${err.message}`);
+  }
+
+  // 4. Idioma do canal (áudio dos vídeos recentes > idioma declarado > país).
+  for (const id of found) {
+    const c = stats.channels[id];
+    const { language, source } = detectLanguage({
+      videoLanguages: c.recent.map((v) => v.l),
+      declared: declared.get(id),
+      country: c.country,
+    });
+    c.language = language;
+    c.languageSource = source;
   }
 
   for (const ref of refs) {

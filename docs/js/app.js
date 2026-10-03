@@ -30,7 +30,11 @@ import {
   fmtAge,
   fmtUSD,
   countryName,
+  languageName,
+  languageOptions,
 } from './format.js';
+import { refKey } from './refs.js';
+import { detectLanguage } from './language.js';
 import {
   CPM_TIERS,
   suggestTier,
@@ -54,7 +58,8 @@ const state = {
   rows: [],
   cfg: loadConfig(),
   rising: loadPrefs(),
-  filters: { q: '', tags: new Set(), size: 'all', risingOnly: false, sort: { key: 'momentum', dir: -1 } },
+  filters: { q: '', tags: new Set(), size: 'all', language: '', risingOnly: false, sort: { key: 'momentum', dir: -1 } },
+  nicheLanguage: '',
   nicheSort: { key: 'medianMomentum', dir: -1 },
   selected: new Set(),
   compare: { metric: 1, mode: 'index', q: '' },
@@ -134,8 +139,17 @@ async function loadData() {
 function buildRows() {
   const { resolve = {}, channels = {}, history = {}, errors = {} } = state.stats;
   const now = new Date();
-  state.rows = (state.doc.channels ?? []).map((c) => {
+  const seen = new Map();
+  state.duplicates = [];
+  state.rows = [];
+  for (const c of state.doc.channels ?? []) {
     const id = resolve[c.ref] ?? (CHANNEL_ID.test(c.ref) ? c.ref : null);
+    // Mesmo canal cadastrado de jeitos diferentes (@handle, URL, vídeo): vale a primeira entrada.
+    if (id && seen.has(id)) {
+      state.duplicates.push({ ref: c.ref, keep: seen.get(id) });
+      continue;
+    }
+    if (id) seen.set(id, c.ref);
     const meta = (id && channels[id]) || {};
     const hist = (id && history[id]) || [];
     const metrics = channelMetrics(hist, meta, now);
@@ -149,11 +163,18 @@ function buildRows() {
       title: meta.title || c.ref,
       error: errors[c.ref] ?? null,
     };
+    // Idioma: definido por você > detectado na coleta > palpite pelo país.
+    if (c.language) Object.assign(row, { language: c.language, languageSource: 'manual' });
+    else if (meta.language) Object.assign(row, { language: meta.language, languageSource: meta.languageSource });
+    else {
+      const guess = detectLanguage({ country: meta.country });
+      Object.assign(row, { language: guess.language, languageSource: guess.source });
+    }
     row.status = row.error ? 'erro' : hist.length ? 'ok' : 'pendente';
     row.rising = isRisingSmall(metrics, state.rising);
     enrichRow(row);
-    return row;
-  });
+    state.rows.push(row);
+  }
 }
 
 function nicheOverrides() {
@@ -404,6 +425,7 @@ function filteredRows() {
     if (q && !`${r.title} ${r.ref} ${r.meta.handle ?? ''} ${r.channel.notes ?? ''}`.toLowerCase().includes(q)) return false;
     if (f.tags.size && !tagsOf(r.channel).some((t) => f.tags.has(t))) return false;
     if (f.size !== 'all' && (r.metrics.subs == null || r.metrics.subs < min || r.metrics.subs >= max)) return false;
+    if (f.language && (r.language ?? '—') !== f.language) return false;
     if (f.risingOnly && !r.rising) return false;
     return true;
   });
@@ -415,6 +437,8 @@ function chanCell(r, { tags = true } = {}) {
     : '<span class="avatar"></span>';
   const tagHtml = tags
     ? `<span class="tags">${(r.channel.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}${
+        r.language ? `<span class="tag tag-lang">${esc(languageName(r.language))}</span>` : ''
+      }${
         r.rising ? '<span class="badge-rise">▲ em alta</span>' : ''
       }${r.status !== 'ok' ? `<span class="status${r.status === 'erro' ? ' err' : ''}">${r.status === 'erro' ? 'erro' : 'aguardando coleta'}</span>` : ''}</span>`
     : '';
@@ -498,6 +522,7 @@ function renderDashboard(params) {
         <select id="size" aria-label="Tamanho">${Object.entries(SIZE_BUCKETS)
           .map(([k, [label]]) => `<option value="${k}"${state.filters.size === k ? ' selected' : ''}>${label}</option>`)
           .join('')}</select>
+        ${languageSelect('lang', state.filters.language, 'Todos os idiomas')}
         <label class="inline"><input type="checkbox" id="risingOnly"${state.filters.risingOnly ? ' checked' : ''}> só pequenos em alta</label>
       </div>
       <div class="chips" id="tagChips" style="margin-bottom:12px"></div>
@@ -522,6 +547,10 @@ function renderDashboard(params) {
   });
   document.getElementById('size').addEventListener('change', (e) => {
     state.filters.size = e.target.value;
+    renderTable();
+  });
+  document.getElementById('lang').addEventListener('change', (e) => {
+    state.filters.language = e.target.value;
     renderTable();
   });
   document.getElementById('risingOnly').addEventListener('change', (e) => {
@@ -648,14 +677,17 @@ const NICHE_COLS = [
 ];
 
 function renderNiches() {
-  const niches = nicheStats(state.rows);
-  if (!niches.length) {
+  const lang = state.nicheLanguage;
+  const rows = lang ? state.rows.filter((r) => (r.language ?? '—') === lang) : state.rows;
+  const niches = nicheStats(rows);
+  if (!state.rows.length) {
     app.innerHTML = '<div class="card empty"><h1>Sem nichos ainda</h1><p>Adicione canais com tags em <a href="#/gerenciar">Gerenciar</a>.</p></div>';
     return;
   }
   app.innerHTML = `
     <div class="page-head"><div><h1>Nichos</h1>
-      <p>Compare nichos pelo ritmo dos canais que você catalogou. Mediana evita que um canal gigante distorça o nicho.</p></div></div>
+      <p>Compare nichos pelo ritmo dos canais que você catalogou. Mediana evita que um canal gigante distorça o nicho.</p></div>
+      ${languageSelect('nicheLang', lang, 'Todos os idiomas')}</div>
     ${trendNotice()}
     <section class="card">
       <div class="table-wrap"><table id="nicheTable"></table></div>
@@ -707,6 +739,11 @@ function renderNiches() {
     };
   };
   renderTable();
+  document.getElementById('nicheLang').addEventListener('change', (e) => {
+    state.nicheLanguage = e.target.value;
+    state.nicheChart.tags = null;
+    route();
+  });
 
   // Cores fixas por nicho (ordem alfabética), para a cor não mudar quando o filtro muda.
   const tagOrder = niches.map((n) => n.tag).sort((a, b) => a.localeCompare(b));
@@ -724,7 +761,7 @@ function renderNiches() {
       .join('')}`;
     const chosen = tagOrder.filter((t) => sel.has(t));
     const series = chosen.map((tag) => {
-      const hists = state.rows.filter((r) => tagsOf(r.channel).includes(tag)).map((r) => r.hist);
+      const hists = rows.filter((r) => tagsOf(r.channel).includes(tag)).map((r) => r.hist);
       return { label: tag, color: seriesColor(tagOrder.indexOf(tag)), points: chainIndex(hists, state.nicheChart.metric) };
     });
     const { labels, datasets } = alignSeries(series);
@@ -895,6 +932,7 @@ function renderCmpTable(chosen, colorOf) {
   }
   const lines = [
     ['Nichos', (r) => (r.channel.tags ?? []).map((x) => `<span class="tag">${esc(x)}</span>`).join(' ') || '—', false],
+    ['Idioma', (r) => esc(languageName(r.language) ?? '—'), false],
     ['Inscritos', (r) => fmtN(r.metrics.subs)],
     ['Crescimento / mês', (r) => `<span class="${signClass(r.metrics.momentum)}">${fmtPct(r.metrics.momentum)}</span>`],
     ['Δ inscritos 7 dias', (r) => fmtSigned(r.metrics.g7?.dSubs)],
@@ -935,6 +973,7 @@ function renderChannel(ref) {
           ${r.meta.handle ? `<span>${esc(r.meta.handle)}</span>` : ''}
           ${ytUrl ? `<a href="${ytUrl}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>` : ''}
           ${r.meta.country ? `<span>${esc(countryName(r.meta.country))}</span>` : ''}
+          ${r.language ? `<span title="${esc(langSourceText(r))}">Idioma: ${esc(languageName(r.language))}</span>` : ''}
           ${r.meta.publishedAt ? `<span>criado em ${fmtDate(r.meta.publishedAt)}</span>` : ''}
           <span class="chips">${(r.channel.tags ?? []).map((t) => `<a class="tag" href="#/?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join('')}</span>
         </div>
@@ -968,6 +1007,8 @@ function renderChannel(ref) {
             <label class="field">Tags de nicho (separadas por vírgula)
               <input name="tags" list="tagList" value="${esc((r.channel.tags ?? []).join(', '))}"></label>
             <datalist id="tagList">${allTags().map((t) => `<option value="${esc(t)}">`).join('')}</datalist>
+            <label class="field" style="margin-top:10px">Idioma
+              <select name="language">${languageOptions(r.channel.language ?? '', autoLangLabel(r))}</select></label>
             <label class="field" style="margin-top:10px">Notas pessoais
               <textarea name="notes" rows="6">${esc(r.channel.notes ?? '')}</textarea></label>
             <div style="margin-top:10px;display:flex;gap:8px"><button class="primary" type="submit">Salvar</button></div>
@@ -1005,11 +1046,44 @@ function renderChannel(ref) {
     const fd = new FormData(e.target);
     const tags = normTags(fd.get('tags'));
     const notes = String(fd.get('notes')).trim();
+    const language = String(fd.get('language') ?? '');
     await saveCatalog(`Atualiza tags/notas de ${r.title}`, (doc) => {
       const c = doc.channels.find((x) => x.ref === r.ref);
-      if (c) Object.assign(c, { tags, notes });
+      if (c) setChannelFields(c, { tags, notes, language });
     });
   });
+}
+
+// Seletor com os idiomas presentes no catálogo.
+function languageSelect(id, selected, allLabel) {
+  const counts = new Map();
+  for (const r of state.rows) {
+    const l = r.language ?? '—';
+    counts.set(l, (counts.get(l) ?? 0) + 1);
+  }
+  const opts = [...counts]
+    .map(([l, n]) => [l, l === '—' ? 'Não detectado' : languageName(l), n])
+    .sort((a, b) => b[2] - a[2]);
+  return `<select id="${id}" aria-label="Idioma"><option value="">${allLabel}</option>${opts
+    .map(([l, name, n]) => `<option value="${esc(l)}"${l === selected ? ' selected' : ''}>${esc(name)} (${n})</option>`)
+    .join('')}</select>`;
+}
+
+function setChannelFields(c, { tags, notes, language }) {
+  Object.assign(c, { tags, notes });
+  if (language) c.language = language;
+  else delete c.language;
+}
+
+function langSourceText(r) {
+  if (r.languageSource === 'manual') return 'Idioma definido por você';
+  const why = { vídeos: 'pelo áudio dos vídeos recentes', canal: 'pelo idioma declarado do canal', país: 'pelo país do canal' };
+  return `Idioma detectado ${why[r.languageSource] ?? 'automaticamente'}`;
+}
+
+function autoLangLabel(r) {
+  const auto = r.meta.language ?? detectLanguage({ country: r.meta.country }).language;
+  return auto ? `Automático (${languageName(auto)})` : 'Detectar automaticamente';
 }
 
 function opportunityBlock(r) {
@@ -1107,6 +1181,13 @@ function renderManage() {
 
     ${!editable ? `<div class="notice">Modo somente leitura. Conecte o GitHub abaixo para adicionar canais e editar tags/notas pelo site.</div>` : ''}
     ${pending.length ? `<div class="notice">${pending.length} canal(is) aguardando a primeira coleta. Ela roda sozinha ao salvar o catálogo e todo dia; leva 1–3 minutos para aparecer aqui.</div>` : ''}
+    ${
+      state.duplicates.length
+        ? `<div class="notice"><strong>${state.duplicates.length} entrada(s) duplicada(s):</strong> o mesmo canal foi cadastrado de formas diferentes
+          (${state.duplicates.map((d) => `<code>${esc(d.ref)}</code>`).join(', ')}). Só a primeira entrada é usada.
+          ${editable ? '<button type="button" id="dedupe" style="margin-left:8px">Remover duplicadas</button>' : ''}</div>`
+        : ''
+    }
     ${errors.length ? `<div class="notice"><strong>Canais com erro na coleta:</strong><ul style="margin:6px 0 0">${errors.map((r) => `<li><code>${esc(r.ref)}</code> — ${esc(r.error)}</li>`).join('')}</ul></div>` : ''}
 
     <section class="card">
@@ -1116,6 +1197,7 @@ function renderManage() {
           <textarea name="refs" rows="4" placeholder="@canalexemplo&#10;https://www.youtube.com/@outrocanal&#10;https://youtu.be/ID_DO_VIDEO" required></textarea></label>
         <div class="form-grid" style="margin-top:10px">
           <label class="field">Tags de nicho (vírgula)<input name="tags" list="tagList2" placeholder="finanças, investimentos"></label>
+          <label class="field">Idioma<select name="language">${languageOptions('')}</select></label>
           <label class="field">Nota inicial (opcional)<input name="notes"></label>
         </div>
         <datalist id="tagList2">${allTags().map((t) => `<option value="${esc(t)}">`).join('')}</datalist>
@@ -1195,7 +1277,10 @@ function renderManage() {
         <div>${chanCell(r, { tags: false })}
           <div class="muted small" style="margin-top:4px"><code>${esc(r.ref)}</code>
           ${r.status === 'ok' ? '' : `<span class="status${r.status === 'erro' ? ' err' : ''}">${r.status === 'erro' ? 'erro' : 'aguardando coleta'}</span>`}</div></div>
-        <label class="field">Tags<input name="tags" list="tagList2" value="${esc((r.channel.tags ?? []).join(', '))}"${editable ? '' : ' readonly'}></label>
+        <div class="manage-col">
+          <label class="field">Tags<input name="tags" list="tagList2" value="${esc((r.channel.tags ?? []).join(', '))}"${editable ? '' : ' readonly'}></label>
+          <label class="field">Idioma<select name="language"${editable ? '' : ' disabled'}>${languageOptions(r.channel.language ?? '', autoLangLabel(r))}</select></label>
+        </div>
         <label class="field">Notas<textarea name="notes" rows="2"${editable ? '' : ' readonly'}>${esc(r.channel.notes ?? '')}</textarea></label>
         <div class="actions" style="align-self:end">${
           editable ? '<button type="submit">Salvar</button><button type="button" class="danger" data-remove="1" aria-label="Remover">Remover</button>' : ''
@@ -1214,7 +1299,7 @@ function renderManage() {
     const fd = new FormData(form);
     await saveCatalog(`Atualiza tags/notas de ${ref}`, (doc) => {
       const c = doc.channels.find((x) => x.ref === ref);
-      if (c) Object.assign(c, { tags: normTags(fd.get('tags')), notes: String(fd.get('notes')).trim() });
+      if (c) setChannelFields(c, { tags: normTags(fd.get('tags')), notes: String(fd.get('notes')).trim(), language: String(fd.get('language') ?? '') });
     });
   });
   document.getElementById('manageList').addEventListener('click', async (e) => {
@@ -1227,22 +1312,50 @@ function renderManage() {
     });
   });
 
+  document.getElementById('dedupe')?.addEventListener('click', async () => {
+    const dups = state.duplicates;
+    await saveCatalog(`Remove ${dups.length} entrada(s) duplicada(s)`, (doc) => {
+      for (const d of dups) {
+        const keep = doc.channels.find((x) => x.ref === d.keep);
+        const drop = doc.channels.find((x) => x.ref === d.ref);
+        if (!keep || !drop) continue;
+        // Preserva tags e notas da entrada removida.
+        keep.tags = [...new Set([...(keep.tags ?? []), ...(drop.tags ?? [])])];
+        if (drop.notes && !(keep.notes ?? '').includes(drop.notes)) keep.notes = [keep.notes, drop.notes].filter(Boolean).join('\n');
+        if (!keep.language && drop.language) keep.language = drop.language;
+        doc.channels = doc.channels.filter((x) => x !== drop);
+      }
+    });
+  });
+
   document.getElementById('addForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     const refs = [...new Set(String(fd.get('refs')).split('\n').map((s) => s.trim()).filter(Boolean))];
     const tags = normTags(fd.get('tags'));
     const notes = String(fd.get('notes') ?? '').trim();
+    const language = String(fd.get('language') ?? '');
     const today = new Date().toISOString().slice(0, 10);
-    const known = new Set(state.rows.flatMap((r) => [r.ref, r.id]).filter(Boolean));
-    const fresh = refs.filter((ref) => !known.has(ref) && !known.has(state.stats.resolve?.[ref]));
+    // Reconhece o mesmo canal escrito de outro jeito (@Handle × URL /@handle/videos × ID).
+    const known = new Set(
+      state.rows.flatMap((r) => [r.ref, r.id, refKey(r.ref), r.meta.handle?.toLowerCase()]).filter(Boolean),
+    );
+    const fresh = [];
+    for (const ref of refs) {
+      const keys = [ref, refKey(ref), state.stats.resolve?.[ref]].filter(Boolean);
+      if (keys.some((k) => known.has(k))) continue;
+      keys.forEach((k) => known.add(k));
+      fresh.push(ref);
+    }
     if (!fresh.length) {
       toast('Esses canais já estão no catálogo.');
       return;
     }
     const ok = await saveCatalog(`Adiciona ${fresh.length} canal(is)`, (doc) => {
       const existing = new Set(doc.channels.map((c) => c.ref));
-      for (const ref of fresh) if (!existing.has(ref)) doc.channels.push({ ref, tags, notes, addedAt: today });
+      for (const ref of fresh) {
+        if (!existing.has(ref)) doc.channels.push({ ref, tags, notes, ...(language ? { language } : {}), addedAt: today });
+      }
     });
     if (ok && fresh.length < refs.length) toast(`${refs.length - fresh.length} já estavam no catálogo e foram ignorados.`);
   });

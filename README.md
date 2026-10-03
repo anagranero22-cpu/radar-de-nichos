@@ -29,6 +29,12 @@ Custo zero: o site roda no **GitHub Pages**, a coleta diária no **GitHub Action
 
 Tema claro/escuro no botão do topo.
 
+### Idioma
+
+Cada canal tem um **idioma**, separado das tags de nicho (assim “inglês” não vira um nicho na análise). A coleta detecta sozinha pelo idioma do áudio dos vídeos recentes; se a API não informar, usa o idioma declarado pelo canal e, por último, o país. Você pode corrigir em Gerenciar ou na página do canal. O idioma aparece na faixa do card e pode ser usado como filtro no Início, no Painel e na página de Nichos.
+
+Se o mesmo canal for cadastrado de formas diferentes (`@handle`, URL `/videos`, link de vídeo), o site usa só a primeira entrada e oferece um botão em Gerenciar para remover as duplicadas, juntando as tags e notas delas.
+
 ### Como as métricas são calculadas
 
 - **Crescimento / mês**: variação % de inscritos na janela de 30 dias, normalizada para 30 dias. Enquanto o histórico for menor que 30 dias, usa o que existir (mínimo de 3 dias) e marca o valor com `~`.
@@ -75,7 +81,7 @@ Cole o token em **Gerenciar → Conexão com o GitHub**. Ele fica salvo apenas n
 ```json
 {
   "channels": [
-    { "ref": "@algumcanal", "tags": ["finanças", "shorts"], "notes": "thumbnails fortes", "addedAt": "2026-10-03", "favorite": true, "pick": true }
+    { "ref": "@algumcanal", "tags": ["finanças", "shorts"], "language": "pt", "notes": "thumbnails fortes", "addedAt": "2026-10-03", "favorite": true, "pick": true }
   ],
   "niches": { "shorts": { "cpm": "baixo" } }
 }
@@ -111,6 +117,8 @@ Sem dependências nem etapa de build: Node 20+ para a coleta, HTML/CSS/JS puro n
 | `docs/js/metrics.js` | Cálculos de crescimento, nichos e “pequenos em alta” |
 | `docs/js/insights.js` | CPM, ganhos estimados, score de oportunidade e tese |
 | `docs/js/explore.js` | Feed do Início/Favoritos |
+| `docs/js/language.js` | Detecção do idioma do canal |
+| `docs/js/refs.js` | Interpreta @handle, URLs e IDs de canal |
 | `docs/js/minicharts.js` | Mini-gráficos dos cards (SVG/HTML) |
 | `docs/js/app.js` | Demais páginas e roteamento |
 | `docs/js/github.js` | Gravação do catálogo via API do GitHub |

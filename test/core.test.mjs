@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseRef } from '../scripts/lib/refs.mjs';
+import { parseRef } from '../docs/js/refs.js';
 import {
   growth,
   channelMetrics,

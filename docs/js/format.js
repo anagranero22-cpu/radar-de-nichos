@@ -52,3 +52,26 @@ export function countryName(code) {
     return code;
   }
 }
+
+// Idiomas oferecidos nos formulários (o detectado automaticamente pode ser qualquer outro).
+export const LANGUAGES = ['pt', 'en', 'es', 'de', 'fr', 'it', 'nl', 'pl', 'ru', 'tr', 'ar', 'hi', 'id', 'ja', 'ko', 'zh'];
+
+const languageNames = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames(['pt-BR'], { type: 'language' }) : null;
+export function languageName(code) {
+  if (!code) return null;
+  try {
+    const name = languageNames?.of(code) ?? code;
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  } catch {
+    return code;
+  }
+}
+
+export function languageOptions(selected = '', autoLabel = 'Detectar automaticamente') {
+  const codes = selected && !LANGUAGES.includes(selected) ? [...LANGUAGES, selected] : LANGUAGES;
+  return `<option value="">${esc(autoLabel)}</option>${codes
+    .map((c) => [c, languageName(c)])
+    .sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'))
+    .map(([c, n]) => `<option value="${c}"${c === selected ? ' selected' : ''}>${esc(n)}</option>`)
+    .join('')}`;
+}
