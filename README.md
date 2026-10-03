@@ -29,6 +29,10 @@ Custo zero: o site roda no **GitHub Pages**, a coleta diária no **GitHub Action
 
 Tema claro/escuro no botão do topo.
 
+### Nicho automático
+
+Ao colar o link, você não precisa informar o nicho. Se o canal ficar **sem tags**, o site detecta o nicho sozinho (marcado com ✦ auto) a partir do nome e da descrição do canal, dos títulos dos últimos vídeos, dos tópicos que o YouTube atribui ao canal e da categoria dos vídeos. São cerca de 35 nichos (finanças, saúde, construção & arquitetura, games, true crime…), com palavras-chave em português, inglês, espanhol e alemão, e cada um já vem com a sua faixa de CPM. Quando você preenche as tags, valem as suas; em Gerenciar e na página do canal aparece o nicho detectado com um botão para fixá-lo ou somá-lo às suas tags. A lista de nichos e palavras-chave fica em `docs/js/niche.js` e pode ser ampliada.
+
 ### Idioma
 
 Cada canal tem um **idioma**, separado das tags de nicho (assim “inglês” não vira um nicho na análise). A coleta detecta sozinha pelo idioma do áudio dos vídeos recentes; se a API não informar, usa o idioma declarado pelo canal e, por último, o país. Você pode corrigir em Gerenciar ou na página do canal. O idioma aparece na faixa do card e pode ser usado como filtro no Início, no Painel e na página de Nichos.
@@ -118,6 +122,7 @@ Sem dependências nem etapa de build: Node 20+ para a coleta, HTML/CSS/JS puro n
 | `docs/js/insights.js` | CPM, ganhos estimados, score de oportunidade e tese |
 | `docs/js/explore.js` | Feed do Início/Favoritos |
 | `docs/js/language.js` | Detecção do idioma do canal |
+| `docs/js/niche.js` | Detecção automática de nicho (taxonomia e palavras-chave) |
 | `docs/js/refs.js` | Interpreta @handle, URLs e IDs de canal |
 | `docs/js/minicharts.js` | Mini-gráficos dos cards (SVG/HTML) |
 | `docs/js/app.js` | Demais páginas e roteamento |

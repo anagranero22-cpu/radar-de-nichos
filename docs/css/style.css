@@ -401,6 +401,11 @@ code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; font-
 .cc-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
 .tag-link { text-decoration: none; }
 .tag-lang { background: transparent; border: 1px solid var(--axis); }
+.tag-auto { background: transparent; border: 1px dashed var(--accent); color: var(--ink-2); }
+.auto-mark { font-style: normal; font-size: 0.7rem; color: var(--accent-ink); text-transform: none; letter-spacing: 0; }
+.suggest { font-size: 0.82rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; margin-top: 4px; }
+.linkish { border: 0; background: none; padding: 0; color: var(--accent-ink); text-decoration: underline; font-size: inherit; }
+.linkish:hover { background: none; color: var(--ink); }
 .manage-col { display: flex; flex-direction: column; gap: 8px; }
 .manage-row code { word-break: break-all; }
 .tag-link:hover { color: var(--ink); }

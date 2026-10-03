@@ -35,6 +35,8 @@ import {
 } from './format.js';
 import { refKey } from './refs.js';
 import { detectLanguage } from './language.js';
+import { classifyNiche } from './niche.js';
+import { tagChips } from './explore.js';
 import {
   CPM_TIERS,
   suggestTier,
@@ -170,6 +172,10 @@ function buildRows() {
       const guess = detectLanguage({ country: meta.country });
       Object.assign(row, { language: guess.language, languageSource: guess.source });
     }
+    // Nicho: suas tags > detectado automaticamente pelos títulos, descrição e tópicos do canal.
+    row.autoNiche = classifyNiche({ title: meta.title, description: meta.description, recent: meta.recent ?? [], topics: meta.topics ?? [] });
+    row.tagsAuto = !c.tags?.length && row.autoNiche.niches.length > 0;
+    row.tags = c.tags?.length ? c.tags : row.autoNiche.niches;
     row.status = row.error ? 'erro' : hist.length ? 'ok' : 'pendente';
     row.rising = isRisingSmall(metrics, state.rising);
     enrichRow(row);
@@ -189,7 +195,7 @@ function enrichRow(row) {
   row.favorite = flags.favorite ?? Boolean(row.channel.favorite);
   row.pick = flags.pick ?? Boolean(row.channel.pick);
   row.rs = recentStats(row.meta.recent ?? [], row.metrics.subs);
-  row.cpm = cpmTier(row.channel.tags ?? [], nicheOverrides());
+  row.cpm = cpmTier(row.tags ?? [], nicheOverrides());
   row.earnings = estimateEarnings(row.metrics, row.rs, row.cpm.tier);
   row.score = opportunityScore(row.metrics, row.rs, row.cpm.tier);
   row.verdict = verdict(row.score.score);
@@ -255,7 +261,7 @@ const exploreCtx = () => ({
 
 function allTags() {
   const counts = new Map();
-  for (const r of state.rows) for (const t of r.channel.tags ?? []) counts.set(t, (counts.get(t) ?? 0) + 1);
+  for (const r of state.rows) for (const t of r.tags ?? []) counts.set(t, (counts.get(t) ?? 0) + 1);
   return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([t]) => t);
 }
 
@@ -423,7 +429,7 @@ function filteredRows() {
   const q = f.q.trim().toLowerCase();
   return state.rows.filter((r) => {
     if (q && !`${r.title} ${r.ref} ${r.meta.handle ?? ''} ${r.channel.notes ?? ''}`.toLowerCase().includes(q)) return false;
-    if (f.tags.size && !tagsOf(r.channel).some((t) => f.tags.has(t))) return false;
+    if (f.tags.size && !tagsOf(r).some((t) => f.tags.has(t))) return false;
     if (f.size !== 'all' && (r.metrics.subs == null || r.metrics.subs < min || r.metrics.subs >= max)) return false;
     if (f.language && (r.language ?? '—') !== f.language) return false;
     if (f.risingOnly && !r.rising) return false;
@@ -436,7 +442,7 @@ function chanCell(r, { tags = true } = {}) {
     ? `<img src="${esc(r.meta.thumbnail)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
     : '<span class="avatar"></span>';
   const tagHtml = tags
-    ? `<span class="tags">${(r.channel.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}${
+    ? `<span class="tags">${tagChips(r)}${
         r.language ? `<span class="tag tag-lang">${esc(languageName(r.language))}</span>` : ''
       }${
         r.rising ? '<span class="badge-rise">▲ em alta</span>' : ''
@@ -567,7 +573,7 @@ function riseCard(r) {
   return `<a class="rise-card" href="${channelHref(r)}">
     <div class="top">${r.meta.thumbnail ? `<img class="avatar" src="${esc(r.meta.thumbnail)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '<span class="avatar"></span>'}
       <div style="min-width:0"><div class="title">${esc(r.title)}</div>
-      <div class="chips">${(r.channel.tags ?? []).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div></div></div>
+      <div class="chips">${tagChips(r, 3)}</div></div></div>
     <div><span class="big up">${fmtPct(m.momentum)}</span> <span class="muted small">/ mês ${partialMark(m.g30)}</span></div>
     <div class="stats"><span>${fmtN(m.subs)} inscritos</span><span>${fmtSigned(m.dSubs30)} no período</span></div>
     <div class="stats"><span>${fmtN(m.viewsPerDay)} views/dia</span><span>upload ${fmtAgo(m.daysSinceUpload)}</span></div>
@@ -590,7 +596,7 @@ function nicheRank(niches) {
 function renderTagChips() {
   const el = document.getElementById('tagChips');
   const tags = allTags();
-  if (state.rows.some((r) => !r.channel.tags?.length)) tags.push(UNTAGGED);
+  if (state.rows.some((r) => !r.tags?.length)) tags.push(UNTAGGED);
   el.innerHTML = tags.length
     ? `<span class="muted small" style="align-self:center">Nichos:</span>${tags
         .map((t) => `<button type="button" class="chip" data-tag="${esc(t)}" aria-pressed="${state.filters.tags.has(t)}">${esc(t)}</button>`)
@@ -761,7 +767,7 @@ function renderNiches() {
       .join('')}`;
     const chosen = tagOrder.filter((t) => sel.has(t));
     const series = chosen.map((tag) => {
-      const hists = rows.filter((r) => tagsOf(r.channel).includes(tag)).map((r) => r.hist);
+      const hists = rows.filter((r) => tagsOf(r).includes(tag)).map((r) => r.hist);
       return { label: tag, color: seriesColor(tagOrder.indexOf(tag)), points: chainIndex(hists, state.nicheChart.metric) };
     });
     const { labels, datasets } = alignSeries(series);
@@ -843,7 +849,7 @@ function renderCompare(params) {
   const renderPicker = () => {
     const q = C.q.trim().toLowerCase();
     const list = state.rows
-      .filter((r) => !q || `${r.title} ${(r.channel.tags ?? []).join(' ')}`.toLowerCase().includes(q))
+      .filter((r) => !q || `${r.title} ${(r.tags ?? []).join(' ')}`.toLowerCase().includes(q))
       .sort((a, b) => (state.selected.has(b.ref) - state.selected.has(a.ref)) || a.title.localeCompare(b.title));
     document.getElementById('picker').innerHTML =
       list
@@ -931,7 +937,7 @@ function renderCmpTable(chosen, colorOf) {
     return;
   }
   const lines = [
-    ['Nichos', (r) => (r.channel.tags ?? []).map((x) => `<span class="tag">${esc(x)}</span>`).join(' ') || '—', false],
+    ['Nichos', (r) => tagChips(r) || '—', false],
     ['Idioma', (r) => esc(languageName(r.language) ?? '—'), false],
     ['Inscritos', (r) => fmtN(r.metrics.subs)],
     ['Crescimento / mês', (r) => `<span class="${signClass(r.metrics.momentum)}">${fmtPct(r.metrics.momentum)}</span>`],
@@ -975,7 +981,7 @@ function renderChannel(ref) {
           ${r.meta.country ? `<span>${esc(countryName(r.meta.country))}</span>` : ''}
           ${r.language ? `<span title="${esc(langSourceText(r))}">Idioma: ${esc(languageName(r.language))}</span>` : ''}
           ${r.meta.publishedAt ? `<span>criado em ${fmtDate(r.meta.publishedAt)}</span>` : ''}
-          <span class="chips">${(r.channel.tags ?? []).map((t) => `<a class="tag" href="#/?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join('')}</span>
+          <span class="chips">${(r.tags ?? []).map((t) => `<a class="tag${r.tagsAuto ? ' tag-auto' : ''}" href="#/?tag=${encodeURIComponent(t)}"${r.tagsAuto ? ' title="Nicho detectado automaticamente"' : ''}>${r.tagsAuto ? '✦ ' : ''}${esc(t)}</a>`).join('')}</span>
         </div>
       </div>
     </div>
@@ -1004,8 +1010,9 @@ function renderChannel(ref) {
         ${
           editable
             ? `<form id="editForm">
-            <label class="field">Tags de nicho (separadas por vírgula)
-              <input name="tags" list="tagList" value="${esc((r.channel.tags ?? []).join(', '))}"></label>
+            <label class="field">Tags de nicho (separadas por vírgula; em branco = automático)
+              <input name="tags" list="tagList" value="${esc((r.channel.tags ?? []).join(', '))}" placeholder="${esc(autoTagsPlaceholder(r))}"></label>
+            ${suggestionLine(r)}
             <datalist id="tagList">${allTags().map((t) => `<option value="${esc(t)}">`).join('')}</datalist>
             <label class="field" style="margin-top:10px">Idioma
               <select name="language">${languageOptions(r.channel.language ?? '', autoLangLabel(r))}</select></label>
@@ -1053,6 +1060,30 @@ function renderChannel(ref) {
     });
   });
 }
+
+function autoTagsPlaceholder(r) {
+  return r.autoNiche.niches.length ? `Automático: ${r.autoNiche.niches.join(', ')}` : 'Em branco = detectar automaticamente';
+}
+
+// Mostra o nicho detectado quando ele difere das suas tags, com botão para usar.
+function suggestionLine(r) {
+  const auto = r.autoNiche.niches;
+  if (!auto.length) return '';
+  const mine = r.channel.tags ?? [];
+  if (mine.length && auto.every((t) => mine.includes(t))) return '';
+  return `<div class="suggest">✦ Detectado: <b>${esc(auto.join(', '))}</b> <span class="muted">(confiança ${esc(r.autoNiche.confidence)})</span>
+    <button type="button" class="linkish" data-use-tags="${esc(auto.join(', '))}">${mine.length ? 'Adicionar às tags' : 'Fixar como tags'}</button></div>`;
+}
+
+// Botões "usar sugestão": preenchem o campo de tags do mesmo formulário.
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-use-tags]');
+  if (!b) return;
+  const input = b.closest('form')?.querySelector('input[name="tags"]');
+  if (!input) return;
+  input.value = normTags(`${input.value},${b.dataset.useTags}`).join(', ');
+  input.focus();
+});
 
 // Seletor com os idiomas presentes no catálogo.
 function languageSelect(id, selected, allLabel) {
@@ -1196,7 +1227,7 @@ function renderManage() {
         <label class="field">Um por linha: @handle, URL do canal, URL de um vídeo do canal ou ID (UC…)
           <textarea name="refs" rows="4" placeholder="@canalexemplo&#10;https://www.youtube.com/@outrocanal&#10;https://youtu.be/ID_DO_VIDEO" required></textarea></label>
         <div class="form-grid" style="margin-top:10px">
-          <label class="field">Tags de nicho (vírgula)<input name="tags" list="tagList2" placeholder="finanças, investimentos"></label>
+          <label class="field">Tags de nicho (opcional)<input name="tags" list="tagList2" placeholder="Em branco = detectar automaticamente"></label>
           <label class="field">Idioma<select name="language">${languageOptions('')}</select></label>
           <label class="field">Nota inicial (opcional)<input name="notes"></label>
         </div>
@@ -1268,7 +1299,7 @@ function renderManage() {
   const renderList = (q = '') => {
     const ql = q.trim().toLowerCase();
     const rows = state.rows
-      .filter((r) => !ql || `${r.title} ${r.ref} ${(r.channel.tags ?? []).join(' ')}`.toLowerCase().includes(ql))
+      .filter((r) => !ql || `${r.title} ${r.ref} ${(r.tags ?? []).join(' ')}`.toLowerCase().includes(ql))
       .sort((a, b) => a.title.localeCompare(b.title));
     document.getElementById('manageList').innerHTML =
       rows
@@ -1278,7 +1309,8 @@ function renderManage() {
           <div class="muted small" style="margin-top:4px"><code>${esc(r.ref)}</code>
           ${r.status === 'ok' ? '' : `<span class="status${r.status === 'erro' ? ' err' : ''}">${r.status === 'erro' ? 'erro' : 'aguardando coleta'}</span>`}</div></div>
         <div class="manage-col">
-          <label class="field">Tags<input name="tags" list="tagList2" value="${esc((r.channel.tags ?? []).join(', '))}"${editable ? '' : ' readonly'}></label>
+          <label class="field">Tags<input name="tags" list="tagList2" value="${esc((r.channel.tags ?? []).join(', '))}" placeholder="${esc(autoTagsPlaceholder(r))}"${editable ? '' : ' readonly'}></label>
+          ${editable ? suggestionLine(r) : ''}
           <label class="field">Idioma<select name="language"${editable ? '' : ' disabled'}>${languageOptions(r.channel.language ?? '', autoLangLabel(r))}</select></label>
         </div>
         <label class="field">Notas<textarea name="notes" rows="2"${editable ? '' : ' readonly'}>${esc(r.channel.notes ?? '')}</textarea></label>

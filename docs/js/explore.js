@@ -3,7 +3,7 @@
 
 import { esc, fmtN, fmtInt, fmtPct, fmtUSD, fmtAgo, fmtAge, countryName, languageName, signClass } from './format.js';
 import { CPM_TIERS } from './insights.js';
-import { UNTAGGED, tagsOf } from './metrics.js';
+import { tagsOf } from './metrics.js';
 import { sparkArea, viewsBars, scoreMeter, formatSplit, videoThumb, bindTooltips } from './minicharts.js';
 
 const PAGE = 20;
@@ -80,7 +80,7 @@ function formatOf(r) {
 function sideFilter(rows) {
   const [, min, max] = Array.isArray(SIZES[ex.size]) ? SIZES[ex.size] : [0, 0, Infinity];
   return rows.filter((r) => {
-    if (ex.niches.size && !tagsOf(r.channel).some((t) => ex.niches.has(t))) return false;
+    if (ex.niches.size && !tagsOf(r).some((t) => ex.niches.has(t))) return false;
     if (ex.countries.size && !ex.countries.has(r.meta.country ?? '—')) return false;
     if (ex.languages.size && !ex.languages.has(r.language ?? '—')) return false;
     if (ex.size !== 'all' && (r.metrics.subs == null || r.metrics.subs < min || r.metrics.subs >= max)) return false;
@@ -132,7 +132,7 @@ const ICONS = {
 /* ---------- partes do card ---------- */
 
 function strip(r, ctx, compact = false) {
-  const niche = (r.channel.tags?.length ? r.channel.tags : [UNTAGGED]).join(', ');
+  const niche = tagsOf(r).join(', ');
   const e = r.earnings;
   const money =
     e.max == null
@@ -143,7 +143,7 @@ function strip(r, ctx, compact = false) {
   const cpmTitle = `Faixa de CPM ${r.cpm.source === 'manual' ? 'definida por você' : r.cpm.source === 'automático' ? 'sugerida pelo nome do nicho' : 'padrão (defina em Gerenciar)'}`;
   return `<header class="cc-strip">
     <div class="cc-strip-text">
-      ${compact ? '' : `<span>Nicho: <b>${esc(niche)}</b></span><i>|</i>`}
+      ${compact ? '' : `<span${r.tagsAuto ? ` title="Nicho detectado automaticamente (confiança ${esc(r.autoNiche.confidence)})"` : ''}>Nicho: <b>${esc(niche)}</b>${r.tagsAuto ? ' <em class="auto-mark">✦ auto</em>' : ''}</span><i>|</i>`}
       ${r.language ? `<span>${compact ? '' : 'Idioma: '}<b>${esc(languageName(r.language))}</b></span><i>|</i>` : ''}
       <span title="${esc(cpmTitle)}">CPM: <b>${CPM_TIERS[r.cpm.tier].label}</b></span><i>|</i>
       <span title="${esc(e.basis ? `Views/mês por ${e.basis} × RPM da faixa de CPM (estimativa)` : 'Sem dados de views ainda')}">${compact ? `<b>${money}</b>/mês` : `Ganhos mensais est.: <b>${money}</b> (estimativa)`}</span>
@@ -155,6 +155,17 @@ function strip(r, ctx, compact = false) {
       <button type="button" class="icon-btn fav" data-act="favorite" aria-pressed="${r.favorite}" aria-label="Favorito" data-tip="Favoritar">${ICONS.heart}</button>
     </div>
   </header>`;
+}
+
+export function tagChips(r, max = 99, cls = 'tag') {
+  return (r.tags ?? [])
+    .slice(0, max)
+    .map((t) =>
+      r.tagsAuto
+        ? `<span class="${cls} tag-auto" title="Nicho detectado automaticamente (confiança ${esc(r.autoNiche.confidence)})">✦ ${esc(t)}</span>`
+        : `<span class="${cls}">${esc(t)}</span>`,
+    )
+    .join('');
 }
 
 function avatar(r, size) {
@@ -269,7 +280,7 @@ function cardGrid(r, ctx) {
         </div>
       </div>
       <div class="cc-badges">${pending ? `<span class="status">${r.status === 'erro' ? 'erro' : 'aguardando coleta'}</span>` : verdictBadge(r)}
-        ${(r.channel.tags ?? []).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}
+        ${tagChips(r, 3)}
         ${r.language ? `<span class="tag tag-lang">${esc(languageName(r.language))}</span>` : ''}</div>
       ${
         pending
@@ -293,7 +304,7 @@ function spotlight(cands) {
   return `<section class="spot" aria-label="Destaque do radar">
     <div class="spot-body">
       <div class="spot-pills"><span class="spot-pill">✦ Radar de oportunidade • ${esc(r.verdict.label)}</span>
-        ${(r.channel.tags ?? []).slice(0, 2).map((t) => `<span class="spot-tag">${esc(t)}</span>`).join('')}
+        ${(r.tags ?? []).slice(0, 2).map((t) => `<span class="spot-tag">${r.tagsAuto ? '✦ ' : ''}${esc(t)}</span>`).join('')}
         ${r.language ? `<span class="spot-tag">${esc(languageName(r.language))}</span>` : ''}</div>
       <h2><a href="#/canal/${encodeURIComponent(r.ref)}">${esc(r.title)}</a> <span class="verdict v-${r.verdict.key}"><i></i>${r.verdict.label}</span></h2>
       <p class="spot-thesis">${esc(r.thesis)}</p>
@@ -310,7 +321,7 @@ function spotlight(cands) {
 
 function sidebar(rows) {
   const nicheCounts = new Map();
-  for (const r of rows) for (const t of tagsOf(r.channel)) nicheCounts.set(t, (nicheCounts.get(t) ?? 0) + 1);
+  for (const r of rows) for (const t of tagsOf(r)) nicheCounts.set(t, (nicheCounts.get(t) ?? 0) + 1);
   const niches = [...nicheCounts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'));
   const countries = new Map();
   for (const r of rows) {
@@ -377,7 +388,7 @@ export function renderExplore(ctx, { favoritesOnly = false, params } = {}) {
   }
   ex.limit = PAGE;
   const base = favoritesOnly ? ctx.rows.filter((r) => r.favorite) : ctx.rows;
-  const tagCount = new Set(ctx.rows.flatMap((r) => r.channel.tags ?? [])).size;
+  const tagCount = new Set(ctx.rows.flatMap((r) => r.tags ?? [])).size;
 
   if (!ctx.rows.length) {
     app.innerHTML = `<div class="ex-hero"><h1>Radar de Nichos do YouTube</h1></div>

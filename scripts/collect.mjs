@@ -98,6 +98,7 @@ async function fillVideoStats(videos) {
       v.s = parseDuration(item.contentDetails?.duration);
       const l = normLang(item.snippet?.defaultAudioLanguage ?? item.snippet?.defaultLanguage);
       if (l) v.l = l;
+      if (item.snippet?.categoryId) v.c = item.snippet.categoryId;
     }
   }
 }
@@ -175,7 +176,7 @@ async function collectInto(stats, refs, today) {
   const declared = new Map();
   for (const batch of chunk(ids, 50)) {
     const r = await api('channels', {
-      part: 'snippet,statistics,contentDetails,brandingSettings',
+      part: 'snippet,statistics,contentDetails,brandingSettings,topicDetails',
       id: batch.join(','),
       maxResults: '50',
     });
@@ -197,12 +198,14 @@ async function collectInto(stats, refs, today) {
         handle: item.snippet?.customUrl ?? null,
         thumbnail: bestThumb(item.snippet?.thumbnails),
         banner: item.brandingSettings?.image?.bannerExternalUrl ?? null,
-        description: (item.snippet?.description ?? '').slice(0, 300),
+        description: (item.snippet?.description ?? '').slice(0, 600),
+        // Tópicos que o YouTube atribui ao canal (slug da Wikipédia), usados na detecção de nicho.
+        topics: (item.topicDetails?.topicCategories ?? []).map((u) => decodeURIComponent(u.split('/').pop())),
         country: item.snippet?.country ?? null,
         publishedAt: item.snippet?.publishedAt?.slice(0, 10) ?? null,
         hiddenSubscribers: Boolean(s.hiddenSubscriberCount),
         lastUpload,
-        // [{ id, t: título, d: data, v: views, s: duração em segundos, l: idioma do áudio }], mais recente primeiro
+        // [{ id, t: título, d: data, v: views, s: duração em segundos, l: idioma do áudio, c: categoria }], mais recente primeiro
         recent: recent ?? prev.recent ?? [],
       };
       if (recent) fresh.push(...recent);
