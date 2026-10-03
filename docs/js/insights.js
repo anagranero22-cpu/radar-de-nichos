@@ -3,6 +3,7 @@
 
 import { median, daysBetween } from './metrics.js';
 import { fmtN, fmtPct, fmtUSD } from './format.js';
+import { taxonomyTier } from './niche.js';
 
 // RPM = quanto o criador recebe por 1.000 views (USD). Faixas conservadoras
 // para vídeos longos monetizados; Shorts pagam bem menos.
@@ -37,6 +38,8 @@ const KEYWORDS = {
 };
 
 export function suggestTier(tag) {
+  const fromTaxonomy = taxonomyTier(tag);
+  if (fromTaxonomy) return fromTaxonomy;
   const t = ` ${String(tag).toLowerCase()} `;
   return TIER_ORDER.find((tier) => KEYWORDS[tier].some((k) => t.includes(k))) ?? null;
 }
@@ -142,7 +145,7 @@ export function verdict(score) {
 // Texto curto explicando por que o canal chama atenção.
 export function thesis(row, rs, tier, earnings) {
   const m = row.metrics;
-  const niche = row.channel.tags?.[0] ?? 'seu nicho';
+  const niche = (row.tags ?? row.channel.tags)?.[0] ?? 'seu nicho';
   const out = [];
   if (rs?.viewsPerSub != null && rs.viewsPerSub >= 0.5) {
     out.push(

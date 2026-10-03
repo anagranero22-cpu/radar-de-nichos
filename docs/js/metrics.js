@@ -100,15 +100,17 @@ export function isRisingSmall(m, opts = DEFAULT_RISING) {
   );
 }
 
-export function tagsOf(channel) {
-  return channel.tags?.length ? channel.tags : [UNTAGGED];
+// Aceita a linha (usa row.tags, que pode vir da detecção automática) ou o canal do catálogo.
+export function tagsOf(item) {
+  const tags = item.tags ?? item.channel?.tags;
+  return tags?.length ? tags : [UNTAGGED];
 }
 
 // Agregados por nicho. `rows` = [{ channel, metrics, rising }]
 export function nicheStats(rows) {
   const groups = new Map();
   for (const row of rows) {
-    for (const tag of tagsOf(row.channel)) {
+    for (const tag of tagsOf(row)) {
       if (!groups.has(tag)) groups.set(tag, []);
       groups.get(tag).push(row);
     }
