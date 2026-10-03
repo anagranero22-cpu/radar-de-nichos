@@ -58,3 +58,23 @@ test('tagsOf prefere as tags da linha (manuais ou automáticas)', () => {
   assert.deepEqual(tagsOf({ channel: { tags: ['x'] } }), ['x']);
   assert.deepEqual(tagsOf({ tags: [], channel: {} }), ['sem nicho']);
 });
+
+test('prepping e energia off-grid (canais em inglês)', () => {
+  const prep = classifyNiche({
+    title: 'Ray Sutter',
+    recent: [
+      { t: '13 Survival Foods Experienced Preppers Quietly Stockpile' },
+      { t: 'These 15 Must-Have Prepping Items to Survive a Winter Power Outage' },
+      { t: '5 Emergency Indoor Cooking Methods That Actually Work Without Power' },
+    ],
+  });
+  assert.deepEqual(prep.niches, ['prepping & sobrevivência']);
+  const offgrid = classifyNiche({
+    title: 'Builds With Eli Yoder',
+    recent: [
+      { t: 'This $299 Lidl Balcony Battery Powers Any Home All Winter — No Solar' },
+      { t: 'This $40 DIY 3-in-1 Heater Warms Any Home All Winter — Zero Electricity' },
+    ],
+  });
+  assert.equal(offgrid.niches[0], 'energia & off-grid');
+});
