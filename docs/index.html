@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar de Nichos</title>
+  <meta name="description" content="Catálogo de canais do YouTube com histórico diário de crescimento por nicho.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='none' stroke='%232a78d6' stroke-width='3'/><circle cx='16' cy='16' r='7' fill='none' stroke='%232a78d6' stroke-width='3'/><path d='M16 16 L28 8' stroke='%23eb6834' stroke-width='3' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" /><circle cx="16" cy="16" r="6" /><path d="M16 16 L27 9" class="sweep" /></svg>
+      Radar de Nichos
+    </a>
+    <nav class="tabs" aria-label="Seções">
+      <a href="#/" data-route="painel">Painel</a>
+      <a href="#/nichos" data-route="nichos">Nichos</a>
+      <a href="#/comparar" data-route="comparar">Comparar</a>
+      <a href="#/gerenciar" data-route="gerenciar">Gerenciar</a>
+    </nav>
+  </header>
+  <main id="app" tabindex="-1"><p class="muted loading">Carregando dados…</p></main>
+  <footer class="footer" id="footer"></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
