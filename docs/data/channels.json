@@ -1,3 +1,28 @@
 {
-  "channels": []
+  "channels": [
+    {
+      "ref": "@GrundrissDeutschland",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "vidrush",
+      "addedAt": "2026-10-03"
+    },
+    {
+      "ref": "https://www.youtube.com/@GrundrissDeutschland/videos",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "vidrush",
+      "addedAt": "2026-10-03"
+    },
+    {
+      "ref": "https://www.youtube.com/watch?v=v--_RvubQe4&t=37s",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "vidrush",
+      "addedAt": "2026-10-03"
+    }
+  ]
 }
