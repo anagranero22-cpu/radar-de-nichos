@@ -17,6 +17,32 @@ import {
   updateChannelsDoc,
   triggerCollect,
 } from './github.js';
+import {
+  esc,
+  nfPctPlain,
+  fmtN,
+  fmtInt,
+  fmtSigned,
+  fmtPct,
+  fmtDate,
+  signClass,
+  fmtAgo,
+  fmtAge,
+  fmtUSD,
+  countryName,
+} from './format.js';
+import {
+  CPM_TIERS,
+  suggestTier,
+  cpmTier,
+  recentStats,
+  estimateEarnings,
+  opportunityScore,
+  verdict,
+  thesis,
+} from './insights.js';
+import { renderExplore } from './explore.js';
+import { viewsBars, videoThumb, scoreMeter, scoreBreakdown, formatSplit, bindTooltips } from './minicharts.js';
 
 const app = document.getElementById('app');
 const MAX_COMPARE = 8;
@@ -51,36 +77,6 @@ function savePrefs() {
   } catch {
     /* sem armazenamento */
   }
-}
-
-const esc = (s) =>
-  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-
-const nfCompact = new Intl.NumberFormat('pt-BR', { notation: 'compact', maximumFractionDigits: 1 });
-const nfInt = new Intl.NumberFormat('pt-BR');
-const nfPct = new Intl.NumberFormat('pt-BR', { style: 'percent', maximumFractionDigits: 1, signDisplay: 'exceptZero' });
-const nfPctPlain = new Intl.NumberFormat('pt-BR', { style: 'percent', maximumFractionDigits: 0 });
-
-const fmtN = (n) => (n == null || !Number.isFinite(n) ? '—' : nfCompact.format(n));
-const fmtInt = (n) => (n == null ? '—' : nfInt.format(Math.round(n)));
-const fmtSigned = (n) => (n == null || !Number.isFinite(n) ? '—' : (n > 0 ? '+' : '') + nfCompact.format(n));
-const fmtPct = (p) => (p == null || !Number.isFinite(p) ? '—' : nfPct.format(p));
-const fmtDate = (d) => (d ? d.split('-').reverse().join('/') : '—');
-const signClass = (n) => (n > 0 ? 'up' : n < 0 ? 'down' : '');
-
-function fmtAgo(days) {
-  if (days == null) return '—';
-  if (days <= 0) return 'hoje';
-  if (days === 1) return 'ontem';
-  if (days < 60) return `há ${days} dias`;
-  if (days < 730) return `há ${Math.round(days / 30)} meses`;
-  return `há ${Math.round(days / 365)} anos`;
-}
-function fmtAge(days) {
-  if (days == null) return '—';
-  if (days < 60) return `${days} d`;
-  if (days < 730) return `${Math.round(days / 30)} m`;
-  return `${(days / 365).toFixed(1).replace('.', ',')} a`;
 }
 
 function partialMark(g) {
@@ -155,9 +151,86 @@ function buildRows() {
     };
     row.status = row.error ? 'erro' : hist.length ? 'ok' : 'pendente';
     row.rising = isRisingSmall(metrics, state.rising);
+    enrichRow(row);
     return row;
   });
 }
+
+function nicheOverrides() {
+  const out = {};
+  for (const [tag, cfg] of Object.entries(state.doc.niches ?? {})) if (cfg?.cpm) out[tag] = cfg.cpm;
+  return out;
+}
+
+// Leituras de oportunidade e marcações (♡ favorito, ★ eu faria).
+function enrichRow(row) {
+  const flags = localFlags()[row.ref] ?? {};
+  row.favorite = flags.favorite ?? Boolean(row.channel.favorite);
+  row.pick = flags.pick ?? Boolean(row.channel.pick);
+  row.rs = recentStats(row.meta.recent ?? [], row.metrics.subs);
+  row.cpm = cpmTier(row.channel.tags ?? [], nicheOverrides());
+  row.earnings = estimateEarnings(row.metrics, row.rs, row.cpm.tier);
+  row.score = opportunityScore(row.metrics, row.rs, row.cpm.tier);
+  row.verdict = verdict(row.score.score);
+  row.thesis = thesis(row, row.rs, row.cpm.tier, row.earnings);
+}
+
+function localFlags() {
+  try {
+    return JSON.parse(localStorage.getItem('radar.flags') ?? '{}');
+  } catch {
+    return {};
+  }
+}
+function setLocalFlag(ref, flag, value) {
+  try {
+    const all = localFlags();
+    all[ref] = { ...all[ref], [flag]: value };
+    if (value === undefined) delete all[ref][flag];
+    if (!Object.keys(all[ref]).length) delete all[ref];
+    localStorage.setItem('radar.flags', JSON.stringify(all));
+  } catch {
+    /* sem armazenamento */
+  }
+}
+
+// Marca na hora (navegador) e, com GitHub conectado, grava no catálogo em segundo plano.
+async function toggleFlag(row, flag) {
+  const value = !row[flag];
+  row[flag] = value;
+  setLocalFlag(row.ref, flag, value);
+  if (!canWrite(state.cfg)) return;
+  try {
+    state.doc = await updateChannelsDoc(state.cfg, `${value ? 'Marca' : 'Desmarca'} ${flag === 'favorite' ? 'favorito' : '“eu faria”'}: ${row.title}`, (doc) => {
+      const c = doc.channels.find((x) => x.ref === row.ref);
+      if (c) {
+        if (value) c[flag] = true;
+        else delete c[flag];
+      }
+    });
+    setLocalFlag(row.ref, flag, undefined);
+    row.channel = state.doc.channels.find((x) => x.ref === row.ref) ?? row.channel;
+  } catch (err) {
+    toast(`Marcado só neste navegador (erro ao salvar: ${err.message})`, true);
+  }
+}
+
+async function removeChannel(row) {
+  await saveCatalog(`Remove canal ${row.ref}`, (doc) => {
+    doc.channels = doc.channels.filter((x) => x.ref !== row.ref);
+  });
+}
+
+let leaveHooks = [];
+const exploreCtx = () => ({
+  app,
+  rows: state.rows,
+  rising: state.rising,
+  canEdit: canWrite(state.cfg),
+  toggleFlag,
+  removeChannel,
+  onLeave: (fn) => leaveHooks.push(fn),
+});
 
 function allTags() {
   const counts = new Map();
@@ -258,13 +331,15 @@ function alignSeries(series) {
 
 function route() {
   destroyCharts();
+  leaveHooks.forEach((fn) => fn());
+  leaveHooks = [];
   const hash = location.hash.slice(1) || '/';
   const [path, query = ''] = hash.split('?');
   const params = new URLSearchParams(query);
   const parts = path.split('/').filter(Boolean);
-  const page = parts[0] ?? 'painel';
+  const page = parts[0] ?? 'inicio';
   document.querySelectorAll('.tabs a').forEach((a) => {
-    a.classList.toggle('active', a.dataset.route === (page === 'canal' ? '' : page));
+    a.classList.toggle('active', a.dataset.route === page);
     if (a.dataset.route === page) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
@@ -272,7 +347,9 @@ function route() {
   else if (page === 'comparar') renderCompare(params);
   else if (page === 'canal') renderChannel(decodeURIComponent(parts.slice(1).join('/')));
   else if (page === 'gerenciar') renderManage();
-  else renderDashboard(params);
+  else if (page === 'painel') renderDashboard(params);
+  else if (page === 'favoritos') renderExplore(exploreCtx(), { favoritesOnly: true, params });
+  else renderExplore(exploreCtx(), { params });
   renderFooter();
 }
 
@@ -496,7 +573,7 @@ function renderTagChips() {
     if (b.dataset.clear) state.filters.tags.clear();
     else if (state.filters.tags.has(b.dataset.tag)) state.filters.tags.delete(b.dataset.tag);
     else state.filters.tags.add(b.dataset.tag);
-    if (location.hash.includes('tag=')) history.replaceState(null, '', '#/');
+    if (location.hash.includes('tag=')) history.replaceState(null, '', '#/painel');
     renderTagChips();
     renderTable();
   };
@@ -857,7 +934,7 @@ function renderChannel(ref) {
         <div class="meta">
           ${r.meta.handle ? `<span>${esc(r.meta.handle)}</span>` : ''}
           ${ytUrl ? `<a href="${ytUrl}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>` : ''}
-          ${r.meta.country ? `<span>${esc(r.meta.country)}</span>` : ''}
+          ${r.meta.country ? `<span>${esc(countryName(r.meta.country))}</span>` : ''}
           ${r.meta.publishedAt ? `<span>criado em ${fmtDate(r.meta.publishedAt)}</span>` : ''}
           <span class="chips">${(r.channel.tags ?? []).map((t) => `<a class="tag" href="#/?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join('')}</span>
         </div>
@@ -875,6 +952,7 @@ function renderChannel(ref) {
       ${kpi('Último upload', fmtAgo(m.daysSinceUpload), fmtDate(m.lastUpload))}
       ${kpi('Inscritos / mês de vida', fmtN(m.lifetimeSubsPerMonth), `idade ${fmtAge(m.ageDays)}`)}
     </div>
+    ${r.status === 'ok' ? opportunityBlock(r) : ''}
     <div class="grid-2">
       <section class="card"><h2>Inscritos</h2><div class="chart-box short"><canvas id="cSubs" role="img" aria-label="Inscritos ao longo do tempo"></canvas></div></section>
       <section class="card"><h2>Views totais</h2><div class="chart-box short"><canvas id="cViews" role="img" aria-label="Views totais ao longo do tempo"></canvas></div></section>
@@ -921,6 +999,7 @@ function renderChannel(ref) {
     }
   }
 
+  bindTooltips(app);
   document.getElementById('editForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -931,6 +1010,57 @@ function renderChannel(ref) {
       if (c) Object.assign(c, { tags, notes });
     });
   });
+}
+
+function opportunityBlock(r) {
+  const rs = r.rs;
+  const e = r.earnings;
+  const tier = CPM_TIERS[r.cpm.tier];
+  return `
+    <section class="spot spot-static">
+      <div class="spot-body">
+        <div class="spot-pills"><span class="spot-pill">✦ Tese de oportunidade</span></div>
+        <h2>${esc(r.title)} <span class="verdict v-${r.verdict.key}"><i></i>${r.verdict.label}</span></h2>
+        <p class="spot-thesis full">${esc(r.thesis)}</p>
+      </div>
+      <div class="spot-side"><div class="spot-score"><b>${r.score.score}</b><span>/100</span></div></div>
+    </section>
+    <div class="grid-3">
+      <section class="card">
+        <h2>Score de oportunidade</h2>
+        <p class="muted small">Tamanho, crescimento, tração dos vídeos, constância e CPM do nicho.</p>
+        ${scoreMeter(r.score.score, r.verdict.key)}
+        ${scoreBreakdown(r.score.parts)}
+      </section>
+      <section class="card">
+        <h2>Monetização estimada</h2>
+        <p class="muted small">CPM ${tier.label.toLowerCase()} (${r.cpm.source}) · RPM US$ ${tier.rpm[0]}–${tier.rpm[1]} por mil views${rs.shortsShare ? ', ajustado pela parcela de Shorts' : ''}.</p>
+        <div class="cc-big">${e.max != null ? `${fmtUSD(e.min)} – ${fmtUSD(e.max)}` : '—'} <small>/ mês</small></div>
+        <div class="sigs">
+          <div class="sig"><span>Views / mês</span><b>${fmtN(e.monthlyViews)}</b></div>
+          <div class="sig"><span>Base do cálculo</span><b>${e.basis ?? '—'}</b></div>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Formato e cadência</h2>
+        <p class="muted small">Com base nos ${rs.count} vídeos mais recentes.</p>
+        ${formatSplit(rs.shortsShare) || '<p class="muted">Sem dados de duração.</p>'}
+        <div class="sigs">
+          <div class="sig"><span>Vídeos / semana</span><b>${rs.perWeek != null ? rs.perWeek.toFixed(1).replace('.', ',') : '—'}</b></div>
+          <div class="sig"><span>Views / inscrito</span><b>${rs.viewsPerSub != null ? `${rs.viewsPerSub.toFixed(2).replace('.', ',')}×` : '—'}</b></div>
+        </div>
+      </section>
+    </div>
+    ${
+      r.meta.recent?.length
+        ? `<section class="card">
+      <div class="card-head"><div><h2>Últimos vídeos</h2>
+        <p class="muted small">Barras em laranja: vídeos com 2× ou mais a mediana (${fmtN(rs.median)} views) — pistas de temas com demanda.</p></div></div>
+      ${viewsBars(r.meta.recent, rs.median, { h: 110, axis: true })}
+      <div class="cc-videos wide">${r.meta.recent.map((v) => videoThumb(v, rs.median)).join('')}</div>
+    </section>`
+        : ''
+    }`;
 }
 
 const kpi = (label, value, sub = '') =>
@@ -1021,6 +1151,26 @@ function renderManage() {
           <li>Cole aqui. O token fica salvo só neste navegador (localStorage) e é enviado apenas para api.github.com.</li>
         </ol>
       </details>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><div><h2>CPM por nicho</h2>
+        <p class="muted small">Usado na estimativa de ganhos e no score. “Automático” sugere a faixa pelo nome do nicho.</p></div></div>
+      ${
+        allTags().length
+          ? `<form id="cpmForm"><div class="cpm-grid">${allTags()
+              .map((t) => {
+                const cur = state.doc.niches?.[t]?.cpm ?? '';
+                const sug = suggestTier(t);
+                return `<label class="field">${esc(t)}<select name="${esc(t)}"${editable ? '' : ' disabled'}>
+                  <option value="">Automático (${sug ? CPM_TIERS[sug].label : 'Médio'})</option>
+                  ${Object.entries(CPM_TIERS).map(([k, v]) => `<option value="${k}"${cur === k ? ' selected' : ''}>${v.label}</option>`).join('')}
+                </select></label>`;
+              })
+              .join('')}</div>
+            ${editable ? '<button type="submit" class="primary" style="margin-top:12px">Salvar faixas de CPM</button>' : ''}</form>`
+          : '<p class="muted">Adicione canais com tags para configurar.</p>'
+      }
     </section>
 
     <section class="card">
@@ -1137,6 +1287,20 @@ function renderManage() {
       e.target.disabled = false;
     }
   });
+  document.getElementById('cpmForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    await saveCatalog('Atualiza faixas de CPM por nicho', (doc) => {
+      doc.niches ??= {};
+      for (const [tag, tier] of fd.entries()) {
+        if (tier) doc.niches[tag] = { ...doc.niches[tag], cpm: tier };
+        else if (doc.niches[tag]) {
+          delete doc.niches[tag].cpm;
+          if (!Object.keys(doc.niches[tag]).length) delete doc.niches[tag];
+        }
+      }
+    });
+  });
   document.getElementById('prefForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -1154,6 +1318,18 @@ function renderManage() {
 /* ---------- início ---------- */
 
 window.addEventListener('hashchange', route);
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme
+    ? document.documentElement.dataset.theme === 'dark'
+    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+  try {
+    localStorage.setItem('radar.theme', document.documentElement.dataset.theme);
+  } catch {
+    /* sem armazenamento */
+  }
+  route();
+});
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', route);
 
 loadData()

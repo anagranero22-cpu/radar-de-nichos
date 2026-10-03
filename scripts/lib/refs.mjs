@@ -37,3 +37,11 @@ export function parseRef(raw) {
   if (/^[\w.-]+$/.test(ref)) return { type: 'handle', value: `@${ref}` };
   return { type: 'search', value: ref };
 }
+
+// Duração ISO 8601 da API (ex.: PT1H2M3S, P1DT2H) em segundos.
+export function parseDuration(iso) {
+  const m = /^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/.exec(iso ?? '');
+  if (!m) return null;
+  const [, d = 0, h = 0, min = 0, sec = 0] = m.map((x) => Number(x ?? 0));
+  return d * 86400 + h * 3600 + min * 60 + sec;
+}

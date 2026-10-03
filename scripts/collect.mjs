@@ -7,7 +7,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { parseRef } from './lib/refs.mjs';
+import { parseRef, parseDuration } from './lib/refs.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHANNELS_FILE = path.join(ROOT, 'docs/data/channels.json');
@@ -66,14 +66,37 @@ async function resolveRef(ref) {
   }
 }
 
-async function lastUploadDate(uploadsPlaylistId) {
-  if (!uploadsPlaylistId) return null;
-  const r = await api('playlistItems', { part: 'contentDetails', playlistId: uploadsPlaylistId, maxResults: '5' });
-  const dates = (r.items ?? [])
-    .map((it) => it.contentDetails?.videoPublishedAt)
-    .filter(Boolean)
-    .sort();
-  return dates.length ? dates[dates.length - 1].slice(0, 10) : null;
+const RECENT_VIDEOS = 8;
+
+// Últimos vídeos do canal (playlist de uploads): 1 unidade de cota por canal.
+async function recentUploads(uploadsPlaylistId) {
+  if (!uploadsPlaylistId) return [];
+  const r = await api('playlistItems', {
+    part: 'snippet,contentDetails',
+    playlistId: uploadsPlaylistId,
+    maxResults: String(RECENT_VIDEOS),
+  });
+  return (r.items ?? [])
+    .filter((it) => it.contentDetails?.videoPublishedAt)
+    .map((it) => ({
+      id: it.contentDetails.videoId,
+      t: it.snippet?.title ?? '',
+      d: it.contentDetails.videoPublishedAt.slice(0, 10),
+    }))
+    .sort((a, b) => (a.d < b.d ? 1 : -1));
+}
+
+// Views e duração dos vídeos em lotes de 50 (1 unidade por lote).
+async function fillVideoStats(videos) {
+  const byId = new Map(videos.map((v) => [v.id, v]));
+  for (const batch of chunk([...byId.keys()], 50)) {
+    const r = await api('videos', { part: 'statistics,contentDetails', id: batch.join(','), maxResults: '50' });
+    for (const item of r.items ?? []) {
+      const v = byId.get(item.id);
+      v.v = Number(item.statistics?.viewCount ?? 0);
+      v.s = parseDuration(item.contentDetails?.duration);
+    }
+  }
 }
 
 function bestThumb(thumbnails = {}) {
@@ -145,9 +168,10 @@ async function collectInto(stats, refs, today) {
 
   // 2. Estatísticas em lotes de 50 (1 unidade de cota por lote).
   const found = new Set();
+  const fresh = [];
   for (const batch of chunk(ids, 50)) {
     const r = await api('channels', {
-      part: 'snippet,statistics,contentDetails',
+      part: 'snippet,statistics,contentDetails,brandingSettings',
       id: batch.join(','),
       maxResults: '50',
     });
@@ -155,23 +179,29 @@ async function collectInto(stats, refs, today) {
       found.add(item.id);
       const s = item.statistics ?? {};
       const uploads = item.contentDetails?.relatedPlaylists?.uploads ?? null;
-      let lastUpload = null;
+      let recent = null;
       try {
-        lastUpload = await lastUploadDate(uploads);
+        recent = await recentUploads(uploads);
       } catch (err) {
         if (err instanceof QuotaError) throw err;
-        console.warn(`Último upload de ${item.id}: ${err.message}`);
-        lastUpload = stats.channels[item.id]?.lastUpload ?? null;
+        console.warn(`Últimos vídeos de ${item.id}: ${err.message}`);
       }
+      const prev = stats.channels[item.id] ?? {};
+      const lastUpload = recent ? (recent[0]?.d ?? null) : (prev.lastUpload ?? null);
       stats.channels[item.id] = {
         title: item.snippet?.title ?? '',
         handle: item.snippet?.customUrl ?? null,
         thumbnail: bestThumb(item.snippet?.thumbnails),
+        banner: item.brandingSettings?.image?.bannerExternalUrl ?? null,
+        description: (item.snippet?.description ?? '').slice(0, 300),
         country: item.snippet?.country ?? null,
         publishedAt: item.snippet?.publishedAt?.slice(0, 10) ?? null,
         hiddenSubscribers: Boolean(s.hiddenSubscriberCount),
         lastUpload,
+        // [{ id, t: título, d: data, v: views, s: duração em segundos }], mais recente primeiro
+        recent: recent ?? prev.recent ?? [],
       };
+      if (recent) fresh.push(...recent);
       const row = [
         today,
         s.hiddenSubscriberCount ? null : Number(s.subscriberCount ?? 0),
@@ -183,6 +213,14 @@ async function collectInto(stats, refs, today) {
       if (hist.length && hist[hist.length - 1][0] === today) hist[hist.length - 1] = row;
       else hist.push(row);
     }
+  }
+
+  // 3. Views e duração dos vídeos recentes.
+  try {
+    await fillVideoStats(fresh);
+  } catch (err) {
+    if (err instanceof QuotaError) throw err;
+    console.warn(`Estatísticas dos vídeos: ${err.message}`);
   }
 
   for (const ref of refs) {
