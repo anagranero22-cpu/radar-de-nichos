@@ -3,9 +3,10 @@
     {
       "ref": "https://www.youtube.com/@GrundrissDeutschland/videos",
       "tags": [
-        "construção civil"
+        "construção civil",
+        "por que [país] é assim"
       ],
-      "notes": "vidrush",
+      "notes": "vidrush · [Análise Claude, 04/10] Forte, potencial 92/100. Canal com 19 dias e 4 vídeos. Os 3 primeiros passaram de 15 mil views; o do isopor fez 54 mil em uma semana. Molde: “Por que a Alemanha [faz X]”, 8–11 min, fontes na descrição. O mais consistente da lista.",
       "addedAt": "2026-10-03"
     },
     {
@@ -14,7 +15,7 @@
         "alimento",
         "saúde"
       ],
-      "notes": "",
+      "notes": "[Análise Claude, 04/10] Referência 50+. Testes de marcas de supermercado. Mediana de 69 mil, mas o ritmo caiu para cerca de 10 vídeos por mês.",
       "addedAt": "2026-10-03"
     },
     {
@@ -22,7 +23,7 @@
       "tags": [
         "prepping e sobrevivência"
       ],
-      "notes": "",
+      "notes": "[Análise Claude, 04/10] Referência 50+. Prepping. Mediana de 8,3 mil, com picos de 736 mil.",
       "addedAt": "2026-10-03"
     },
     {
@@ -30,80 +31,374 @@
       "tags": [
         "prepping e sobrevivência"
       ],
-      "notes": "",
+      "notes": "[Análise Claude, 04/10] Referência 50+. Estoque de comida. Mediana de 88 mil e 1,3 mi no vídeo mais recente: o mais forte entre os canais de referência.",
       "addedAt": "2026-10-03"
     },
     {
       "ref": "https://www.youtube.com/@Nia.Prescott",
       "tags": [
-        "finançaos",
+        "finanças",
         "60+",
         "eua"
       ],
-      "notes": "",
+      "notes": "[Análise Claude, 04/10] Referência 50+. Finanças para 65+. Vive de picos (975 mil) com mediana de 2,3 mil.",
       "addedAt": "2026-10-03"
     },
     {
       "ref": "https://www.youtube.com/@SutterRay",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "prepping e sobrevivência"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência 50+. Prepping. Mediana de 25 mil e 9 de cada 10 vídeos recentes acima de 10 mil.",
       "addedAt": "2026-10-03"
     },
     {
       "ref": "https://www.youtube.com/@BuildsWithEliYoder",
       "tags": [
-        "prepping e sobrevivência"
+        "prepping e sobrevivência",
+        "energia & off-grid"
       ],
-      "notes": "",
+      "notes": "[Análise Claude, 04/10] Referência 50+. Promessas fisicamente impossíveis; mediana caiu para 2,6 mil.",
       "addedAt": "2026-10-03"
     },
     {
       "ref": "www.youtube.com/@MaisonsOubli%C3%A9esFA",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "imóveis",
+        "casas baratas que ninguém compra"
+      ],
+      "notes": "[Análise Claude, 04/10] Forte, potencial 90/100. 47 dias, 18 vídeos, 457 mil views. Usa sempre o mesmo molde de título (“Pourquoi personne n'achète ces…” + preço em euros). Mediana de 9,6 mil por vídeo e nenhum vídeo com mais de 3 dias abaixo de 4 mil. Francês, com pouca concorrência.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@GeoEnvy-YouTube",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "construção civil",
+        "ideias de casas de outros países"
+      ],
+      "notes": "[Análise Claude, 04/10] Forte, potencial 88/100. 108 dias, 41 vídeos, 2,3 mi de views. Três vídeos acima de 500 mil (casas suecas, italianas, norueguesas). Publica em inglês e português no mesmo canal. Mediana de 8,8 mil: vive de picos, e os picos são enormes.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@CasaViva-l5w",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "construção civil",
+        "por que [país] é assim",
+        "60+"
+      ],
+      "notes": "[Análise Claude, 04/10] Forte, potencial 87/100. Trocou decoração por “Por que o Brasil constrói assim…” há cerca de 3 semanas e explodiu: 203 mil em 1 dia e 145 mil em 2 semanas. Mediana dos últimos 10 vídeos: 16 mil. Mira o público 60+. É o concorrente direto mais forte no Brasil.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@lostustownsyt/videos",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "true crime & mistério",
+        "casas esquecidas e abandonadas"
+      ],
+      "notes": "[Análise Claude, 04/10] Forte, potencial 80/100. 207 dias, 5,3 mi de views. Cidades e casas abandonadas, assombradas e de crimes nos EUA. 7 de cada 10 vídeos recentes passam de 10 mil. Mais perto de terror e true crime do que de cotidiano.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@PorQueOBrasil",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "construção civil",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 70/100. O formato mais parecido com o que você quer fazer: Brasil × EUA no cotidiano, 8–9 min. Dois vídeos passaram de 140 mil (varal, porão), mas a mediana é 811 views. A demanda está comprovada e a execução é irregular: há espaço para fazer melhor.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@EraEsquecida-BR/videos",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "história",
+        "história do cotidiano"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 62/100. 203 dias. “Como era viver no Brasil em [época]” e “Como foi a morte de…”. Um vídeo de 335 mil e outro de 120 mil; o resto fica abaixo de 1,5 mil.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "www.youtube.com/@NostalgiaBRASIL-m5c",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "história",
+        "história do cotidiano"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 55/100. Fez de 220 mil a 374 mil por vídeo há 3–7 meses com “Reconstrução com IA” do Brasil antigo. Hoje a mediana caiu para 1,5 mil: o formato esfriou.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "https://www.youtube.com/@Realnomicsyt",
-      "tags": [],
-      "notes": "",
+      "tags": [
+        "imóveis",
+        "casas baratas que ninguém compra"
+      ],
+      "notes": "[Análise Claude, 05/10] Sem análise completa ainda. “Ninguém está comprando estas fazendas baratas com terreno — veja por quê” fez 392 mil em 2 meses: é o formato “casas baratas que ninguém compra”, que está se espalhando.",
       "addedAt": "2026-10-04"
+    },
+    {
+      "ref": "https://www.youtube.com/@KenTsukamoto",
+      "tags": [
+        "casa & decoração",
+        "japão x ocidente",
+        "60+"
+      ],
+      "notes": "[Análise Claude, 04/10] Forte, potencial 82/100. 72 dias, 1,18 mi de views, 11,8 mil inscritos. Casa e organização “do jeito japonês” para 60+, com vídeos em inglês e português. Um vídeo de 600 mil e outro de 121 mil; mediana de 6 mil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@americansecrets1",
+      "tags": [
+        "construção civil",
+        "casas esquecidas e abandonadas"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 72/100. 62 dias, 536 mil views. “Recursos esquecidos das casas americanas antigas” em inglês e português. Cinco vídeos entre 63 mil e 110 mil, mas a maioria fica abaixo de 2 mil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@LesNuitsdelHistoire111",
+      "tags": [
+        "história",
+        "história do cotidiano"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 55/100. 139 dias. Cotidiano histórico francês (banheiro, comida, frio). Um vídeo de 91 mil e outro de 34 mil; mediana de 517. Registrado na Islândia.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@DieFirmenakte",
+      "tags": [
+        "tecnologia",
+        "marcas que sumiram"
+      ],
+      "notes": "[Análise Claude, 04/10] Promissor, potencial 45/100. Canal de respiração em italiano reaproveitado para “ascensão e queda” de marcas alemãs. O vídeo do ISDN fez 37 mil, mas o canal posta vários vídeos por dia com mediana de 1,1 mil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@NostalgiadoBrasil",
+      "tags": [
+        "história",
+        "história do cotidiano"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 40/100. Casas brasileiras antigas: 543 mil no vídeo da casa de 1920. Parado há 7 meses. Prova que o tema tem demanda e que o espaço está livre.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@CuriosidadesReais-m4u",
+      "tags": [
+        "construção civil",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 25/100. Usa exatamente títulos como “Por que todas as casas no Brasil têm grade”, mas está parado há 4 meses, com mediana de 727.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Historiasecuriosidadesearth",
+      "tags": [
+        "curiosidades",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 20/100. Um acerto de 39 mil (“Por que as casas do Brasil são tão quentes”); parado há 8 meses.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@CeQuelaFranceaPerdu",
+      "tags": [
+        "história",
+        "história do cotidiano"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 15/100. 123 dias, 6 vídeos, no máximo 504 views. Operado a partir do Brasil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Marcus_Uncovers7",
+      "tags": [
+        "tecnologia",
+        "japão x ocidente"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 15/100. Tecnologia do Japão e da China; no máximo 4,5 mil views.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@BoîteNoire-j5m",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 15/100. 4 vídeos, parado há 6 meses.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@PaperMindOfficialYT",
+      "tags": [
+        "desenvolvimento pessoal"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 10/100. Mudou para psicologia; saiu do nicho.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@ContextoPrime-k3o",
+      "tags": [
+        "construção civil",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 8/100. 71 dias, 20 vídeos, mediana de 3 views.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Waswurdeaus-u2k",
+      "tags": [
+        "negócios",
+        "marcas que sumiram"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 8/100. 34 dias, 8 vídeos, 392 views no total.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@TropTôt12",
+      "tags": [
+        "construção civil",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 5/100. 11 vídeos e 25 views no total. Operado a partir do Brasil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@logic_beneath_media",
+      "tags": [
+        "curiosidades",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 5/100. 12 vídeos, no máximo 87 views.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@thepriceofimpossible",
+      "tags": [
+        "ciência"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 5/100. 7 vídeos, no máximo 646 views; mudou de tema.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@TimeExplainer-c5j",
+      "tags": [
+        "história"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 5/100. 31 dias, 16 vídeos, no máximo 874 views.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@sandersbarr6203",
+      "tags": [
+        "japão x ocidente"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 3/100. 3 vídeos, 19 views no total.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Mapspire",
+      "tags": [
+        "japão x ocidente"
+      ],
+      "notes": "[Análise Claude, 04/10] Fraco, potencial 2/100. 2 vídeos, 20 views no total.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@lesartisansdedemain",
+      "tags": [
+        "viagem",
+        "japão x ocidente"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Reportagens de viagem com apresentador, em francês. Pouco ativo (1 vídeo no mês).",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@MoreJTReacts",
+      "tags": [
+        "reações europa x eua"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Reações EUA × Europa com apresentador. Mediana de 298 mil: mostra o tamanho do público para comparações entre países.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Elementar",
+      "tags": [
+        "curiosidades",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). 1,55 mi de inscritos, com apresentador. É o teto do tema “Por que o Brasil…”: mediana de 155 mil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@reynardlowell",
+      "tags": [
+        "casa & decoração",
+        "ideias de casas de outros países"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Designer australiano dublado em português. 404 mil no vídeo do último mês.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@european-reacts",
+      "tags": [
+        "reações europa x eua"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Reações Europa × EUA com apresentadora. 1.724 vídeos, mediana de 31 mil.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@UGREENbr",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Ciência da construção. 833 mil em 8 dias com “O golpe da mini-mansão”.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@PLANARQCAMPOS",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Arquiteto com rosto. “Por que não construímos como os americanos?” fez 4,6 mi.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@desenhandoeexplicando",
+      "tags": [
+        "educação",
+        "por que [país] é assim"
+      ],
+      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Geografia no formato “Por que o Brasil…”. 345 dias, 62,8 mil inscritos e mediana de 36 mil: prova a força desse molde de título.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@renansousaeng",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “8 armadilhas das casas modernas que ninguém te conta” fez 356 mil. Engenheiro com rosto: mostra a demanda por erros e armadilhas.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@willarquitetura",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “Não cometa esses erros na sua casa térrea” fez 82 mil. Arquiteto com rosto, mesmo molde do PLANARQ.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@Fubáonline",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “5 erros e 5 acertos na construção da minha casa” fez 356 mil. Diário de obra com rosto.",
+      "addedAt": "2026-10-05"
+    },
+    {
+      "ref": "https://www.youtube.com/@engenheiro_matheus",
+      "tags": [
+        "construção civil"
+      ],
+      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “Por que sua casa é tão quente? Não é só o telhado!” fez 18 mil em 2 dias. Engenheiro com rosto; vende curso de construção.",
+      "addedAt": "2026-10-05"
     }
   ]
 }
