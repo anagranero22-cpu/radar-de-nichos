@@ -104,14 +104,14 @@ function themeRow(t, ctx) {
     ['Shorts no topo', t.m.shortsShare == null ? '—' : pct(t.m.shortsShare), 'Parte dos 20 mais vistos que são Shorts'],
   ];
   const lg = t.langGap?.level
-    ? `<span class="gap-lang" data-tip="Em ${esc(t.lang)}: mediana ${fmtN(t.m.medianViews)} · em ${esc(ctx.cfg.homeLang)} (“${esc(t.local)}”): mediana ${fmtN(t.localM?.medianViews)}">Lacuna de idioma ${t.langGap.level}</span>`
+    ? `<span class="gap-lang" data-tip="Em ${esc(t.lang)}: mediana ${fmtN(t.m.medianViews)} · em ${esc(t.localLang ?? ctx.cfg.homeLang)} (“${esc(t.local)}”): mediana ${fmtN(t.localM?.medianViews)}">Lacuna de idioma ${t.langGap.level}</span>`
     : '';
   return `<article class="gap-row">
     <div class="gap-head">
       <div class="gap-name">
         ${langTag(t.lang)}
         <h3>${esc(t.q)}</h3>
-        ${t.local ? `<span class="muted small">→ ${langTag(ctx.cfg.homeLang)} ${esc(t.local)}</span>` : ''}
+        ${t.local ? `<span class="muted small">→ ${langTag(t.localLang ?? ctx.cfg.homeLang)} ${esc(t.local)}</span>` : ''}
       </div>
       <div class="gap-pills">${verdictChip(t.score)} ${lg}
         ${t.niche ? `<span class="tag">${esc(t.niche)}</span>` : ''}
@@ -138,10 +138,10 @@ function themeRow(t, ctx) {
       <div class="gvid-grid">${t.videos.map((v) => videoCard(v, ctx, t)).join('') || '<p class="muted">Nenhum vídeo acima do mínimo de views.</p>'}</div>
       ${
         t.localVideos?.length
-          ? `<h4 class="gap-sub">O que já existe em ${esc(languageName(ctx.cfg.homeLang) ?? ctx.cfg.homeLang)} (“${esc(t.local)}”)</h4>
+          ? `<h4 class="gap-sub">O que já existe em ${esc(languageName(t.localLang ?? ctx.cfg.homeLang) ?? t.localLang)} (“${esc(t.local)}”)</h4>
              <div class="gvid-grid">${t.localVideos.map((v) => videoCard(v, ctx, t)).join('')}</div>`
           : t.local
-            ? `<p class="muted small">Nenhum vídeo relevante encontrado em “${esc(t.local)}”: espaço livre no seu idioma.</p>`
+            ? `<p class="muted small">Nenhum vídeo relevante encontrado em “${esc(t.local)}”: espaço livre nesse idioma.</p>`
             : ''
       }
     </details>
@@ -195,7 +195,7 @@ function editor(ctx) {
   const cfg = ctx.cfg;
   const custom = Boolean(ctx.doc.discovery?.queries?.length);
   return `<div class="card-head"><div><h2>Temas monitorados</h2>
-      <p class="muted small">Um tema por linha: <code>termo | idioma | termo no seu idioma</code>. O terceiro campo é opcional e mede a lacuna de idioma (quanto o tema rende lá fora e quanto já existe no seu idioma).${custom ? '' : ' Estes são os temas sugeridos; edite à vontade.'}</p></div></div>
+      <p class="muted small">Um tema por linha: <code>termo | idioma | mesmo termo em outro idioma | outro idioma</code> (ex.: <code>dark history | en | dunkle Geschichte | de</code>). Os dois últimos campos são opcionais e medem a lacuna de idioma: o tema rende num mercado e quase não existe no outro.${custom ? '' : ' Estes são os temas sugeridos; edite à vontade.'}</p></div></div>
     <form id="gapForm">
       <label class="field">Temas<textarea name="queries" rows="12" spellcheck="false">${esc(formatQueryLines(cfg.queries))}</textarea></label>
       <p class="small" id="gapCost"></p>
@@ -204,7 +204,7 @@ function editor(ctx) {
         <label class="field">Canal pequeno: até (inscritos)<input name="maxSubs" type="number" min="100" step="1000" value="${cfg.maxSubs}"></label>
         <label class="field">Mínimo de views do vídeo<input name="minViews" type="number" min="0" step="1000" value="${cfg.minViews}"></label>
         <label class="field">Buscas por dia (100 unidades cada)<input name="maxSearches" type="number" min="1" max="90" value="${cfg.maxSearches}"></label>
-        <label class="field">Idioma do seu canal<input name="homeLang" value="${esc(cfg.homeLang)}" maxlength="5"></label>
+        <label class="field">Outro idioma padrão (comparação)<input name="homeLang" value="${esc(cfg.homeLang)}" maxlength="5"></label>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="primary" type="submit"${ctx.editable ? '' : ' disabled'}>Salvar temas</button>
@@ -215,7 +215,7 @@ function editor(ctx) {
 }
 
 function updateCost(form, maxSearches) {
-  const qs = parseQueryLines(form.queries.value, form.homeLang.value.trim() || 'pt');
+  const qs = parseQueryLines(form.queries.value, form.homeLang.value.trim() || 'en');
   const max = Number(form.maxSearches.value) || maxSearches;
   const cost = qs.reduce((a, t) => a + searchCost(t), 0);
   const el = document.getElementById('gapCost');
@@ -347,7 +347,7 @@ export function renderGaps(ctx) {
   });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const homeLang = form.homeLang.value.trim().toLowerCase() || 'pt';
+    const homeLang = form.homeLang.value.trim().toLowerCase() || 'en';
     const queries = parseQueryLines(form.queries.value, homeLang);
     if (!queries.length) {
       ctx.toast('Adicione pelo menos um tema.', true);

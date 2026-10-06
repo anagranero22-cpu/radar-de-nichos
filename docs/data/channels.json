@@ -400,101 +400,95 @@
     "maxSubs": 100000,
     "minViews": 10000,
     "maxSearches": 40,
-    "homeLang": "pt",
+    "homeLang": "en",
     "queries": [
+      {
+        "q": "the real reason why",
+        "lang": "en",
+        "local": "nicht aus dem Grund, den du denkst",
+        "localLang": "de"
+      },
+      {
+        "q": "la vraie raison",
+        "lang": "fr"
+      },
+      {
+        "q": "hidden features everyday objects",
+        "lang": "en"
+      },
+      {
+        "q": "what really happens to your body",
+        "lang": "en"
+      },
       {
         "q": "unsolved mysteries",
         "lang": "en",
-        "local": "mistérios não resolvidos"
+        "local": "mystères non résolus",
+        "localLang": "fr"
       },
       {
         "q": "dark history",
         "lang": "en",
-        "local": "história sombria"
+        "local": "dunkle Geschichte",
+        "localLang": "de"
       },
       {
         "q": "abandoned places",
         "lang": "en",
-        "local": "lugares abandonados"
+        "local": "lieux abandonnés",
+        "localLang": "fr"
       },
       {
         "q": "ancient civilizations",
         "lang": "en",
-        "local": "civilizações antigas"
+        "local": "civilizaciones antiguas",
+        "localLang": "es"
       },
       {
         "q": "stoicism",
         "lang": "en",
-        "local": "estoicismo"
+        "local": "Stoizismus",
+        "localLang": "de"
       },
       {
         "q": "psychology facts",
         "lang": "en",
-        "local": "fatos de psicologia"
+        "local": "datos de psicología",
+        "localLang": "es"
       },
       {
         "q": "true crime documentary",
         "lang": "en",
-        "local": "caso real crime documentário"
+        "local": "true crime doku",
+        "localLang": "de"
       },
       {
         "q": "retirement tips seniors",
         "lang": "en",
-        "local": "dicas para aposentados"
+        "local": "Rente Tipps",
+        "localLang": "de"
       },
       {
         "q": "food storage prepping",
         "lang": "en",
-        "local": "estoque de comida emergência"
+        "local": "Notvorrat Krise",
+        "localLang": "de"
       },
       {
         "q": "how the rich avoid taxes",
-        "lang": "en",
-        "local": "como os ricos pagam menos impostos"
+        "lang": "en"
       },
       {
-        "q": "por que o Brasil é assim",
-        "lang": "pt"
+        "q": "why is america like this",
+        "lang": "en"
       },
       {
-        "q": "curiosidades do Brasil antigo",
-        "lang": "pt"
-      },
-      {
-        "q": "histórias bíblicas",
-        "lang": "pt"
-      },
-      {
-        "q": "nostalgia anos 90",
-        "lang": "pt"
-      },
-      {
-        "q": "saúde depois dos 60",
-        "lang": "pt"
-      },
-      {
-        "q": "why things are designed this way",
-        "lang": "en",
-        "local": "por que as coisas são feitas assim"
-      },
-      {
-        "q": "everyday objects explained",
-        "lang": "en",
-        "local": "objetos do dia a dia explicados"
-      },
-      {
-        "q": "hidden features everyday objects",
-        "lang": "en",
-        "local": "funções escondidas em objetos"
-      },
-      {
-        "q": "warum ist das so gebaut",
+        "q": "warum ist Deutschland so",
         "lang": "de"
       },
       {
-        "q": "why is it made that way engineering",
-        "lang": "en",
-        "local": "por que é feito desse jeito"
+        "q": "histoire sombre",
+        "lang": "fr"
       }
     ]
   }

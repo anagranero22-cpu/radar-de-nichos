@@ -19,19 +19,21 @@ const cfg = { ...DEFAULT_DISCOVERY };
 const NOW = Date.parse('2026-10-06T12:00:00Z');
 
 test('parseQueryLines: idioma padrão, termo local e duplicados', () => {
-  const q = parseQueryLines('dark history | en | história sombria\nmistérios\n\nMistérios | pt\nfoo | pt | ignorado', 'pt');
+  const q = parseQueryLines('dark history | en | dunkle Geschichte | de\nmistérios\n\nMistérios | pt\nfoo | pt | ignorado | pt\nbar | en | barre', 'pt');
   assert.deepEqual(q, [
-    { q: 'dark history', lang: 'en', local: 'história sombria' },
+    { q: 'dark history', lang: 'en', local: 'dunkle Geschichte', localLang: 'de' },
     { q: 'mistérios', lang: 'pt' },
     { q: 'foo', lang: 'pt' },
+    { q: 'bar', lang: 'en', local: 'barre', localLang: 'pt' },
   ]);
-  assert.equal(formatQueryLines(q.slice(0, 2)), 'dark history | en | história sombria\nmistérios | pt');
+  assert.equal(formatQueryLines(q.slice(0, 2)), 'dark history | en | dunkle Geschichte | de\nmistérios | pt');
 });
 
 test('discoveryConfig usa os padrões quando não há configuração', () => {
   const c = discoveryConfig({});
   assert.equal(c.queries, DEFAULT_QUERIES);
   assert.equal(c.maxSubs, 100000);
+  assert.equal(c.homeLang, 'en');
   const d = discoveryConfig({ discovery: { days: 7, queries: [{ q: 'x', lang: 'pt' }] } });
   assert.equal(d.days, 7);
   assert.equal(d.queries.length, 1);

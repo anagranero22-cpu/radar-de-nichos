@@ -13,24 +13,27 @@ export const NEW_CHANNEL_DAYS = 180;
 export const OUTLIER_RATIO = 3;
 const TOP_N = 20;
 
-// Temas iniciais: nichos que funcionam bem em canal dark. "local" = a mesma
-// busca no idioma do seu canal, para medir a lacuna de idioma (arbitragem).
+// Temas iniciais, focados em canais gringos. "local" = a mesma busca em outro
+// idioma ("localLang"), para medir a lacuna de idioma: o tema rende num
+// mercado e quase não existe no outro (arbitragem entre idiomas).
 export const DEFAULT_QUERIES = [
-  { q: 'unsolved mysteries', lang: 'en', local: 'mistérios não resolvidos' },
-  { q: 'dark history', lang: 'en', local: 'história sombria' },
-  { q: 'abandoned places', lang: 'en', local: 'lugares abandonados' },
-  { q: 'ancient civilizations', lang: 'en', local: 'civilizações antigas' },
-  { q: 'stoicism', lang: 'en', local: 'estoicismo' },
-  { q: 'psychology facts', lang: 'en', local: 'fatos de psicologia' },
-  { q: 'true crime documentary', lang: 'en', local: 'caso real crime documentário' },
-  { q: 'retirement tips seniors', lang: 'en', local: 'dicas para aposentados' },
-  { q: 'food storage prepping', lang: 'en', local: 'estoque de comida emergência' },
-  { q: 'how the rich avoid taxes', lang: 'en', local: 'como os ricos pagam menos impostos' },
-  { q: 'por que o Brasil é assim', lang: 'pt' },
-  { q: 'curiosidades do Brasil antigo', lang: 'pt' },
-  { q: 'histórias bíblicas', lang: 'pt' },
-  { q: 'nostalgia anos 90', lang: 'pt' },
-  { q: 'saúde depois dos 60', lang: 'pt' },
+  { q: 'the real reason why', lang: 'en', local: 'nicht aus dem Grund, den du denkst', localLang: 'de' },
+  { q: 'la vraie raison', lang: 'fr' },
+  { q: 'hidden features everyday objects', lang: 'en' },
+  { q: 'what really happens to your body', lang: 'en' },
+  { q: 'unsolved mysteries', lang: 'en', local: 'mystères non résolus', localLang: 'fr' },
+  { q: 'dark history', lang: 'en', local: 'dunkle Geschichte', localLang: 'de' },
+  { q: 'abandoned places', lang: 'en', local: 'lieux abandonnés', localLang: 'fr' },
+  { q: 'ancient civilizations', lang: 'en', local: 'civilizaciones antiguas', localLang: 'es' },
+  { q: 'stoicism', lang: 'en', local: 'Stoizismus', localLang: 'de' },
+  { q: 'psychology facts', lang: 'en', local: 'datos de psicología', localLang: 'es' },
+  { q: 'true crime documentary', lang: 'en', local: 'true crime doku', localLang: 'de' },
+  { q: 'retirement tips seniors', lang: 'en', local: 'Rente Tipps', localLang: 'de' },
+  { q: 'food storage prepping', lang: 'en', local: 'Notvorrat Krise', localLang: 'de' },
+  { q: 'how the rich avoid taxes', lang: 'en' },
+  { q: 'why is america like this', lang: 'en' },
+  { q: 'warum ist Deutschland so', lang: 'de' },
+  { q: 'histoire sombre', lang: 'fr' },
 ];
 
 export const DEFAULT_DISCOVERY = {
@@ -38,7 +41,7 @@ export const DEFAULT_DISCOVERY = {
   maxSubs: 100000,
   minViews: 10000,
   maxSearches: 40,
-  homeLang: 'pt',
+  homeLang: 'en',
 };
 
 export function discoveryConfig(doc = {}) {
@@ -52,24 +55,26 @@ export function discoveryConfig(doc = {}) {
 
 export const themeKey = (q, lang) => `${lang || '?'}:${normalize(q).trim()}`;
 
-// "termo | idioma | termo no seu idioma" — um tema por linha.
-export function parseQueryLines(text, homeLang = 'pt') {
+// "termo | idioma | termo em outro idioma | outro idioma" — um tema por linha.
+// Sem o quarto campo, o outro idioma é o idioma alvo padrão (homeLang).
+export function parseQueryLines(text, homeLang = 'en') {
   const seen = new Set();
   const out = [];
   for (const line of String(text).split('\n')) {
-    const [q, lang, local] = line.split('|').map((s) => s.trim());
+    const [q, lang, local, localLang] = line.split('|').map((s) => s.trim());
     if (!q) continue;
     const l = (lang || homeLang).toLowerCase().slice(0, 5);
     const key = themeKey(q, l);
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push(local && l !== homeLang ? { q, lang: l, local } : { q, lang: l });
+    const ll = (localLang || homeLang).toLowerCase().slice(0, 5);
+    out.push(local && ll !== l ? { q, lang: l, local, localLang: ll } : { q, lang: l });
   }
   return out;
 }
 
 export const formatQueryLines = (queries) =>
-  queries.map((t) => [t.q, t.lang, t.local].filter(Boolean).join(' | ')).join('\n');
+  queries.map((t) => [t.q, t.lang, t.local, t.local ? t.localLang : null].filter(Boolean).join(' | ')).join('\n');
 
 export const searchCost = (t) => (t.local ? 2 : 1);
 
@@ -177,7 +182,7 @@ export function themeThesis(t) {
   if (m.newChannels) bits.push(`${m.newChannels} deles com menos de 6 meses`);
   bits.push(`${Math.round(m.smallShare * 100)}% dos mais vistos são de canais pequenos`);
   if (t.langGap?.level) {
-    bits.push(`lacuna de idioma ${t.langGap.level}: em ${String(t.lang).toUpperCase()} a mediana é ${Number.isFinite(t.langGap.ratio) ? `${t.langGap.ratio.toFixed(1).replace('.', ',')}×` : 'muito'} maior que em "${t.local}"`);
+    bits.push(`lacuna de idioma ${t.langGap.level}: em ${String(t.lang).toUpperCase()} a mediana é ${Number.isFinite(t.langGap.ratio) ? `${t.langGap.ratio.toFixed(1).replace('.', ',')}×` : 'muito'} maior que em ${String(t.localLang ?? '').toUpperCase()} ("${t.local}")`);
   }
   return bits.join(' · ');
 }

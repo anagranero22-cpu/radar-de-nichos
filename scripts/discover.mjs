@@ -123,7 +123,7 @@ async function main() {
       const key = themeKey(t.q, t.lang);
       try {
         const main = await measure(t.q, t.lang, cfg, channelCache);
-        const local = t.local ? await measure(t.local, cfg.homeLang, cfg, channelCache) : null;
+        const local = t.local ? await measure(t.local, t.localLang ?? cfg.homeLang, cfg, channelCache) : null;
         const { niche, tier } = themeNiche(t.q, main.videos);
         const langGap = local ? languageGap(main.m, local.m, cfg) : null;
         const { score, parts, bonus } = gapScore(main.m, tier, langGap);
@@ -140,6 +140,7 @@ async function main() {
           q: t.q,
           lang: t.lang,
           local: t.local ?? null,
+          localLang: t.local ? (t.localLang ?? cfg.homeLang) : null,
           lastRun: today,
           niche,
           tier,
