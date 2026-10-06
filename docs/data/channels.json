@@ -393,6 +393,46 @@
       ],
       "notes": "[Análise Claude, 06/10] Desmonta objetos do dia a dia e explica por que são feitos assim (pneus, botões, tampas de bueiro). Referência para o tema \"por que as coisas são assim\".",
       "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "UCqKlYgMnpdF98IeeiO1XemQ",
+      "tags": [
+        "idiomas"
+      ],
+      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: German through stories.",
+      "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "UChyx8ibmFMTTe3aS_l_eaKA",
+      "tags": [
+        "idiomas"
+      ],
+      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: Comprehensible German.",
+      "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "@DreamingSpanish",
+      "tags": [
+        "idiomas"
+      ],
+      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: Dreaming Spanish (referência de input compreensível).",
+      "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "@EasyGerman",
+      "tags": [
+        "idiomas"
+      ],
+      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: Easy German (referência grande).",
+      "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "https://www.youtube.com/c/Nat%C3%BCrlichdeutsch",
+      "tags": [
+        "idiomas"
+      ],
+      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: Natürlich German.",
+      "addedAt": "2026-10-06"
     }
   ],
   "discovery": {
@@ -489,6 +529,26 @@
       {
         "q": "histoire sombre",
         "lang": "fr"
+      },
+      {
+        "q": "German stories for beginners",
+        "lang": "de"
+      },
+      {
+        "q": "Spanish stories for beginners",
+        "lang": "es"
+      },
+      {
+        "q": "French stories for beginners",
+        "lang": "fr"
+      },
+      {
+        "q": "learn English with stories",
+        "lang": "en"
+      },
+      {
+        "q": "comprehensible input German",
+        "lang": "de"
       }
     ]
   }
