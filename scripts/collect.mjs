@@ -4,39 +4,16 @@
 //   [data, inscritos, viewsTotais, numeroDeVideos, dataDoUltimoUpload]
 // Rodar de novo no mesmo dia substitui a linha do dia (não duplica).
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { parseRef, parseDuration } from '../docs/js/refs.js';
 import { normLang, detectLanguage } from '../docs/js/language.js';
+import { api, chunk, readJson, QuotaError, KEY } from './youtube.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHANNELS_FILE = path.join(ROOT, 'docs/data/channels.json');
 const STATS_FILE = path.join(ROOT, 'docs/data/stats.json');
-const API = 'https://www.googleapis.com/youtube/v3';
-const KEY = process.env.YOUTUBE_API_KEY;
-
-class QuotaError extends Error {}
-
-async function api(endpoint, params) {
-  const url = new URL(`${API}/${endpoint}`);
-  for (const [k, v] of Object.entries({ ...params, key: KEY })) url.searchParams.set(k, v);
-  for (let attempt = 0; ; attempt++) {
-    const res = await fetch(url);
-    if (res.ok) return res.json();
-    const body = await res.json().catch(() => ({}));
-    const reason = body?.error?.errors?.[0]?.reason;
-    if (reason === 'quotaExceeded' || reason === 'dailyLimitExceeded') {
-      throw new QuotaError('Cota diária da YouTube API esgotada.');
-    }
-    if (res.status === 404) return { items: [], notFound: true };
-    if (res.status >= 500 && attempt < 3) {
-      await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
-      continue;
-    }
-    throw new Error(`YouTube API ${endpoint} respondeu ${res.status}: ${body?.error?.message ?? res.statusText}`);
-  }
-}
 
 async function resolveRef(ref) {
   const parsed = parseRef(ref);
@@ -105,21 +82,6 @@ async function fillVideoStats(videos) {
 
 function bestThumb(thumbnails = {}) {
   return (thumbnails.medium ?? thumbnails.default ?? thumbnails.high)?.url ?? null;
-}
-
-function chunk(arr, size) {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
-}
-
-async function readJson(file, fallback) {
-  try {
-    return JSON.parse(await readFile(file, 'utf8'));
-  } catch (err) {
-    if (err.code === 'ENOENT') return fallback;
-    throw err;
-  }
 }
 
 async function main() {

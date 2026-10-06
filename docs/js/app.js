@@ -48,6 +48,7 @@ import {
   thesis,
 } from './insights.js';
 import { renderExplore } from './explore.js';
+import { renderGaps } from './gaps-page.js';
 import { viewsBars, videoThumb, scoreMeter, scoreBreakdown, formatSplit, bindTooltips } from './minicharts.js';
 
 const app = document.getElementById('app');
@@ -57,6 +58,7 @@ const CHANNEL_ID = /^UC[\w-]{22}$/;
 const state = {
   doc: { channels: [] },
   stats: {},
+  gaps: {},
   rows: [],
   cfg: loadConfig(),
   rising: loadPrefs(),
@@ -121,12 +123,14 @@ async function fetchJson(url) {
 }
 
 async function loadData() {
-  const [doc, stats] = await Promise.all([
+  const [doc, stats, gaps] = await Promise.all([
     fetchJson('data/channels.json').catch(() => ({ channels: [] })),
     fetchJson('data/stats.json').catch(() => ({})),
+    fetchJson('data/gaps.json').catch(() => ({})),
   ]);
   state.doc = doc;
   state.stats = stats;
+  state.gaps = gaps;
   // Com token, o catálogo vem direto do repositório (o site publicado pode estar alguns minutos atrás).
   if (canWrite(state.cfg)) {
     try {
@@ -354,6 +358,29 @@ function alignSeries(series) {
   };
 }
 
+/* ---------- Lacunas ---------- */
+
+// IDs (UC…) dos canais que já estão no catálogo, para marcar “No radar”.
+function knownChannelIds() {
+  const ids = new Set();
+  for (const c of state.doc.channels ?? []) {
+    const id = state.stats.resolve?.[c.ref] ?? (CHANNEL_ID.test(c.ref) ? c.ref : null);
+    if (id) ids.add(id);
+  }
+  return ids;
+}
+
+const gapsCtx = () => ({
+  app,
+  doc: state.doc,
+  gaps: state.gaps,
+  knownIds: knownChannelIds(),
+  editable: canWrite(state.cfg),
+  saveCatalog,
+  toast,
+  triggerCollect: () => triggerCollect(state.cfg),
+});
+
 /* ---------- roteamento ---------- */
 
 function route() {
@@ -371,6 +398,7 @@ function route() {
     else a.removeAttribute('aria-current');
   });
   if (page === 'nichos') renderNiches();
+  else if (page === 'lacunas') renderGaps(gapsCtx());
   else if (page === 'comparar') renderCompare(params);
   else if (page === 'canal') renderChannel(decodeURIComponent(parts.slice(1).join('/')));
   else if (page === 'gerenciar') renderManage();

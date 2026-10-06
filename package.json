@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "collect": "node scripts/collect.mjs",
+    "discover": "node scripts/discover.mjs",
     "test": "node --test test/*.test.mjs",
     "serve": "python3 -m http.server 8000 --directory docs"
   },

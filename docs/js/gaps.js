@@ -1,0 +1,183 @@
+// Lacunas (sem DOM): a partir de buscas por tema no YouTube, mede se há
+// demanda (views altas em vídeos recentes), espaço para canais pequenos
+// (eles aparecem entre os mais vistos) e sinais de viralização (vídeos que
+// passaram muito do número de inscritos do canal, canais novos explodindo).
+// Usado pela coleta (scripts/discover.mjs) e pela aba Lacunas do site.
+
+import { median } from './metrics.js';
+import { normalize, classifyNiche } from './niche.js';
+import { suggestTier } from './insights.js';
+
+export const SHORTS_MAX = 180;
+export const NEW_CHANNEL_DAYS = 180;
+export const OUTLIER_RATIO = 3;
+const TOP_N = 20;
+
+// Temas iniciais: nichos que funcionam bem em canal dark. "local" = a mesma
+// busca no idioma do seu canal, para medir a lacuna de idioma (arbitragem).
+export const DEFAULT_QUERIES = [
+  { q: 'unsolved mysteries', lang: 'en', local: 'mistérios não resolvidos' },
+  { q: 'dark history', lang: 'en', local: 'história sombria' },
+  { q: 'abandoned places', lang: 'en', local: 'lugares abandonados' },
+  { q: 'ancient civilizations', lang: 'en', local: 'civilizações antigas' },
+  { q: 'stoicism', lang: 'en', local: 'estoicismo' },
+  { q: 'psychology facts', lang: 'en', local: 'fatos de psicologia' },
+  { q: 'true crime documentary', lang: 'en', local: 'caso real crime documentário' },
+  { q: 'retirement tips seniors', lang: 'en', local: 'dicas para aposentados' },
+  { q: 'food storage prepping', lang: 'en', local: 'estoque de comida emergência' },
+  { q: 'how the rich avoid taxes', lang: 'en', local: 'como os ricos pagam menos impostos' },
+  { q: 'por que o Brasil é assim', lang: 'pt' },
+  { q: 'curiosidades do Brasil antigo', lang: 'pt' },
+  { q: 'histórias bíblicas', lang: 'pt' },
+  { q: 'nostalgia anos 90', lang: 'pt' },
+  { q: 'saúde depois dos 60', lang: 'pt' },
+];
+
+export const DEFAULT_DISCOVERY = {
+  days: 14,
+  maxSubs: 100000,
+  minViews: 10000,
+  maxSearches: 40,
+  homeLang: 'pt',
+};
+
+export function discoveryConfig(doc = {}) {
+  const d = doc.discovery ?? {};
+  return {
+    ...DEFAULT_DISCOVERY,
+    ...Object.fromEntries(Object.entries(d).filter(([k, v]) => k !== 'queries' && v != null && v !== '')),
+    queries: Array.isArray(d.queries) && d.queries.length ? d.queries : DEFAULT_QUERIES,
+  };
+}
+
+export const themeKey = (q, lang) => `${lang || '?'}:${normalize(q).trim()}`;
+
+// "termo | idioma | termo no seu idioma" — um tema por linha.
+export function parseQueryLines(text, homeLang = 'pt') {
+  const seen = new Set();
+  const out = [];
+  for (const line of String(text).split('\n')) {
+    const [q, lang, local] = line.split('|').map((s) => s.trim());
+    if (!q) continue;
+    const l = (lang || homeLang).toLowerCase().slice(0, 5);
+    const key = themeKey(q, l);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(local && l !== homeLang ? { q, lang: l, local } : { q, lang: l });
+  }
+  return out;
+}
+
+export const formatQueryLines = (queries) =>
+  queries.map((t) => [t.q, t.lang, t.local].filter(Boolean).join(' | ')).join('\n');
+
+export const searchCost = (t) => (t.local ? 2 : 1);
+
+// Escolhe quais temas buscar hoje dentro do limite de buscas: primeiro os que
+// nunca rodaram, depois os mais antigos. Temas já buscados hoje ficam de fora.
+export function pickThemes(queries, previous = {}, maxSearches, today) {
+  const order = queries
+    .map((t, i) => ({ t, i, last: previous[themeKey(t.q, t.lang)]?.lastRun ?? '' }))
+    .filter((x) => x.last !== today)
+    .sort((a, b) => (a.last < b.last ? -1 : a.last > b.last ? 1 : a.i - b.i));
+  const out = [];
+  let budget = maxSearches;
+  for (const { t } of order) {
+    const cost = searchCost(t);
+    if (cost > budget) continue;
+    budget -= cost;
+    out.push(t);
+  }
+  return out;
+}
+
+const daysSince = (iso, now) => (iso ? Math.max(0, (now - Date.parse(iso)) / 86400000) : null);
+
+// v = { id, t, p: publicado (ISO), v: views, s: duração, ch, subs, chAt: criação do canal }
+export function analyzeVideo(v, cfg, now = Date.now()) {
+  const ageDays = daysSince(v.p, now);
+  const chAgeDays = daysSince(v.chAt, now);
+  const known = v.subs != null;
+  const ratio = known ? v.v / Math.max(v.subs, 100) : null;
+  const small = known && v.subs <= cfg.maxSubs;
+  return {
+    ...v,
+    ageDays,
+    chAgeDays,
+    ratio,
+    vpd: ageDays != null ? v.v / Math.max(ageDays, 0.5) : null,
+    short: v.s != null && v.s <= SHORTS_MAX,
+    small,
+    newChannel: chAgeDays != null && chAgeDays <= NEW_CHANNEL_DAYS,
+    outlier: small && ratio >= OUTLIER_RATIO && v.v >= cfg.minViews,
+  };
+}
+
+// Métricas de um tema a partir dos vídeos da busca (já com analyzeVideo).
+export function themeMetrics(videos) {
+  const top = videos.slice().sort((a, b) => b.v - a.v).slice(0, TOP_N);
+  const known = top.filter((v) => v.subs != null);
+  const outliers = videos.filter((v) => v.outlier);
+  const newChannels = new Set(outliers.filter((v) => v.newChannel).map((v) => v.ch));
+  const shorts = top.filter((v) => v.short).length;
+  return {
+    n: videos.length,
+    medianViews: top.length ? median(top.map((v) => v.v)) : 0,
+    smallShare: known.length ? known.filter((v) => v.small).length / known.length : 0,
+    outliers: new Set(outliers.map((v) => v.ch)).size,
+    newChannels: newChannels.size,
+    shortsShare: top.length ? shorts / top.length : null,
+    channels: new Set(top.map((v) => v.ch)).size,
+  };
+}
+
+// Lacuna de idioma: muita demanda no idioma de origem e pouca oferta no seu.
+export function languageGap(main, local, cfg) {
+  if (!main || !local) return null;
+  const ratio = local.medianViews > 0 ? main.medianViews / local.medianViews : Infinity;
+  const strong = main.medianViews >= cfg.minViews && (ratio >= 5 || local.n < 10);
+  const some = main.medianViews >= cfg.minViews && ratio >= 2;
+  return { ratio, level: strong ? 'forte' : some ? 'média' : null };
+}
+
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+export const GAP_MAX = { demanda: 30, pequenos: 25, virais: 20, novos: 15, cpm: 10 };
+const TIER_POINTS = { alto: 10, medio: 6, baixo: 2 };
+
+export function gapScore(m, tier = 'medio', langGap = null) {
+  const parts = {
+    demanda: clamp01((Math.log10(Math.max(m.medianViews, 1)) - 3) / 3) * GAP_MAX.demanda,
+    pequenos: clamp01(m.smallShare) * GAP_MAX.pequenos,
+    virais: clamp01(m.outliers / 5) * GAP_MAX.virais,
+    novos: clamp01(m.newChannels / 3) * GAP_MAX.novos,
+    cpm: TIER_POINTS[tier] ?? TIER_POINTS.medio,
+  };
+  const bonus = langGap?.level === 'forte' ? 10 : langGap?.level === 'média' ? 5 : 0;
+  const total = Object.values(parts).reduce((a, b) => a + b, 0) + bonus;
+  return { score: Math.round(Math.min(100, total)), parts, bonus };
+}
+
+export function gapVerdict(score) {
+  if (score >= 65) return { key: 'testar', label: 'Lacuna forte' };
+  if (score >= 45) return { key: 'promissor', label: 'Vale testar' };
+  return { key: 'observar', label: 'Concorrido ou fraco' };
+}
+
+// Nicho e faixa de CPM do tema, pelo termo buscado e títulos dos vídeos.
+export function themeNiche(q, videos) {
+  const { niches } = classifyNiche({ title: q, recent: videos.slice(0, 12).map((v) => ({ t: v.t })) });
+  const niche = niches[0] ?? null;
+  return { niche, tier: (niche && suggestTier(niche)) || suggestTier(q) || 'medio' };
+}
+
+export function themeThesis(t) {
+  const m = t.m;
+  const bits = [];
+  if (m.outliers) bits.push(`${m.outliers} canal(is) pequeno(s) com vídeo acima de ${OUTLIER_RATIO}× os inscritos`);
+  if (m.newChannels) bits.push(`${m.newChannels} deles com menos de 6 meses`);
+  bits.push(`${Math.round(m.smallShare * 100)}% dos mais vistos são de canais pequenos`);
+  if (t.langGap?.level) {
+    bits.push(`lacuna de idioma ${t.langGap.level}: em ${String(t.lang).toUpperCase()} a mediana é ${Number.isFinite(t.langGap.ratio) ? `${t.langGap.ratio.toFixed(1).replace('.', ',')}×` : 'muito'} maior que em "${t.local}"`);
+  }
+  return bits.join(' · ');
+}

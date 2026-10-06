@@ -23,6 +23,7 @@ Custo zero: o site roda no **GitHub Pages**, a coleta diária no **GitHub Action
 - **Favoritos** — o mesmo feed só com os canais marcados com ♡.
 - **Painel** — indicadores gerais, cards de *pequenos crescendo rápido*, ranking de nichos em alta e a tabela de todos os canais com busca, filtro por nicho/tamanho e ordenação por qualquer coluna (crescimento %/mês, Δ inscritos 7/30 dias, views/dia, views/vídeo, último upload, idade…). Marque canais na tabela para compará-los.
 - **Nichos** — por tag: crescimento mediano mensal, novos inscritos, views/dia, views por vídeo, % de canais ativos e quantos pequenos estão em alta; mais um gráfico de **índice de crescimento por nicho** (base 100).
+- **Lacunas** — todo dia a coleta busca no YouTube uma lista de temas (editável na própria aba) e dá a cada um um **score de lacuna (0–100)**: demanda (mediana de views dos 20 mais vistos nos últimos dias), espaço para canais pequenos no topo, canais pequenos com vídeo acima de 3× os inscritos, canais novos explodindo e CPM do nicho, com bônus para **lacuna de idioma** (o tema rende em inglês, por exemplo, e quase não existe em português). Mostra o ranking, o histórico do score, os vídeos de referência e um feed de *virais de canais pequenos*, com botão para mandar o canal para o radar. Cada tema custa 100 unidades de cota por busca (200 com a versão no seu idioma); o limite diário de buscas é ajustável e, se passar dele, os temas entram em rodízio.
 - **Comparar** — até 8 canais no mesmo gráfico (inscritos, views ou vídeos), em valor absoluto, índice base 100 (para comparar canais de tamanhos diferentes) ou ganho desde o início, e uma tabela lado a lado.
 - **Canal** — tese de oportunidade, score detalhado por critério, monetização estimada, formato e cadência, últimos vídeos, gráficos de inscritos, views, novos inscritos/dia e novas views/dia, histórico completo, tags e notas.
 - **Gerenciar** — adicionar canais (`@handle`, URL do canal, URL de um vídeo ou ID `UC…`), editar tags e notas, remover, definir a **faixa de CPM de cada nicho**, disparar a coleta e ajustar o critério de “pequeno em alta”.
@@ -120,6 +121,8 @@ Sem dependências nem etapa de build: Node 20+ para a coleta, HTML/CSS/JS puro n
 | `scripts/collect.mjs` | Coleta pela YouTube Data API |
 | `docs/js/metrics.js` | Cálculos de crescimento, nichos e “pequenos em alta” |
 | `docs/js/insights.js` | CPM, ganhos estimados, score de oportunidade e tese |
+| `scripts/discover.mjs` | Busca diária dos temas da aba Lacunas (grava `docs/data/gaps.json`) |
+| `docs/js/gaps.js` | Score de lacuna, lacuna de idioma e rodízio de temas |
 | `docs/js/explore.js` | Feed do Início/Favoritos |
 | `docs/js/language.js` | Detecção do idioma do canal |
 | `docs/js/niche.js` | Detecção automática de nicho (taxonomia e palavras-chave) |
