@@ -443,113 +443,137 @@
     "homeLang": "en",
     "queries": [
       {
+        "group": "Cotidiano explicado",
         "q": "the real reason why",
         "lang": "en",
         "local": "nicht aus dem Grund, den du denkst",
         "localLang": "de"
       },
       {
+        "group": "Cotidiano explicado",
         "q": "la vraie raison",
         "lang": "fr"
       },
       {
+        "group": "Cotidiano explicado",
         "q": "hidden features everyday objects",
         "lang": "en"
       },
       {
+        "group": "Cotidiano explicado",
         "q": "what really happens to your body",
         "lang": "en"
       },
       {
+        "group": "Mistério & história",
         "q": "unsolved mysteries",
         "lang": "en",
         "local": "mystères non résolus",
         "localLang": "fr"
       },
       {
+        "group": "Mistério & história",
         "q": "dark history",
         "lang": "en",
         "local": "dunkle Geschichte",
         "localLang": "de"
       },
       {
+        "group": "Mistério & história",
         "q": "abandoned places",
         "lang": "en",
         "local": "lieux abandonnés",
         "localLang": "fr"
       },
       {
+        "group": "Mistério & história",
         "q": "ancient civilizations",
         "lang": "en",
         "local": "civilizaciones antiguas",
         "localLang": "es"
       },
       {
-        "q": "stoicism",
-        "lang": "en",
-        "local": "Stoizismus",
-        "localLang": "de"
-      },
-      {
-        "q": "psychology facts",
-        "lang": "en",
-        "local": "datos de psicología",
-        "localLang": "es"
-      },
-      {
+        "group": "Mistério & história",
         "q": "true crime documentary",
         "lang": "en",
         "local": "true crime doku",
         "localLang": "de"
       },
       {
+        "group": "Mistério & história",
+        "q": "histoire sombre",
+        "lang": "fr"
+      },
+      {
+        "group": "Psicologia",
+        "q": "stoicism",
+        "lang": "en",
+        "local": "Stoizismus",
+        "localLang": "de"
+      },
+      {
+        "group": "Psicologia",
+        "q": "psychology facts",
+        "lang": "en",
+        "local": "datos de psicología",
+        "localLang": "es"
+      },
+      {
+        "group": "60+ & prepping",
         "q": "retirement tips seniors",
         "lang": "en",
         "local": "Rente Tipps",
         "localLang": "de"
       },
       {
+        "group": "60+ & prepping",
         "q": "food storage prepping",
         "lang": "en",
         "local": "Notvorrat Krise",
         "localLang": "de"
       },
       {
+        "group": "60+ & prepping",
         "q": "how the rich avoid taxes",
         "lang": "en"
       },
       {
+        "group": "Por que [país] é assim",
         "q": "why is america like this",
         "lang": "en"
       },
       {
+        "group": "Por que [país] é assim",
         "q": "warum ist Deutschland so",
         "lang": "de"
       },
       {
-        "q": "histoire sombre",
-        "lang": "fr"
-      },
-      {
+        "group": "Idiomas",
         "q": "German stories for beginners",
         "lang": "de"
       },
       {
+        "group": "Idiomas",
         "q": "Spanish stories for beginners",
         "lang": "es"
       },
       {
+        "group": "Idiomas",
         "q": "French stories for beginners",
         "lang": "fr"
       },
       {
+        "group": "Idiomas",
         "q": "learn English with stories",
         "lang": "en"
       },
       {
+        "group": "Idiomas",
         "q": "comprehensible input German",
         "lang": "de"
       }
-    ]
+    ],
+    "focus": "",
+    "focusShare": 0.8
   }
 }

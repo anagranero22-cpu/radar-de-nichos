@@ -105,3 +105,28 @@ test('languageGap: demanda alta lá fora e pouca oferta no seu idioma', () => {
   const bonus = gapScore({ medianViews: 1000, smallShare: 0, outliers: 0, newChannels: 0 }, 'medio', { level: 'forte' });
   assert.equal(bonus.score - base.score, 10);
 });
+
+test('grupos: "# Nome" agrupa os temas e o formato volta igual', async () => {
+  const { groupOf } = await import('../docs/js/gaps.js');
+  const text = 'solto | en\n\n# Idiomas\nGerman stories | de\nlearn English with stories | en\n\n# Cotidiano\nthe real reason why | en | nicht aus dem Grund | de';
+  const q = parseQueryLines(text, 'en');
+  assert.deepEqual(q.map(groupOf), ['Sem grupo', 'Idiomas', 'Idiomas', 'Cotidiano']);
+  assert.equal(formatQueryLines(q), text);
+});
+
+test('modo foco: o grupo em foco fica com a maior parte das buscas e a sobra passa adiante', () => {
+  const qs = [
+    ...Array.from({ length: 10 }, (_, i) => ({ group: 'A', q: `a${i}`, lang: 'en' })),
+    ...Array.from({ length: 10 }, (_, i) => ({ group: 'B', q: `b${i}`, lang: 'en' })),
+  ];
+  const picked = pickThemes(qs, {}, 10, '2026-10-06', { group: 'A', share: 0.8 });
+  assert.equal(picked.length, 10);
+  assert.equal(picked.filter((t) => t.group === 'A').length, 8);
+  // Foco com poucos temas: a sobra vai para os outros grupos.
+  const few = [{ group: 'A', q: 'x', lang: 'en' }, ...qs.filter((t) => t.group === 'B')];
+  const p2 = pickThemes(few, {}, 10, '2026-10-06', { group: 'A', share: 0.8 });
+  assert.equal(p2.length, 10);
+  assert.equal(p2.filter((t) => t.group === 'B').length, 9);
+  // Sem foco, comportamento antigo.
+  assert.equal(pickThemes(qs, {}, 10, '2026-10-06').length, 10);
+});

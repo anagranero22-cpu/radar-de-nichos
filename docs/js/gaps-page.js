@@ -17,9 +17,12 @@ import {
   DEFAULT_DISCOVERY,
   OUTLIER_RATIO,
   SHORTS_MAX,
+  groupOf,
+  groupsOf,
+  pickThemes,
 } from './gaps.js';
 
-const ui = { lang: '', sort: 'score', langGapOnly: false, viralFormat: 'all', viralLimit: 18 };
+const ui = { group: undefined, lang: '', sort: 'score', langGapOnly: false, viralFormat: 'all', viralLimit: 18 };
 
 const SORTS = {
   score: ['Score de lacuna', (t) => t.score],
@@ -116,6 +119,7 @@ function themeRow(t, ctx) {
       <div class="gap-pills">${verdictChip(t.score)} ${lg}
         ${t.niche ? `<span class="tag">${esc(t.niche)}</span>` : ''}
         <span class="tag" title="Faixa de CPM do nicho">CPM ${esc(tier)}</span>
+        ${t.rank ? `<span class="tag gap-rank" title="Posição pelo score dentro do grupo">#${t.rank.n} de ${t.rank.of} em ${esc(t.group)}</span>` : ''}
       </div>
     </div>
     <div class="gap-body">
@@ -195,7 +199,7 @@ function editor(ctx) {
   const cfg = ctx.cfg;
   const custom = Boolean(ctx.doc.discovery?.queries?.length);
   return `<div class="card-head"><div><h2>Temas monitorados</h2>
-      <p class="muted small">Um tema por linha: <code>termo | idioma | mesmo termo em outro idioma | outro idioma</code> (ex.: <code>dark history | en | dunkle Geschichte | de</code>). Os dois últimos campos são opcionais e medem a lacuna de idioma: o tema rende num mercado e quase não existe no outro.${custom ? '' : ' Estes são os temas sugeridos; edite à vontade.'}</p></div></div>
+      <p class="muted small">Um tema por linha: <code>termo | idioma | mesmo termo em outro idioma | outro idioma</code> (ex.: <code>dark history | en | dunkle Geschichte | de</code>). Os dois últimos campos são opcionais e medem a lacuna de idioma: o tema rende num mercado e quase não existe no outro. Uma linha <code># Nome do nicho</code> abre um grupo; os temas abaixo dela pertencem a ele.${custom ? '' : ' Estes são os temas sugeridos; edite à vontade.'}</p></div></div>
     <form id="gapForm">
       <label class="field">Temas<textarea name="queries" rows="12" spellcheck="false">${esc(formatQueryLines(cfg.queries))}</textarea></label>
       <p class="small" id="gapCost"></p>
@@ -205,6 +209,8 @@ function editor(ctx) {
         <label class="field">Mínimo de views do vídeo<input name="minViews" type="number" min="0" step="1000" value="${cfg.minViews}"></label>
         <label class="field">Buscas por dia (100 unidades cada)<input name="maxSearches" type="number" min="1" max="90" value="${cfg.maxSearches}"></label>
         <label class="field">Outro idioma padrão (comparação)<input name="homeLang" value="${esc(cfg.homeLang)}" maxlength="5"></label>
+        <label class="field">Nicho em foco<select name="focus">${focusOptions(cfg.queries, cfg.focus)}</select></label>
+        <label class="field">Parte das buscas para o foco (%)<input name="focusShare" type="number" min="50" max="100" step="5" value="${Math.round((cfg.focusShare ?? 0.8) * 100)}"></label>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="primary" type="submit"${ctx.editable ? '' : ' disabled'}>Salvar temas</button>
@@ -214,14 +220,41 @@ function editor(ctx) {
     </form>`;
 }
 
+function focusOptions(queries, selected) {
+  const groups = groupsOf(queries);
+  if (selected && !groups.includes(selected)) groups.push(selected);
+  return `<option value="">Nenhum (todos iguais)</option>${groups
+    .map((g) => `<option value="${esc(g)}"${g === selected ? ' selected' : ''}>${esc(g)}</option>`)
+    .join('')}`;
+}
+
 function updateCost(form, maxSearches) {
   const qs = parseQueryLines(form.queries.value, form.homeLang.value.trim() || 'en');
   const max = Number(form.maxSearches.value) || maxSearches;
   const cost = qs.reduce((a, t) => a + searchCost(t), 0);
+  // Mantém a lista de nichos do seletor em dia com os cabeçalhos "# Nome" digitados.
+  const sel = form.focus;
+  const current = sel.value;
+  sel.innerHTML = focusOptions(qs, current);
+  const focus = sel.value;
+  const share = Math.min(100, Math.max(50, Number(form.focusShare.value) || 80)) / 100;
   const el = document.getElementById('gapCost');
+  let focusLine = '';
+  if (focus) {
+    const fq = qs.filter((t) => groupOf(t) === focus);
+    const fCost = fq.reduce((a, t) => a + searchCost(t), 0);
+    const fBudget = Math.round(max * share);
+    const picked = pickThemes(qs, {}, max, 'preview', { group: focus, share });
+    const used = picked.filter((t) => groupOf(t) === focus).reduce((a, t) => a + searchCost(t), 0);
+    focusLine = `<br><strong>Foco em ${esc(focus)}:</strong> ${fq.length} tema(s), ${fCost} busca(s) de ${fBudget} reservadas por dia.${
+      fCost < fBudget * 0.6
+        ? ` Sobram ${fBudget - fCost} buscas do foco, que vão para os outros nichos: adicione subtemas em <code># ${esc(focus)}</code> para aprofundar.`
+        : ''
+    }${used < fCost ? ' Os temas do foco entram em rodízio.' : ''}`;
+  }
   el.innerHTML = `${qs.length} tema(s), ${cost} busca(s) ≈ ${fmtInt(cost * 100)} unidades de cota por dia (limite gratuito: 10.000, a coleta dos canais usa pouco).${
     cost > max ? ` <strong>Passa do limite de ${max} buscas/dia:</strong> os temas entram em rodízio, cada um é atualizado a cada ${Math.ceil(cost / max)} dias.` : ''
-  }`;
+  }${focusLine}`;
 }
 
 export function renderGaps(ctx) {
@@ -229,10 +262,32 @@ export function renderGaps(ctx) {
   const cfg = discoveryConfig(ctx.doc);
   const gaps = ctx.gaps ?? {};
   const configured = new Map(cfg.queries.map((t) => [themeKey(t.q, t.lang), t]));
-  const all = Object.entries(gaps.themes ?? {})
+  const everything = Object.entries(gaps.themes ?? {})
     .filter(([key]) => configured.has(key))
-    .map(([key, t]) => ({ ...t, key }));
-  const pending = cfg.queries.filter((t) => !gaps.themes?.[themeKey(t.q, t.lang)]);
+    .map(([key, t]) => ({ ...t, key, group: groupOf(configured.get(key)) }));
+  const groups = groupsOf(cfg.queries);
+  if (ui.group === undefined) ui.group = cfg.focus && groups.includes(cfg.focus) ? cfg.focus : '';
+  if (ui.group && !groups.includes(ui.group)) ui.group = '';
+  // Posição de cada tema pelo score dentro do próprio grupo (a régua só compara dentro do nicho).
+  for (const g of groups) {
+    const list = everything.filter((t) => t.group === g).sort((a, b) => b.score - a.score);
+    list.forEach((t, i) => (t.rank = groups.length > 1 && list.length > 1 ? { n: i + 1, of: list.length } : null));
+  }
+  const all = ui.group ? everything.filter((t) => t.group === ui.group) : everything;
+  const pending = cfg.queries.filter((t) => !gaps.themes?.[themeKey(t.q, t.lang)] && (!ui.group || groupOf(t) === ui.group));
+  const groupBar = groups.length > 1
+    ? `<div class="gap-groups" role="group" aria-label="Nicho">
+        ${[['', 'Todos os nichos', everything.length], ...groups.map((g) => [g, g, everything.filter((t) => t.group === g).length])]
+          .map(([g, label, n]) => `<button type="button" class="fchip" data-group="${esc(g)}" aria-pressed="${ui.group === g}">${g && g === cfg.focus ? '★ ' : ''}${esc(label)} <em>${n}</em></button>`)
+          .join('')}
+      </div>`
+    : '';
+  const focusBar = cfg.focus
+    ? `<div class="notice gap-focus"><span><strong>Modo foco: ${esc(cfg.focus)}</strong> recebe ${Math.round((cfg.focusShare ?? 0.8) * 100)}% das ${cfg.maxSearches} buscas diárias; os outros nichos dividem o resto só para continuar vigiando.</span>
+        ${ctx.editable ? '<button type="button" id="gapUnfocus">Sair do foco</button>' : ''}</div>`
+    : ui.group && ctx.editable
+      ? `<div class="notice gap-focus"><span>Vendo só <strong>${esc(ui.group)}</strong>. Quer analisar este nicho a fundo?</span><button type="button" id="gapFocus">Focar neste nicho</button></div>`
+      : '';
   const c = { ...ctx, cfg };
 
   const langs = [...new Set(all.map((t) => t.lang))].sort();
@@ -261,12 +316,14 @@ export function renderGaps(ctx) {
           }</div>`
         : ''
     }
+    ${groupBar}
+    ${focusBar}
     ${pending.length && all.length ? `<div class="notice">${pending.length} tema(s) ainda não buscado(s): ${pending.slice(0, 6).map((t) => `<code>${esc(t.q)}</code>`).join(', ')}${pending.length > 6 ? '…' : ''}. Entram na próxima busca.</div>` : ''}
 
     ${
       all.length
         ? `<div class="kpis">
-            ${kpi('Temas analisados', fmtInt(all.length), `${fmtInt(cfg.queries.length)} configurados`)}
+            ${kpi('Temas analisados', fmtInt(all.length), ui.group ? `no nicho ${esc(ui.group)}` : `${fmtInt(cfg.queries.length)} configurados`)}
             ${kpi('Lacunas fortes', fmtInt(strong), 'score a partir de 65')}
             ${kpi('Canais pequenos viralizando', fmtInt(viralCh.size), `vídeo ≥ ${OUTLIER_RATIO}× os inscritos`)}
             ${kpi('Canais novos explodindo', fmtInt(newCh.size), 'menos de 6 meses de canal')}
@@ -274,7 +331,7 @@ export function renderGaps(ctx) {
           ${best ? spotlight(best, c) : ''}
 
           <section class="card">
-            <div class="card-head"><h2>Ranking de temas</h2>
+            <div class="card-head"><h2>Ranking de temas${ui.group ? ` · ${esc(ui.group)}` : ''}</h2>
               <div class="toolbar" style="margin:0">
                 <select id="gSort" aria-label="Ordenar">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${ui.sort === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
                 <select id="gLang" aria-label="Idioma"><option value="">Todos os idiomas</option>${langs.map((l) => `<option value="${esc(l)}"${ui.lang === l ? ' selected' : ''}>${esc(languageName(l) ?? l)}</option>`).join('')}</select>
@@ -304,6 +361,15 @@ export function renderGaps(ctx) {
   bindTooltips(app);
   const rerender = () => renderGaps(ctx);
 
+  app.querySelectorAll('[data-group]').forEach((b) => b.addEventListener('click', () => ((ui.group = b.dataset.group), (ui.viralLimit = 18), rerender())));
+  const setFocus = async (group) => {
+    const ok = await ctx.saveCatalog(group ? `Lacunas: foco em ${group}` : 'Lacunas: sai do modo foco', (doc) => {
+      doc.discovery = { ...(doc.discovery ?? {}), queries: doc.discovery?.queries?.length ? doc.discovery.queries : cfg.queries, focus: group };
+    });
+    if (ok) ctx.toast(group ? `Foco em ${group}. Vale a partir da próxima busca.` : 'Modo foco desligado.');
+  };
+  app.querySelector('#gapFocus')?.addEventListener('click', () => setFocus(ui.group));
+  app.querySelector('#gapUnfocus')?.addEventListener('click', () => setFocus(''));
   app.querySelector('#gSort')?.addEventListener('change', (e) => ((ui.sort = e.target.value), rerender()));
   app.querySelector('#gLang')?.addEventListener('change', (e) => ((ui.lang = e.target.value), rerender()));
   app.querySelector('#gLangGap')?.addEventListener('change', (e) => ((ui.langGapOnly = e.target.checked), rerender()));
@@ -343,6 +409,7 @@ export function renderGaps(ctx) {
   app.querySelector('#gapDefaults').addEventListener('click', () => {
     form.queries.value = formatQueryLines(DEFAULT_QUERIES);
     for (const k of ['days', 'maxSubs', 'minViews', 'maxSearches', 'homeLang']) form[k].value = DEFAULT_DISCOVERY[k];
+    form.focusShare.value = 80;
     updateCost(form, DEFAULT_DISCOVERY.maxSearches);
   });
   form.addEventListener('submit', async (e) => {
@@ -362,6 +429,8 @@ export function renderGaps(ctx) {
         minViews: num('minViews', 0, 1e9),
         maxSearches: num('maxSearches', 1, 90),
         homeLang,
+        focus: queries.some((t) => groupOf(t) === form.focus.value) ? form.focus.value : '',
+        focusShare: Math.min(100, Math.max(50, Number(form.focusShare.value) || 80)) / 100,
       };
     });
     if (ok) ctx.toast('Temas salvos. Os novos são buscados em 1–3 minutos.');

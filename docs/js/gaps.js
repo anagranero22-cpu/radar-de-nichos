@@ -17,23 +17,23 @@ const TOP_N = 20;
 // idioma ("localLang"), para medir a lacuna de idioma: o tema rende num
 // mercado e quase não existe no outro (arbitragem entre idiomas).
 export const DEFAULT_QUERIES = [
-  { q: 'the real reason why', lang: 'en', local: 'nicht aus dem Grund, den du denkst', localLang: 'de' },
-  { q: 'la vraie raison', lang: 'fr' },
-  { q: 'hidden features everyday objects', lang: 'en' },
-  { q: 'what really happens to your body', lang: 'en' },
-  { q: 'unsolved mysteries', lang: 'en', local: 'mystères non résolus', localLang: 'fr' },
-  { q: 'dark history', lang: 'en', local: 'dunkle Geschichte', localLang: 'de' },
-  { q: 'abandoned places', lang: 'en', local: 'lieux abandonnés', localLang: 'fr' },
-  { q: 'ancient civilizations', lang: 'en', local: 'civilizaciones antiguas', localLang: 'es' },
-  { q: 'stoicism', lang: 'en', local: 'Stoizismus', localLang: 'de' },
-  { q: 'psychology facts', lang: 'en', local: 'datos de psicología', localLang: 'es' },
-  { q: 'true crime documentary', lang: 'en', local: 'true crime doku', localLang: 'de' },
-  { q: 'retirement tips seniors', lang: 'en', local: 'Rente Tipps', localLang: 'de' },
-  { q: 'food storage prepping', lang: 'en', local: 'Notvorrat Krise', localLang: 'de' },
-  { q: 'how the rich avoid taxes', lang: 'en' },
-  { q: 'why is america like this', lang: 'en' },
-  { q: 'warum ist Deutschland so', lang: 'de' },
-  { q: 'histoire sombre', lang: 'fr' },
+  { group: 'Cotidiano explicado', q: 'the real reason why', lang: 'en', local: 'nicht aus dem Grund, den du denkst', localLang: 'de' },
+  { group: 'Cotidiano explicado', q: 'la vraie raison', lang: 'fr' },
+  { group: 'Cotidiano explicado', q: 'hidden features everyday objects', lang: 'en' },
+  { group: 'Cotidiano explicado', q: 'what really happens to your body', lang: 'en' },
+  { group: 'Mistério & história', q: 'unsolved mysteries', lang: 'en', local: 'mystères non résolus', localLang: 'fr' },
+  { group: 'Mistério & história', q: 'dark history', lang: 'en', local: 'dunkle Geschichte', localLang: 'de' },
+  { group: 'Mistério & história', q: 'abandoned places', lang: 'en', local: 'lieux abandonnés', localLang: 'fr' },
+  { group: 'Mistério & história', q: 'ancient civilizations', lang: 'en', local: 'civilizaciones antiguas', localLang: 'es' },
+  { group: 'Psicologia', q: 'stoicism', lang: 'en', local: 'Stoizismus', localLang: 'de' },
+  { group: 'Psicologia', q: 'psychology facts', lang: 'en', local: 'datos de psicología', localLang: 'es' },
+  { group: 'Mistério & história', q: 'true crime documentary', lang: 'en', local: 'true crime doku', localLang: 'de' },
+  { group: '60+ & prepping', q: 'retirement tips seniors', lang: 'en', local: 'Rente Tipps', localLang: 'de' },
+  { group: '60+ & prepping', q: 'food storage prepping', lang: 'en', local: 'Notvorrat Krise', localLang: 'de' },
+  { group: '60+ & prepping', q: 'how the rich avoid taxes', lang: 'en' },
+  { group: 'Por que [país] é assim', q: 'why is america like this', lang: 'en' },
+  { group: 'Por que [país] é assim', q: 'warum ist Deutschland so', lang: 'de' },
+  { group: 'Mistério & história', q: 'histoire sombre', lang: 'fr' },
 ];
 
 export const DEFAULT_DISCOVERY = {
@@ -42,7 +42,13 @@ export const DEFAULT_DISCOVERY = {
   minViews: 10000,
   maxSearches: 40,
   homeLang: 'en',
+  focus: '',
+  focusShare: 0.8,
 };
+
+export const NO_GROUP = 'Sem grupo';
+export const groupOf = (t) => t.group || NO_GROUP;
+export const groupsOf = (queries) => [...new Set(queries.map(groupOf))];
 
 export function discoveryConfig(doc = {}) {
   const d = doc.discovery ?? {};
@@ -57,10 +63,17 @@ export const themeKey = (q, lang) => `${lang || '?'}:${normalize(q).trim()}`;
 
 // "termo | idioma | termo em outro idioma | outro idioma" — um tema por linha.
 // Sem o quarto campo, o outro idioma é o idioma alvo padrão (homeLang).
+// Uma linha "# Nome" abre um grupo (nicho): os temas abaixo dela pertencem a ele.
 export function parseQueryLines(text, homeLang = 'en') {
   const seen = new Set();
   const out = [];
+  let group = '';
   for (const line of String(text).split('\n')) {
+    const head = line.match(/^\s*#+\s*(.*)$/);
+    if (head) {
+      group = head[1].trim();
+      continue;
+    }
     const [q, lang, local, localLang] = line.split('|').map((s) => s.trim());
     if (!q) continue;
     const l = (lang || homeLang).toLowerCase().slice(0, 5);
@@ -68,19 +81,45 @@ export function parseQueryLines(text, homeLang = 'en') {
     if (seen.has(key)) continue;
     seen.add(key);
     const ll = (localLang || homeLang).toLowerCase().slice(0, 5);
-    out.push(local && ll !== l ? { q, lang: l, local, localLang: ll } : { q, lang: l });
+    out.push({ ...(group ? { group } : {}), q, lang: l, ...(local && ll !== l ? { local, localLang: ll } : {}) });
   }
   return out;
 }
 
-export const formatQueryLines = (queries) =>
-  queries.map((t) => [t.q, t.lang, t.local, t.local ? t.localLang : null].filter(Boolean).join(' | ')).join('\n');
+const queryLine = (t) => [t.q, t.lang, t.local, t.local ? t.localLang : null].filter(Boolean).join(' | ');
+
+// Agrupa por nicho na ordem em que os grupos aparecem; temas sem grupo vêm primeiro, sem cabeçalho.
+export function formatQueryLines(queries) {
+  const groups = new Map();
+  for (const t of queries) {
+    const g = t.group || '';
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(t);
+  }
+  const blocks = [];
+  if (groups.has('')) blocks.push(groups.get('').map(queryLine).join('\n'));
+  for (const [g, list] of groups) if (g) blocks.push([`# ${g}`, ...list.map(queryLine)].join('\n'));
+  return blocks.join('\n\n');
+}
 
 export const searchCost = (t) => (t.local ? 2 : 1);
 
 // Escolhe quais temas buscar hoje dentro do limite de buscas: primeiro os que
 // nunca rodaram, depois os mais antigos. Temas já buscados hoje ficam de fora.
-export function pickThemes(queries, previous = {}, maxSearches, today) {
+// Modo foco: o grupo em foco recebe `share` das buscas; o que sobrar de um lado
+// passa para o outro.
+export function pickThemes(queries, previous = {}, maxSearches, today, focus = null) {
+  if (!focus?.group) return pickPool(queries, previous, maxSearches, today).picked;
+  const inFocus = queries.filter((t) => groupOf(t) === focus.group);
+  const others = queries.filter((t) => groupOf(t) !== focus.group);
+  const focusBudget = Math.round(maxSearches * (focus.share ?? 0.8));
+  const a = pickPool(inFocus, previous, focusBudget, today);
+  const b = pickPool(others, previous, maxSearches - focusBudget + a.left, today);
+  const c = b.left ? pickPool(inFocus.filter((t) => !a.picked.includes(t)), previous, b.left, today) : { picked: [] };
+  return [...a.picked, ...c.picked, ...b.picked];
+}
+
+function pickPool(queries, previous, maxSearches, today) {
   const order = queries
     .map((t, i) => ({ t, i, last: previous[themeKey(t.q, t.lang)]?.lastRun ?? '' }))
     .filter((x) => x.last !== today)
@@ -93,7 +132,7 @@ export function pickThemes(queries, previous = {}, maxSearches, today) {
     budget -= cost;
     out.push(t);
   }
-  return out;
+  return { picked: out, left: budget };
 }
 
 const daysSince = (iso, now) => (iso ? Math.max(0, (now - Date.parse(iso)) / 86400000) : null);

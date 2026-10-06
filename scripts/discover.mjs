@@ -113,8 +113,9 @@ async function main() {
   gaps.errors = {};
   const cfg = discoveryConfig(catalog);
   const today = new Date().toISOString().slice(0, 10);
-  const todo = pickThemes(cfg.queries, gaps.themes, cfg.maxSearches, today);
-  console.log(`Lacunas: ${todo.length} de ${cfg.queries.length} tema(s) para buscar hoje.`);
+  const focus = cfg.focus ? { group: cfg.focus, share: Number(cfg.focusShare) || 0.8 } : null;
+  const todo = pickThemes(cfg.queries, gaps.themes, cfg.maxSearches, today, focus);
+  console.log(`Lacunas: ${todo.length} de ${cfg.queries.length} tema(s) para buscar hoje${focus ? ` (foco: ${focus.group})` : ''}.`);
 
   const channelCache = new Map();
   let done = 0;
