@@ -395,22 +395,6 @@
       "addedAt": "2026-10-06"
     },
     {
-      "ref": "UCqKlYgMnpdF98IeeiO1XemQ",
-      "tags": [
-        "idiomas"
-      ],
-      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: German through stories.",
-      "addedAt": "2026-10-06"
-    },
-    {
-      "ref": "UChyx8ibmFMTTe3aS_l_eaKA",
-      "tags": [
-        "idiomas"
-      ],
-      "notes": "[Análise Claude, 06/10] Referência para canal de idiomas com avatar: Comprehensible German.",
-      "addedAt": "2026-10-06"
-    },
-    {
       "ref": "@DreamingSpanish",
       "tags": [
         "idiomas"
@@ -448,16 +432,6 @@
         "lang": "en",
         "local": "nicht aus dem Grund, den du denkst",
         "localLang": "de"
-      },
-      {
-        "group": "Cotidiano explicado",
-        "q": "la vraie raison",
-        "lang": "fr"
-      },
-      {
-        "group": "Cotidiano explicado",
-        "q": "hidden features everyday objects",
-        "lang": "en"
       },
       {
         "group": "Cotidiano explicado",
@@ -520,22 +494,10 @@
       },
       {
         "group": "60+ & prepping",
-        "q": "retirement tips seniors",
-        "lang": "en",
-        "local": "Rente Tipps",
-        "localLang": "de"
-      },
-      {
-        "group": "60+ & prepping",
         "q": "food storage prepping",
         "lang": "en",
         "local": "Notvorrat Krise",
         "localLang": "de"
-      },
-      {
-        "group": "60+ & prepping",
-        "q": "how the rich avoid taxes",
-        "lang": "en"
       },
       {
         "group": "Por que [país] é assim",
@@ -554,23 +516,8 @@
       },
       {
         "group": "Idiomas",
-        "q": "Spanish stories for beginners",
-        "lang": "es"
-      },
-      {
-        "group": "Idiomas",
-        "q": "French stories for beginners",
-        "lang": "fr"
-      },
-      {
-        "group": "Idiomas",
         "q": "learn English with stories",
         "lang": "en"
-      },
-      {
-        "group": "Idiomas",
-        "q": "comprehensible input German",
-        "lang": "de"
       }
     ],
     "focus": "",
