@@ -385,6 +385,117 @@
       ],
       "notes": "[Análise Claude, 06/10] Casas térreas em estrutura de aço no estilo rancho americano, do terreno à casa pronta: custo de obra, projeto e planejamento. Ainda sem números: a coleta traz os dados.",
       "addedAt": "2026-10-06"
+    },
+    {
+      "ref": "https://www.youtube.com/@AlltagZerlegt",
+      "tags": [
+        "engenharia do cotidiano"
+      ],
+      "notes": "[Análise Claude, 06/10] Desmonta objetos do dia a dia e explica por que são feitos assim (pneus, botões, tampas de bueiro). Referência para o tema \"por que as coisas são assim\".",
+      "addedAt": "2026-10-06"
     }
-  ]
+  ],
+  "discovery": {
+    "days": 14,
+    "maxSubs": 100000,
+    "minViews": 10000,
+    "maxSearches": 40,
+    "homeLang": "pt",
+    "queries": [
+      {
+        "q": "unsolved mysteries",
+        "lang": "en",
+        "local": "mistérios não resolvidos"
+      },
+      {
+        "q": "dark history",
+        "lang": "en",
+        "local": "história sombria"
+      },
+      {
+        "q": "abandoned places",
+        "lang": "en",
+        "local": "lugares abandonados"
+      },
+      {
+        "q": "ancient civilizations",
+        "lang": "en",
+        "local": "civilizações antigas"
+      },
+      {
+        "q": "stoicism",
+        "lang": "en",
+        "local": "estoicismo"
+      },
+      {
+        "q": "psychology facts",
+        "lang": "en",
+        "local": "fatos de psicologia"
+      },
+      {
+        "q": "true crime documentary",
+        "lang": "en",
+        "local": "caso real crime documentário"
+      },
+      {
+        "q": "retirement tips seniors",
+        "lang": "en",
+        "local": "dicas para aposentados"
+      },
+      {
+        "q": "food storage prepping",
+        "lang": "en",
+        "local": "estoque de comida emergência"
+      },
+      {
+        "q": "how the rich avoid taxes",
+        "lang": "en",
+        "local": "como os ricos pagam menos impostos"
+      },
+      {
+        "q": "por que o Brasil é assim",
+        "lang": "pt"
+      },
+      {
+        "q": "curiosidades do Brasil antigo",
+        "lang": "pt"
+      },
+      {
+        "q": "histórias bíblicas",
+        "lang": "pt"
+      },
+      {
+        "q": "nostalgia anos 90",
+        "lang": "pt"
+      },
+      {
+        "q": "saúde depois dos 60",
+        "lang": "pt"
+      },
+      {
+        "q": "why things are designed this way",
+        "lang": "en",
+        "local": "por que as coisas são feitas assim"
+      },
+      {
+        "q": "everyday objects explained",
+        "lang": "en",
+        "local": "objetos do dia a dia explicados"
+      },
+      {
+        "q": "hidden features everyday objects",
+        "lang": "en",
+        "local": "funções escondidas em objetos"
+      },
+      {
+        "q": "warum ist das so gebaut",
+        "lang": "de"
+      },
+      {
+        "q": "why is it made that way engineering",
+        "lang": "en",
+        "local": "por que é feito desse jeito"
+      }
+    ]
+  }
 }
