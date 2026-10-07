@@ -374,6 +374,16 @@
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"housing market crash 2026\": \"12 MORE Canadian Towns Where Brand-New Homes Are Sitting EMPTY (2026)\" fez 22 mil views com 3 mil inscritos. Canal de 110 dias.",
       "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCCVFpW5fDEXY47ysgDVV-AQ",
+      "tags": [
+        "casa & decoração",
+        "dicas de arquiteto"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Formato PLANARQ em inglês: \"11 Things to Remove to Make Your House Look Expensive\" fez 96 mil views com 6,9 mil inscritos (14×).",
+      "addedAt": "2026-10-07"
     }
   ],
   "discovery": {
@@ -548,6 +558,31 @@
       {
         "group": "Construção",
         "q": "house built in 1900 renovation",
+        "lang": "en"
+      },
+      {
+        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "q": "things that make your house look cheap",
+        "lang": "en"
+      },
+      {
+        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "q": "home design mistakes to avoid",
+        "lang": "en"
+      },
+      {
+        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "q": "kitchen design mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "q": "house plan mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "q": "luxury upgrades not worth it",
         "lang": "en"
       }
     ],
