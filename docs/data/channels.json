@@ -3,8 +3,8 @@
     {
       "ref": "https://www.youtube.com/@GrundrissDeutschland/videos",
       "tags": [
-        "construção civil",
-        "por que [país] é assim"
+        "construção explicada",
+        "casas de outros países"
       ],
       "notes": "vidrush · [Análise Claude, 04/10] Forte, potencial 92/100. Canal com 19 dias e 4 vídeos. Os 3 primeiros passaram de 15 mil views; o do isopor fez 54 mil em uma semana. Molde: “Por que a Alemanha [faz X]”, 8–11 min, fontes na descrição. O mais consistente da lista.",
       "addedAt": "2026-10-03",
@@ -21,19 +21,10 @@
       "addedAt": "2026-10-03"
     },
     {
-      "ref": "www.youtube.com/@MaisonsOubli%C3%A9esFA",
-      "tags": [
-        "imóveis",
-        "casas baratas que ninguém compra"
-      ],
-      "notes": "[Análise Claude, 04/10] Forte, potencial 90/100. 47 dias, 18 vídeos, 457 mil views. Usa sempre o mesmo molde de título (“Pourquoi personne n'achète ces…” + preço em euros). Mediana de 9,6 mil por vídeo e nenhum vídeo com mais de 3 dias abaixo de 4 mil. Francês, com pouca concorrência.",
-      "addedAt": "2026-10-04"
-    },
-    {
       "ref": "www.youtube.com/@GeoEnvy-YouTube",
       "tags": [
-        "construção civil",
-        "ideias de casas de outros países"
+        "construção explicada",
+        "casas de outros países"
       ],
       "notes": "[Análise Claude, 04/10] Forte, potencial 88/100. 108 dias, 41 vídeos, 2,3 mi de views. Três vídeos acima de 500 mil (casas suecas, italianas, norueguesas). Publica em inglês e português no mesmo canal. Mediana de 8,8 mil: vive de picos, e os picos são enormes.",
       "addedAt": "2026-10-04"
@@ -49,49 +40,20 @@
       "addedAt": "2026-10-04"
     },
     {
-      "ref": "www.youtube.com/@lostustownsyt/videos",
-      "tags": [
-        "true crime & mistério",
-        "casas esquecidas e abandonadas"
-      ],
-      "notes": "[Análise Claude, 04/10] Forte, potencial 80/100. 207 dias, 5,3 mi de views. Cidades e casas abandonadas, assombradas e de crimes nos EUA. 7 de cada 10 vídeos recentes passam de 10 mil. Mais perto de terror e true crime do que de cotidiano.",
-      "addedAt": "2026-10-04"
-    },
-    {
       "ref": "www.youtube.com/@PorQueOBrasil",
       "tags": [
-        "construção civil",
-        "por que [país] é assim"
+        "construção explicada"
       ],
       "notes": "[Análise Claude, 04/10] Promissor, potencial 70/100. O formato mais parecido com o que você quer fazer: Brasil × EUA no cotidiano, 8–9 min. Dois vídeos passaram de 140 mil (varal, porão), mas a mediana é 811 views. A demanda está comprovada e a execução é irregular: há espaço para fazer melhor.",
       "addedAt": "2026-10-04"
     },
     {
-      "ref": "https://www.youtube.com/@Realnomicsyt",
-      "tags": [
-        "imóveis",
-        "casas baratas que ninguém compra"
-      ],
-      "notes": "[Análise Claude, 05/10] Sem análise completa ainda. “Ninguém está comprando estas fazendas baratas com terreno — veja por quê” fez 392 mil em 2 meses: é o formato “casas baratas que ninguém compra”, que está se espalhando.",
-      "addedAt": "2026-10-04"
-    },
-    {
       "ref": "https://www.youtube.com/@KenTsukamoto",
       "tags": [
-        "casa & decoração",
-        "japão x ocidente",
-        "60+"
+        "decoração",
+        "casas de outros países"
       ],
       "notes": "[Análise Claude, 04/10] Forte, potencial 82/100. 72 dias, 1,18 mi de views, 11,8 mil inscritos. Casa e organização “do jeito japonês” para 60+, com vídeos em inglês e português. Um vídeo de 600 mil e outro de 121 mil; mediana de 6 mil.",
-      "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@americansecrets1",
-      "tags": [
-        "construção civil",
-        "casas esquecidas e abandonadas"
-      ],
-      "notes": "[Análise Claude, 04/10] Promissor, potencial 72/100. 62 dias, 536 mil views. “Recursos esquecidos das casas americanas antigas” em inglês e português. Cinco vídeos entre 63 mil e 110 mil, mas a maioria fica abaixo de 2 mil.",
       "addedAt": "2026-10-05"
     },
     {
@@ -105,7 +67,8 @@
     {
       "ref": "https://www.youtube.com/@PLANARQCAMPOS",
       "tags": [
-        "construção civil"
+        "decoração",
+        "dicas de arquiteto"
       ],
       "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Arquiteto com rosto. “Por que não construímos como os americanos?” fez 4,6 mi.",
       "addedAt": "2026-10-05"
@@ -143,46 +106,9 @@
       "addedAt": "2026-10-06"
     },
     {
-      "ref": "UCtJaeMyUccMJ1euiwv4o2bA",
-      "tags": [
-        "casas esquecidas e abandonadas"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"20 Hollywood Mansions With Dark Secrets You Were Never Supposed to Know\" fez 71 mil views com 706 inscritos (100,0×). Canal de 1061 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCgI0LTkmvS2R4nMdZetoaVA",
-      "tags": [
-        "casas esquecidas e abandonadas"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"The 20 Most TERRIFYING ABANDONED Houses in the World\" fez 49 mil views com 1 mil inscritos (48,2×). Canal de 2187 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCyqObBgxCK_SzG5Axz6LRyQ",
-      "tags": [
-        "casas esquecidas e abandonadas"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"Abandoned Mansions Of America's Deadliest Mafia\" fez 11 mil views com 4 mil inscritos (2,8×). Canal de 61 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCFAkyyGi9HVs9I0bcqf8KQA",
-      "tags": [
-        "casas históricas",
-        "mansões do dinheiro antigo"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"How Dallas's Old Money Built a Hollow of Mansions and Then Tore Them Down: Preston Hollow\" fez 12 mil views com 5 mil inscritos (2,3×). Canal de 111 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
       "ref": "UCD1tdcG04-qSKmcd5XFICXw",
       "tags": [
-        "casas esquecidas e abandonadas"
+        "reforma & transformação"
       ],
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"This Abandoned Swan-Shaped Mansion Was Rotting Away — We Brought It Back to Elegance\" fez 16 mil views com 5 mil inscritos (3,3×). Canal de 174 dias.",
@@ -191,64 +117,10 @@
     {
       "ref": "UC8ZXLMKox8Pht2w7ji9ubtA",
       "tags": [
-        "casas esquecidas e abandonadas"
+        "reforma & transformação"
       ],
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"Satisfying Abandoned House Makeover | Vines to Luxury Modern Home\" fez 21 mil views com 1 mil inscritos (14,9×). Canal de 143 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCD0lXF319it_QtWZ8qeOtAg",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"houses nobody wants to buy\": \"Why Is Nobody Buying These Cheap Country Homes at These Prices? Here’s Why\" fez 11 mil views com 4 mil inscritos (2,5×). Canal de 60 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UC9_aAknBWSyicGluewMZ6jw",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"houses nobody wants to buy\": \"EMPTY CONNECTICUT — Its Houses Cost $30,000 But NOBODY Wants Them\" fez 24 mil views com 26 mil inscritos (0,9×). Canal de 1512 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCqDhLnCZpZTE9UGN-kkUoOQ",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"cheap old houses for sale\": \"10 DIRT CHEAP Farmhouses in Georgia with Big Acreage — Unbelievable Real Estate You Can Buy Today!\" fez 10 mil views com 29 mil inscritos (0,4×). Canal de 211 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCyDozT0WBmUGcrgBZkEj87A",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"ghost towns america\": \"12 Dirt Cheap Texas Ghost Towns Where Land Are So Cheap... But Nobody Moving Here\" fez 15 mil views com 5 mil inscritos (3,0×). Canal de 117 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCRhYkVUAOs6kAAc4P2mGpFg",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"houses nobody wants to buy\": \"EMPTY SPAIN – Houses for €17,000, but NO ONE wants them\" fez 215 mil views com 6 mil inscritos (38,1×). Canal de 256 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCfT8LMtHB5bU11RUOaU_9lQ",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"ghost towns america\": \"10 American Small Towns So Violent, Locals Warn You Not to Stop for Gas\" fez 121 mil views com 4 mil inscritos (27,6×). Canal de 202 dias.",
       "addedAt": "2026-10-07"
     },
     {
@@ -307,48 +179,9 @@
       "addedAt": "2026-10-07"
     },
     {
-      "ref": "UCSYjqa8WeYlHQeLTiigtAHQ",
-      "tags": [
-        "imóveis",
-        "flipping"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"house flipping before and after\": \"I Bought This Duplex...Then Found Something I Didn’t Expect\" fez 60 mil views com 79 mil inscritos (0,8×). Canal de 937 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCO7M4uoa2OWBA0Wqze0p9yw",
-      "tags": [
-        "casas históricas",
-        "mansões do dinheiro antigo"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"gilded age mansions history\": \"How Milwaukee's Old Money Built a Bluff of Mansions and Then Sealed It Shut Forever: North Point\" fez 43 mil views com 3 mil inscritos. Canal de 19 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCxFETiWD0gqcmnnnxOt6nOQ",
-      "tags": [
-        "casas baratas que ninguém compra"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"houses nobody wants to buy\": \"Nobody Is Buying These Cheap Houses in Florida... And Here's Why\" fez 12 mil views com 273 inscritos. Canal de 55 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCXIz7ldmgWV7M3XdkEm5Vqg",
-      "tags": [
-        "casas baratas que ninguém compra",
-        "mercado imobiliário"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"housing market crash 2026\": \"12 MORE Canadian Towns Where Brand-New Homes Are Sitting EMPTY (2026)\" fez 22 mil views com 3 mil inscritos. Canal de 110 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
       "ref": "UCCVFpW5fDEXY47ysgDVV-AQ",
       "tags": [
-        "casa & decoração",
+        "decoração",
         "dicas de arquiteto"
       ],
       "language": "en",
@@ -363,173 +196,6 @@
     "maxSearches": 45,
     "homeLang": "en",
     "queries": [
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "old money mansions history",
-        "lang": "en"
-      },
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "millionaires row history",
-        "lang": "en"
-      },
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "gilded age mansions demolished",
-        "lang": "en"
-      },
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "lost mansions of america",
-        "lang": "en"
-      },
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "how old money built mansions",
-        "lang": "en"
-      },
-      {
-        "group": "Construção",
-        "q": "house building mistakes",
-        "lang": "en"
-      },
-      {
-        "group": "Construção",
-        "q": "building a house cost breakdown",
-        "lang": "en"
-      },
-      {
-        "group": "Construção",
-        "q": "barndominium build",
-        "lang": "en"
-      },
-      {
-        "group": "Construção",
-        "q": "tiny house build",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "housing market explained",
-        "lang": "en"
-      },
-      {
-        "group": "Casas históricas",
-        "q": "historic home tour",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "abandoned places",
-        "lang": "en",
-        "local": "lieux abandonnés",
-        "localLang": "fr"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "abandoned mansions",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "houses nobody wants to buy",
-        "lang": "en"
-      },
-      {
-        "group": "Casas na Europa (DE/FR)",
-        "q": "warum ist Deutschland so",
-        "lang": "de"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "abandoned celebrity mansions",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "home insurance crisis",
-        "lang": "en"
-      },
-      {
-        "group": "Mansões do dinheiro antigo",
-        "q": "gilded age mansions history",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "abandoned house frozen in time",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "cities where houses are cheap",
-        "lang": "en"
-      },
-      {
-        "group": "Casas históricas",
-        "q": "sears catalog homes",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "billionaire mansions abandoned",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "hoa horror stories",
-        "lang": "en"
-      },
-      {
-        "group": "Casas históricas",
-        "q": "why old houses were built this way",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "abandoned farmhouse",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "housing market crash 2026",
-        "lang": "en"
-      },
-      {
-        "group": "Casas históricas",
-        "q": "victorian house history",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "towns paying people to move",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "weird zillow listings",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "property taxes rising",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & mansões",
-        "q": "mansions for sale cheap",
-        "lang": "en"
-      },
-      {
-        "group": "Mercado imobiliário EUA",
-        "q": "why no one can afford a house",
-        "lang": "en"
-      },
-      {
-        "group": "Construção",
-        "q": "house built in 1900 renovation",
-        "lang": "en"
-      },
       {
         "group": "Dicas de arquiteto (formato PLANARQ)",
         "q": "things that make your house look cheap",
@@ -554,9 +220,84 @@
         "group": "Dicas de arquiteto (formato PLANARQ)",
         "q": "luxury upgrades not worth it",
         "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "interior design mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "how to make your home look expensive on a budget",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "living room decor mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "small apartment design tips",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "bathroom design mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "home decor trends 2026",
+        "lang": "en"
+      },
+      {
+        "group": "Decoração (dicas)",
+        "q": "decorating tips from interior designer",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "house building mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "building a house cost breakdown",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "renovation mistakes to avoid",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "kitchen remodel mistakes",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "things I would never do building a house",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "barndominium build",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "tiny house build",
+        "lang": "en"
+      },
+      {
+        "group": "Construção & reforma (dicas)",
+        "q": "home renovation cost",
+        "lang": "en"
       }
     ],
-    "focus": "Mansões do dinheiro antigo",
+    "focus": "",
     "focusShare": 0.6,
     "longOnly": true
   }
