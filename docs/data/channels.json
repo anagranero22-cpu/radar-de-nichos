@@ -1,67 +1,21 @@
 {
   "channels": [
     {
-      "ref": "https://www.youtube.com/@GrundrissDeutschland/videos",
-      "tags": [
-        "construção explicada",
-        "casas de outros países"
-      ],
-      "notes": "vidrush · [Análise Claude, 04/10] Forte, potencial 92/100. Canal com 19 dias e 4 vídeos. Os 3 primeiros passaram de 15 mil views; o do isopor fez 54 mil em uma semana. Molde: “Por que a Alemanha [faz X]”, 8–11 min, fontes na descrição. O mais consistente da lista.",
-      "addedAt": "2026-10-03",
-      "favorite": true,
-      "pick": true
-    },
-    {
-      "ref": "https://www.youtube.com/@BuildsWithEliYoder",
-      "tags": [
-        "prepping e sobrevivência",
-        "energia & off-grid"
-      ],
-      "notes": "[Análise Claude, 04/10] Referência 50+. Promessas fisicamente impossíveis; mediana caiu para 2,6 mil.",
-      "addedAt": "2026-10-03"
-    },
-    {
       "ref": "www.youtube.com/@GeoEnvy-YouTube",
       "tags": [
-        "construção explicada",
-        "casas de outros países"
+        "decoração",
+        "ideias de casas de outros países"
       ],
       "notes": "[Análise Claude, 04/10] Forte, potencial 88/100. 108 dias, 41 vídeos, 2,3 mi de views. Três vídeos acima de 500 mil (casas suecas, italianas, norueguesas). Publica em inglês e português no mesmo canal. Mediana de 8,8 mil: vive de picos, e os picos são enormes.",
-      "addedAt": "2026-10-04"
-    },
-    {
-      "ref": "www.youtube.com/@CasaViva-l5w",
-      "tags": [
-        "construção civil",
-        "por que [país] é assim",
-        "60+"
-      ],
-      "notes": "[Análise Claude, 04/10] Forte, potencial 87/100. Trocou decoração por “Por que o Brasil constrói assim…” há cerca de 3 semanas e explodiu: 203 mil em 1 dia e 145 mil em 2 semanas. Mediana dos últimos 10 vídeos: 16 mil. Mira o público 60+. É o concorrente direto mais forte no Brasil.",
-      "addedAt": "2026-10-04"
-    },
-    {
-      "ref": "www.youtube.com/@PorQueOBrasil",
-      "tags": [
-        "construção explicada"
-      ],
-      "notes": "[Análise Claude, 04/10] Promissor, potencial 70/100. O formato mais parecido com o que você quer fazer: Brasil × EUA no cotidiano, 8–9 min. Dois vídeos passaram de 140 mil (varal, porão), mas a mediana é 811 views. A demanda está comprovada e a execução é irregular: há espaço para fazer melhor.",
       "addedAt": "2026-10-04"
     },
     {
       "ref": "https://www.youtube.com/@KenTsukamoto",
       "tags": [
         "decoração",
-        "casas de outros países"
+        "organização"
       ],
       "notes": "[Análise Claude, 04/10] Forte, potencial 82/100. 72 dias, 1,18 mi de views, 11,8 mil inscritos. Casa e organização “do jeito japonês” para 60+, com vídeos em inglês e português. Um vídeo de 600 mil e outro de 121 mil; mediana de 6 mil.",
-      "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@UGREENbr",
-      "tags": [
-        "construção civil"
-      ],
-      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Ciência da construção. 833 mil em 8 dias com “O golpe da mini-mansão”.",
       "addedAt": "2026-10-05"
     },
     {
@@ -76,98 +30,11 @@
     {
       "ref": "https://www.youtube.com/@willarquitetura",
       "tags": [
-        "construção civil"
+        "decoração",
+        "dicas de arquiteto"
       ],
       "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “Não cometa esses erros na sua casa térrea” fez 82 mil. Arquiteto com rosto, mesmo molde do PLANARQ.",
       "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@Fubáonline",
-      "tags": [
-        "construção civil"
-      ],
-      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “5 erros e 5 acertos na construção da minha casa” fez 356 mil. Diário de obra com rosto.",
-      "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@engenheiro_matheus",
-      "tags": [
-        "construção civil"
-      ],
-      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “Por que sua casa é tão quente? Não é só o telhado!” fez 18 mil em 2 dias. Engenheiro com rosto; vende curso de construção.",
-      "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@Ranchdominium",
-      "tags": [
-        "construção civil"
-      ],
-      "notes": "[Análise Claude, 06/10] Casas térreas em estrutura de aço no estilo rancho americano, do terreno à casa pronta: custo de obra, projeto e planejamento. Ainda sem números: a coleta traz os dados.",
-      "addedAt": "2026-10-06"
-    },
-    {
-      "ref": "UCD1tdcG04-qSKmcd5XFICXw",
-      "tags": [
-        "reforma & transformação"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"This Abandoned Swan-Shaped Mansion Was Rotting Away — We Brought It Back to Elegance\" fez 16 mil views com 5 mil inscritos (3,3×). Canal de 174 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UC8ZXLMKox8Pht2w7ji9ubtA",
-      "tags": [
-        "reforma & transformação"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"Satisfying Abandoned House Makeover | Vines to Luxury Modern Home\" fez 21 mil views com 1 mil inscritos (14,9×). Canal de 143 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UClxJ1lLACuu_YePcuCqjdOw",
-      "tags": [
-        "construção civil"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"barndominium build\": \"7 Tiny Barndos Built for Life After 50 Years Old — No Mortgage, No Upkeep, No Property Tax\" fez 50 mil views com 3 mil inscritos (14,8×). Canal de 93 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCNkLXYEAj1Kpvn957kNiVDQ",
-      "tags": [
-        "construção civil"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"building a house cost breakdown\": \"Corrugated Steel Culverts Are 15x Stronger Than Concrete — So I Built a House From Them\" fez 25 mil views com 10 mil inscritos (2,6×). Canal de 256 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCHIPLaEyNayksPw7Lhz_oWA",
-      "tags": [
-        "construção civil"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"tiny house build\": \"What It's Actually Like Living Inside the $500 Tiny Survival Homes Built for Homeless People\" fez 231 mil views com 14 mil inscritos (17,1×). Canal de 6900 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCKPUPrkLL8H8iflqOBTj3Aw",
-      "tags": [
-        "construção civil"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"why are houses so expensive\": \"Houses Are Expensive, So I'm Building My Own\" fez 371 mil views com 143 mil inscritos (2,6×). Canal de 394 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCZ4ti1nPCjvSL-Co98vmARA",
-      "tags": [
-        "construção civil",
-        "obra nova com defeito"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"new construction homes problems\": \"Watch New Construction Homes FALL APART While Builders DON'T CARE\" fez 138 mil views com 19 mil inscritos (7,2×). Canal de 6404 dias.",
-      "addedAt": "2026-10-07"
     },
     {
       "ref": "UCCVFpW5fDEXY47ysgDVV-AQ",
@@ -177,6 +44,36 @@
       ],
       "language": "en",
       "notes": "[Lacunas, 07/10] Formato PLANARQ em inglês: \"11 Things to Remove to Make Your House Look Expensive\" fez 96 mil views com 6,9 mil inscritos (14×).",
+      "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCh5KYfm_Bs0_HG1FhtvawWA",
+      "tags": [
+        "decoração",
+        "home tour"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"historic home tour\": \"This Bath Cottage Looks Traditional—But Wait Until You See Inside\" fez 10 mil views com 224 inscritos.",
+      "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCn5XzrXtuzLFAf_Mr1gVv_A",
+      "tags": [
+        "decoração",
+        "home tour"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"historic home tour\": \"This 1783 Farmhouse Has 20 Patterns in One Room (And It Works)\" fez 10 mil views com 69 mil inscritos.",
+      "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCXvzpK4eKUJysEZ42zjTUdw",
+      "tags": [
+        "decoração",
+        "referência grande"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"historic home tour\": \"The Final Reveal: Our Store Is a Dream Come True | Trolley Square, Ep. 5\" fez 191 mil views com 636 mil inscritos.",
       "addedAt": "2026-10-07"
     }
   ],
@@ -188,103 +85,113 @@
     "homeLang": "en",
     "queries": [
       {
-        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "group": "Dicas de designer (formato PLANARQ)",
         "q": "things that make your house look cheap",
         "lang": "en"
       },
       {
-        "group": "Dicas de arquiteto (formato PLANARQ)",
-        "q": "home design mistakes to avoid",
-        "lang": "en"
-      },
-      {
-        "group": "Dicas de arquiteto (formato PLANARQ)",
-        "q": "kitchen design mistakes",
-        "lang": "en"
-      },
-      {
-        "group": "Dicas de arquiteto (formato PLANARQ)",
-        "q": "house plan mistakes",
-        "lang": "en"
-      },
-      {
-        "group": "Dicas de arquiteto (formato PLANARQ)",
+        "group": "Dicas de designer (formato PLANARQ)",
         "q": "luxury upgrades not worth it",
         "lang": "en"
       },
       {
-        "group": "Decoração (dicas)",
-        "q": "interior design mistakes",
+        "group": "Dicas de designer (formato PLANARQ)",
+        "q": "what interior designers never do",
         "lang": "en"
       },
       {
-        "group": "Decoração (dicas)",
-        "q": "how to make your home look expensive on a budget",
-        "lang": "en"
-      },
-      {
-        "group": "Decoração (dicas)",
-        "q": "living room decor mistakes",
-        "lang": "en"
-      },
-      {
-        "group": "Decoração (dicas)",
-        "q": "small apartment design tips",
-        "lang": "en"
-      },
-      {
-        "group": "Decoração (dicas)",
-        "q": "bathroom design mistakes",
-        "lang": "en"
-      },
-      {
-        "group": "Decoração (dicas)",
-        "q": "home decor trends 2026",
-        "lang": "en"
-      },
-      {
-        "group": "Decoração (dicas)",
+        "group": "Dicas de designer (formato PLANARQ)",
         "q": "decorating tips from interior designer",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "house building mistakes",
+        "group": "Dicas de designer (formato PLANARQ)",
+        "q": "home design mistakes to avoid",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "building a house cost breakdown",
+        "group": "Dicas de designer (formato PLANARQ)",
+        "q": "kitchen design mistakes",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "renovation mistakes to avoid",
+        "group": "Erros & truques de decoração",
+        "q": "interior design mistakes",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "kitchen remodel mistakes",
+        "group": "Erros & truques de decoração",
+        "q": "how to make your home look expensive on a budget",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "things I would never do building a house",
+        "group": "Erros & truques de decoração",
+        "q": "living room decor mistakes",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "barndominium build",
+        "group": "Erros & truques de decoração",
+        "q": "bathroom design mistakes",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "tiny house build",
+        "group": "Erros & truques de decoração",
+        "q": "small apartment design tips",
         "lang": "en"
       },
       {
-        "group": "Construção & reforma (dicas)",
-        "q": "home renovation cost",
+        "group": "Erros & truques de decoração",
+        "q": "decorating mistakes that make your home look cluttered",
+        "lang": "en"
+      },
+      {
+        "group": "Erros & truques de decoração",
+        "q": "budget home makeover",
+        "lang": "en"
+      },
+      {
+        "group": "Erros & truques de decoração",
+        "q": "rental apartment decor ideas",
+        "lang": "en"
+      },
+      {
+        "group": "Erros & truques de decoração",
+        "q": "home organization tips",
+        "lang": "en"
+      },
+      {
+        "group": "Erros & truques de decoração",
+        "q": "how to choose paint colors",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "home decor trends 2026",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "old money interior design",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "japandi interior design",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "cozy home decor ideas",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "interior design styles explained",
+        "lang": "en"
+      },
+      {
+        "group": "Estilos & tendências",
+        "q": "home tour interior design",
         "lang": "en"
       }
     ],
