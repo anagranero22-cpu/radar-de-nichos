@@ -354,118 +354,49 @@
     "homeLang": "en",
     "queries": [
       {
-        "group": "Imóveis & construção (EUA)",
-        "q": "why american houses are built with wood",
-        "lang": "en",
-        "local": "warum bauen Amerikaner Häuser aus Holz",
-        "localLang": "de"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
-        "q": "why are houses so expensive",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Construção",
         "q": "house building mistakes",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
-        "q": "new construction homes problems",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
-        "q": "home builder secrets",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Construção",
         "q": "building a house cost breakdown",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Construção",
         "q": "barndominium build",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Construção",
         "q": "tiny house build",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
-        "q": "off grid cabin build",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
-        "q": "how houses were built 100 years ago",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
-        "q": "american homes vs european homes",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Mercado imobiliário EUA",
         "q": "housing market explained",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
-        "q": "house flipping before and after",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
-        "q": "mobile home renovation",
-        "lang": "en"
-      },
-      {
-        "group": "Imóveis & construção (EUA)",
+        "group": "Casas históricas",
         "q": "historic home tour",
         "lang": "en"
       },
       {
-        "group": "Imóveis & construção (EUA)",
-        "q": "why american suburbs look like this",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & baratas",
+        "group": "Casas abandonadas & mansões",
         "q": "abandoned places",
         "lang": "en",
         "local": "lieux abandonnés",
         "localLang": "fr"
       },
       {
-        "group": "Casas abandonadas & baratas",
+        "group": "Casas abandonadas & mansões",
         "q": "abandoned mansions",
         "lang": "en"
       },
       {
-        "group": "Casas abandonadas & baratas",
-        "q": "cheap old houses for sale",
-        "lang": "en",
-        "local": "vieilles maisons à vendre pas cher",
-        "localLang": "fr"
-      },
-      {
-        "group": "Casas abandonadas & baratas",
-        "q": "forgotten houses america",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & baratas",
-        "q": "ghost towns america",
-        "lang": "en"
-      },
-      {
-        "group": "Casas abandonadas & baratas",
+        "group": "Mercado imobiliário EUA",
         "q": "houses nobody wants to buy",
         "lang": "en"
       },
@@ -475,17 +406,97 @@
         "lang": "de"
       },
       {
-        "group": "Casas na Europa (DE/FR)",
-        "q": "Hausbau Fehler",
-        "lang": "de"
+        "group": "Casas abandonadas & mansões",
+        "q": "abandoned celebrity mansions",
+        "lang": "en"
       },
       {
-        "group": "Casas na Europa (DE/FR)",
-        "q": "maisons abandonnées",
-        "lang": "fr"
+        "group": "Mercado imobiliário EUA",
+        "q": "home insurance crisis",
+        "lang": "en"
+      },
+      {
+        "group": "Casas históricas",
+        "q": "gilded age mansions history",
+        "lang": "en"
+      },
+      {
+        "group": "Casas abandonadas & mansões",
+        "q": "abandoned house frozen in time",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "cities where houses are cheap",
+        "lang": "en"
+      },
+      {
+        "group": "Casas históricas",
+        "q": "sears catalog homes",
+        "lang": "en"
+      },
+      {
+        "group": "Casas abandonadas & mansões",
+        "q": "billionaire mansions abandoned",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "hoa horror stories",
+        "lang": "en"
+      },
+      {
+        "group": "Casas históricas",
+        "q": "why old houses were built this way",
+        "lang": "en"
+      },
+      {
+        "group": "Casas abandonadas & mansões",
+        "q": "abandoned farmhouse",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "housing market crash 2026",
+        "lang": "en"
+      },
+      {
+        "group": "Casas históricas",
+        "q": "victorian house history",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "towns paying people to move",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "weird zillow listings",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "property taxes rising",
+        "lang": "en"
+      },
+      {
+        "group": "Casas abandonadas & mansões",
+        "q": "mansions for sale cheap",
+        "lang": "en"
+      },
+      {
+        "group": "Mercado imobiliário EUA",
+        "q": "why no one can afford a house",
+        "lang": "en"
+      },
+      {
+        "group": "Construção",
+        "q": "house built in 1900 renovation",
+        "lang": "en"
       }
     ],
-    "focus": "Imóveis & construção (EUA)",
+    "focus": "",
     "focusShare": 0.7,
     "longOnly": true
   }
