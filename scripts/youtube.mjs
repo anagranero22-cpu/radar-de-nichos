@@ -15,7 +15,8 @@ export async function api(endpoint, params) {
     if (res.ok) return res.json();
     const body = await res.json().catch(() => ({}));
     const reason = body?.error?.errors?.[0]?.reason;
-    if (reason === 'quotaExceeded' || reason === 'dailyLimitExceeded') {
+    const msg = body?.error?.message ?? '';
+    if (reason === 'quotaExceeded' || reason === 'dailyLimitExceeded' || (res.status === 429 && /quota/i.test(msg))) {
       throw new QuotaError('Cota diária da YouTube API esgotada.');
     }
     if (res.status === 404) return { items: [], notFound: true };

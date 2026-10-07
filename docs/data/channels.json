@@ -172,7 +172,8 @@
     {
       "ref": "UCFAkyyGi9HVs9I0bcqf8KQA",
       "tags": [
-        "casas esquecidas e abandonadas"
+        "casas históricas",
+        "mansões do dinheiro antigo"
       ],
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"abandoned mansions\": \"How Dallas's Old Money Built a Hollow of Mansions and Then Tore Them Down: Preston Hollow\" fez 12 mil views com 5 mil inscritos (2,3×). Canal de 111 dias.",
@@ -344,6 +345,35 @@
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"house flipping before and after\": \"I Bought This Duplex...Then Found Something I Didn’t Expect\" fez 60 mil views com 79 mil inscritos (0,8×). Canal de 937 dias.",
       "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCO7M4uoa2OWBA0Wqze0p9yw",
+      "tags": [
+        "casas históricas",
+        "mansões do dinheiro antigo"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"gilded age mansions history\": \"How Milwaukee's Old Money Built a Bluff of Mansions and Then Sealed It Shut Forever: North Point\" fez 43 mil views com 3 mil inscritos. Canal de 19 dias.",
+      "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCxFETiWD0gqcmnnnxOt6nOQ",
+      "tags": [
+        "casas baratas que ninguém compra"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"houses nobody wants to buy\": \"Nobody Is Buying These Cheap Houses in Florida... And Here's Why\" fez 12 mil views com 273 inscritos. Canal de 55 dias.",
+      "addedAt": "2026-10-07"
+    },
+    {
+      "ref": "UCXIz7ldmgWV7M3XdkEm5Vqg",
+      "tags": [
+        "casas baratas que ninguém compra",
+        "mercado imobiliário"
+      ],
+      "language": "en",
+      "notes": "[Lacunas, 07/10] Achado em \"housing market crash 2026\": \"12 MORE Canadian Towns Where Brand-New Homes Are Sitting EMPTY (2026)\" fez 22 mil views com 3 mil inscritos. Canal de 110 dias.",
+      "addedAt": "2026-10-07"
     }
   ],
   "discovery": {
@@ -353,6 +383,31 @@
     "maxSearches": 45,
     "homeLang": "en",
     "queries": [
+      {
+        "group": "Mansões do dinheiro antigo",
+        "q": "old money mansions history",
+        "lang": "en"
+      },
+      {
+        "group": "Mansões do dinheiro antigo",
+        "q": "millionaires row history",
+        "lang": "en"
+      },
+      {
+        "group": "Mansões do dinheiro antigo",
+        "q": "gilded age mansions demolished",
+        "lang": "en"
+      },
+      {
+        "group": "Mansões do dinheiro antigo",
+        "q": "lost mansions of america",
+        "lang": "en"
+      },
+      {
+        "group": "Mansões do dinheiro antigo",
+        "q": "how old money built mansions",
+        "lang": "en"
+      },
       {
         "group": "Construção",
         "q": "house building mistakes",
@@ -416,7 +471,7 @@
         "lang": "en"
       },
       {
-        "group": "Casas históricas",
+        "group": "Mansões do dinheiro antigo",
         "q": "gilded age mansions history",
         "lang": "en"
       },
@@ -496,8 +551,8 @@
         "lang": "en"
       }
     ],
-    "focus": "",
-    "focusShare": 0.7,
+    "focus": "Mansões do dinheiro antigo",
+    "focusShare": 0.6,
     "longOnly": true
   }
 }
