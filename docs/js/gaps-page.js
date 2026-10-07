@@ -204,7 +204,7 @@ function editor(ctx) {
       <label class="field">Temas<textarea name="queries" rows="12" spellcheck="false">${esc(formatQueryLines(cfg.queries))}</textarea></label>
       <p class="small" id="gapCost"></p>
       <div class="form-grid">
-        <label class="field">Janela (dias)<input name="days" type="number" min="1" max="60" value="${cfg.days}"></label>
+        <label class="field">Janela (dias)<input name="days" type="number" min="1" max="90" value="${cfg.days}"></label>
         <label class="field">Canal pequeno: até (inscritos)<input name="maxSubs" type="number" min="100" step="1000" value="${cfg.maxSubs}"></label>
         <label class="field">Mínimo de views do vídeo<input name="minViews" type="number" min="0" step="1000" value="${cfg.minViews}"></label>
         <label class="field">Buscas por dia (100 unidades cada)<input name="maxSearches" type="number" min="1" max="90" value="${cfg.maxSearches}"></label>
@@ -427,7 +427,7 @@ export function renderGaps(ctx) {
     const ok = await ctx.saveCatalog('Atualiza temas de Lacunas', (doc) => {
       doc.discovery = {
         queries,
-        days: num('days', 1, 60),
+        days: num('days', 1, 90),
         maxSubs: num('maxSubs', 100, 1e8),
         minViews: num('minViews', 0, 1e9),
         maxSearches: num('maxSearches', 1, 90),

@@ -71,7 +71,7 @@
     }
   ],
   "discovery": {
-    "days": 14,
+    "days": 90,
     "maxSubs": 100000,
     "minViews": 10000,
     "maxSearches": 45,
