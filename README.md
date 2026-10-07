@@ -32,7 +32,7 @@ Tema claro/escuro no botão do topo.
 
 ### Critérios de nicho
 
-A regra para classificar canais (o que é decoração, organização, arquitetura & reforma, construção civil…) está em [`CRITERIOS_DE_NICHO.md`](CRITERIOS_DE_NICHO.md). O `CLAUDE.md` manda o Claude Code seguir esse documento ao cadastrar ou reclassificar canais, e a classificação automática abaixo usa as mesmas palavras-chave, só com vídeos longos.
+O método de pesquisa e as regras de como a IA deve agir estão em [`PROMPT_SISTEMA.md`](PROMPT_SISTEMA.md). A regra para classificar canais (o que é decoração, organização, arquitetura & reforma, construção civil…) está em [`CRITERIOS_DE_NICHO.md`](CRITERIOS_DE_NICHO.md). O `CLAUDE.md` manda o Claude Code seguir esse documento ao cadastrar ou reclassificar canais, e a classificação automática abaixo usa as mesmas palavras-chave, só com vídeos longos.
 
 ### Nicho automático
 

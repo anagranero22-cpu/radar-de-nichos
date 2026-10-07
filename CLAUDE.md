@@ -4,6 +4,12 @@ Site estático (GitHub Pages) que acompanha canais do YouTube por nicho. Catálo
 `docs/data/channels.json`, dados da coleta em `docs/data/stats.json` e
 `docs/data/gaps.json`. Detalhes técnicos no `README.md`.
 
+## Antes de tudo
+
+Leia **`PROMPT_SISTEMA.md`**: objetivo do projeto, princípios, método de pesquisa
+(país → demanda → público → oferta no YouTube → combinar temas → decisão), temas já
+descartados e regras do canal com avatar. Siga esse método em toda pesquisa.
+
 ## Regra principal: classificação de nicho
 
 **Antes de cadastrar, remover ou mudar a tag de qualquer canal, leia
