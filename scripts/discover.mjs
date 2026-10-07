@@ -21,6 +21,7 @@ import {
   languageGap,
   gapScore,
   themeNiche,
+  SHORTS_MAX,
 } from '../docs/js/gaps.js';
 import { api, chunk, readJson, QuotaError, KEY } from './youtube.mjs';
 
@@ -83,7 +84,11 @@ async function measure(q, lang, cfg, channelCache) {
   const ids = await search(q, lang, cfg.days);
   const raw = await hydrate(ids, channelCache);
   // Descarta vídeos com áudio declarado em outro idioma (a busca às vezes mistura).
-  const videos = raw.filter((v) => !v.l || v.l === lang).map((v) => analyzeVideo(v, cfg));
+  // Só vídeos longos: Shorts ficam fora da medição (demanda, virais, canais novos).
+  const videos = raw
+    .filter((v) => !v.l || v.l === lang)
+    .filter((v) => !cfg.longOnly || v.s == null || v.s > SHORTS_MAX)
+    .map((v) => analyzeVideo(v, cfg));
   return { videos, m: themeMetrics(videos) };
 }
 
@@ -180,7 +185,7 @@ async function main() {
     return;
   }
   gaps.updatedAt = new Date().toISOString();
-  gaps.config = { days: cfg.days, maxSubs: cfg.maxSubs, minViews: cfg.minViews, homeLang: cfg.homeLang };
+  gaps.config = { longOnly: Boolean(cfg.longOnly), days: cfg.days, maxSubs: cfg.maxSubs, minViews: cfg.minViews, homeLang: cfg.homeLang };
   await writeFile(GAPS_FILE, `${JSON.stringify(gaps)}\n`);
   console.log(`Pronto: ${done} tema(s) atualizados.`);
 }

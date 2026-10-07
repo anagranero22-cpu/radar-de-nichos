@@ -211,6 +211,7 @@ function editor(ctx) {
         <label class="field">Outro idioma padrão (comparação)<input name="homeLang" value="${esc(cfg.homeLang)}" maxlength="5"></label>
         <label class="field">Nicho em foco<select name="focus">${focusOptions(cfg.queries, cfg.focus)}</select></label>
         <label class="field">Parte das buscas para o foco (%)<input name="focusShare" type="number" min="50" max="100" step="5" value="${Math.round((cfg.focusShare ?? 0.8) * 100)}"></label>
+        <label class="field">Formato medido<select name="longOnly"><option value="1"${cfg.longOnly ? ' selected' : ''}>Só vídeos longos (ignora Shorts)</option><option value=""${cfg.longOnly ? '' : ' selected'}>Longos e Shorts</option></select></label>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="primary" type="submit"${ctx.editable ? '' : ' disabled'}>Salvar temas</button>
@@ -266,6 +267,7 @@ export function renderGaps(ctx) {
     .filter(([key]) => configured.has(key))
     .map(([key, t]) => ({ ...t, key, group: groupOf(configured.get(key)) }));
   const groups = groupsOf(cfg.queries);
+  if (ui.viralFormat === 'all' && cfg.longOnly && !ui.formatSet) ui.viralFormat = 'long';
   if (ui.group === undefined) ui.group = cfg.focus && groups.includes(cfg.focus) ? cfg.focus : '';
   if (ui.group && !groups.includes(ui.group)) ui.group = '';
   // Posição de cada tema pelo score dentro do próprio grupo (a régua só compara dentro do nicho).
@@ -303,7 +305,7 @@ export function renderGaps(ctx) {
 
   app.innerHTML = `
     <div class="page-head"><div><h1>Lacunas</h1>
-      <p>Todo dia a coleta busca seus temas no YouTube e mede onde há demanda, canais pequenos viralizando e pouca concorrência.</p></div>
+      <p>Todo dia a coleta busca seus temas no YouTube e mede onde há demanda, canais pequenos viralizando e pouca concorrência.${cfg.longOnly ? ' <strong>Medindo só vídeos longos.</strong>' : ''}</p></div>
       <div class="gap-run">
         <span class="muted small">${at ? `Última busca: ${at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}` : 'Ainda sem buscas'}</span>
         ${ctx.editable ? '<button type="button" id="gapRun">Buscar agora</button>' : ''}
@@ -373,7 +375,7 @@ export function renderGaps(ctx) {
   app.querySelector('#gSort')?.addEventListener('change', (e) => ((ui.sort = e.target.value), rerender()));
   app.querySelector('#gLang')?.addEventListener('change', (e) => ((ui.lang = e.target.value), rerender()));
   app.querySelector('#gLangGap')?.addEventListener('change', (e) => ((ui.langGapOnly = e.target.checked), rerender()));
-  app.querySelectorAll('[data-vf]').forEach((b) => b.addEventListener('click', () => ((ui.viralFormat = b.dataset.vf), (ui.viralLimit = 18), rerender())));
+  app.querySelectorAll('[data-vf]').forEach((b) => b.addEventListener('click', () => ((ui.formatSet = true), (ui.viralFormat = b.dataset.vf), (ui.viralLimit = 18), rerender())));
   app.querySelector('#moreViral')?.addEventListener('click', () => ((ui.viralLimit += 18), rerender()));
   app.querySelectorAll('.gap-more').forEach((d) =>
     d.addEventListener('toggle', () => {
@@ -410,6 +412,7 @@ export function renderGaps(ctx) {
     form.queries.value = formatQueryLines(DEFAULT_QUERIES);
     for (const k of ['days', 'maxSubs', 'minViews', 'maxSearches', 'homeLang']) form[k].value = DEFAULT_DISCOVERY[k];
     form.focusShare.value = 80;
+    form.longOnly.value = '1';
     updateCost(form, DEFAULT_DISCOVERY.maxSearches);
   });
   form.addEventListener('submit', async (e) => {
@@ -431,6 +434,7 @@ export function renderGaps(ctx) {
         homeLang,
         focus: queries.some((t) => groupOf(t) === form.focus.value) ? form.focus.value : '',
         focusShare: Math.min(100, Math.max(50, Number(form.focusShare.value) || 80)) / 100,
+        longOnly: Boolean(form.longOnly.value),
       };
     });
     if (ok) ctx.toast('Temas salvos. Os novos são buscados em 1–3 minutos.');

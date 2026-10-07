@@ -95,15 +95,6 @@
       "addedAt": "2026-10-05"
     },
     {
-      "ref": "https://www.youtube.com/@reynardlowell",
-      "tags": [
-        "casa & decoração",
-        "ideias de casas de outros países"
-      ],
-      "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Designer australiano dublado em português. 404 mil no vídeo do último mês.",
-      "addedAt": "2026-10-05"
-    },
-    {
       "ref": "https://www.youtube.com/@UGREENbr",
       "tags": [
         "construção civil"
@@ -117,14 +108,6 @@
         "construção civil"
       ],
       "notes": "[Análise Claude, 04/10] Referência (canal grande, com apresentador). Arquiteto com rosto. “Por que não construímos como os americanos?” fez 4,6 mi.",
-      "addedAt": "2026-10-05"
-    },
-    {
-      "ref": "https://www.youtube.com/@renansousaeng",
-      "tags": [
-        "construção civil"
-      ],
-      "notes": "[Análise Claude, 05/10] Referência (canal com apresentador). “8 armadilhas das casas modernas que ninguém te conta” fez 356 mil. Engenheiro com rosto: mostra a demanda por erros e armadilhas.",
       "addedAt": "2026-10-05"
     },
     {
@@ -313,15 +296,6 @@
       "addedAt": "2026-10-07"
     },
     {
-      "ref": "UCZjJYbExwbCcafaqTrw2YVA",
-      "tags": [
-        "construção civil"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"abandoned places\": \"🚂 Donner Pass Summit Tunnel — Dug by Hand Through Granite 🏔️\" fez 233 mil views com 803 inscritos (289,8×). Canal de 1704 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
       "ref": "UCZ4ti1nPCjvSL-Co98vmARA",
       "tags": [
         "construção civil",
@@ -329,16 +303,6 @@
       ],
       "language": "en",
       "notes": "[Lacunas, 07/10] Achado em \"new construction homes problems\": \"Watch New Construction Homes FALL APART While Builders DON'T CARE\" fez 138 mil views com 19 mil inscritos (7,2×). Canal de 6404 dias.",
-      "addedAt": "2026-10-07"
-    },
-    {
-      "ref": "UCDqnFOlrS9oyGryLLZz66yg",
-      "tags": [
-        "construção civil",
-        "obra nova com defeito"
-      ],
-      "language": "en",
-      "notes": "[Lacunas, 07/10] Achado em \"new construction homes problems\": \"$2.5M FOR THIS?! NEW CONSTRUCTION INSPECTION REVEALED SHOCKING ISSUES! #home #homeinspection #usa\" fez 51 mil views com 9 mil inscritos (6,0×). Canal de 242 dias.",
       "addedAt": "2026-10-07"
     },
     {
@@ -522,6 +486,7 @@
       }
     ],
     "focus": "Imóveis & construção (EUA)",
-    "focusShare": 0.7
+    "focusShare": 0.7,
+    "longOnly": true
   }
 }

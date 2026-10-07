@@ -44,6 +44,7 @@ export const DEFAULT_DISCOVERY = {
   homeLang: 'en',
   focus: '',
   focusShare: 0.8,
+  longOnly: true,
 };
 
 export const NO_GROUP = 'Sem grupo';
