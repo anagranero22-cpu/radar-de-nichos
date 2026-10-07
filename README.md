@@ -30,6 +30,10 @@ Custo zero: o site roda no **GitHub Pages**, a coleta diária no **GitHub Action
 
 Tema claro/escuro no botão do topo.
 
+### Critérios de nicho
+
+A regra para classificar canais (o que é decoração, organização, arquitetura & reforma, construção civil…) está em [`CRITERIOS_DE_NICHO.md`](CRITERIOS_DE_NICHO.md). O `CLAUDE.md` manda o Claude Code seguir esse documento ao cadastrar ou reclassificar canais, e a classificação automática abaixo usa as mesmas palavras-chave, só com vídeos longos.
+
 ### Nicho automático
 
 Ao colar o link, você não precisa informar o nicho. Se o canal ficar **sem tags**, o site detecta o nicho sozinho (marcado com ✦ auto) a partir do nome e da descrição do canal, dos títulos dos últimos vídeos, dos tópicos que o YouTube atribui ao canal e da categoria dos vídeos. São cerca de 35 nichos (finanças, saúde, construção & arquitetura, games, true crime…), com palavras-chave em português, inglês, espanhol e alemão, e cada um já vem com a sua faixa de CPM. Quando você preenche as tags, valem as suas; em Gerenciar e na página do canal aparece o nicho detectado com um botão para fixá-lo ou somá-lo às suas tags. A lista de nichos e palavras-chave fica em `docs/js/niche.js` e pode ser ampliada.
