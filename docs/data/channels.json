@@ -199,9 +199,11 @@
     },
     {
       "ref": "@vanishedrooms",
-      "tags": [],
+      "tags": [
+        "decoração"
+      ],
       "language": "en",
-      "notes": "",
+      "notes": "[Classificação, 08/10/2026] decoração: 7 de 8 vídeos longos (ex.: \"11 Things to Remove Today to Make Your House Look Old Money\", \"7 Colors Designers Say Instantly Make a Home Look Cheap\"); 1 de 8 sobre cuidado com móveis antigos. 0% de Shorts. Formato: listas de estilo old money e erros que deixam a casa com cara de barata, 16–20 min, publica quase todo dia.",
       "addedAt": "2026-10-08"
     }
   ],
