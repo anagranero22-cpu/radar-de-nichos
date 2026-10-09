@@ -235,9 +235,12 @@
     },
     {
       "ref": "@HayleyWellsHome",
-      "tags": [],
-      "notes": "",
-      "addedAt": "2026-10-08"
+      "tags": [
+        "decoração"
+      ],
+      "notes": "[Classificação, 08/10/2026] decoração: 8 de 8 vídeos longos (ex.: \"10 SIMPLE SWAPS That Take Your Living Room From BASIC to QUIET LUXURY\", \"How to Make Your Kitchen Look EXPENSIVE Without Renovating\"). 0% de Shorts. Formato: \"10 trocas de designer\" por cômodo, casa com cara de cara sem reforma, quiet luxury, 12 min. Canal de 6 meses, 65 vídeos.",
+      "addedAt": "2026-10-08",
+      "language": "en"
     }
   ],
   "discovery": {
