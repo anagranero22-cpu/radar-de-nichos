@@ -65,9 +65,12 @@
     },
     {
       "ref": "https://www.youtube.com/@TOP7UK",
-      "tags": [],
-      "notes": "Enviado pela Ana em 20/10/2026 para análise. Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "curiosidades"
+      ],
+      "notes": "[Classificação, 20/10/2026] curiosidades (fora do foco): 8 de 8 vídeos longos são listas \"7 coisas\" de temas variados (ex.: \"7 Borders That Make Absolutely No Sense – But Actually Exist\", \"7 Expensive Pets That Only Millionaires Can Own\"). Dos nichos do foco, só 1 países & sociedade (fronteiras) e 1 empresas & marcas (produtos descontinuados). 0% de Shorts. Formato: contagem regressiva \"Top 7\", 11–14 min, sem rosto, Reino Unido.\n[Análise Claude, 20/10] Referência de fora. Canal de 5 meses, 12,7 mil inscritos, 61 vídeos (um a cada 2 dias), 5,6 mi de views. Mediana dos longos recentes só 3,5 mil, mas picos de 243 mil (fronteiras, 19× os inscritos) e 120 mil (pets caros). Vive de picos; o tema de geografia foi o maior.",
+      "addedAt": "2026-10-20",
+      "language": "en"
     }
   ],
   "discovery": {
