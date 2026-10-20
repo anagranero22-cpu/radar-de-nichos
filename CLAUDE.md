@@ -8,7 +8,7 @@ Site estático (GitHub Pages) que acompanha canais do YouTube por nicho. Catálo
 
 Leia **`PROMPT_SISTEMA.md`**: objetivo do projeto, princípios, método de pesquisa
 (país → demanda → público → oferta no YouTube → combinar temas → decisão), temas já
-descartados e regras do canal com avatar. Siga esse método em toda pesquisa.
+descartados e regras do canal dark. Siga esse método em toda pesquisa.
 
 ## Regra principal: classificação de nicho
 
@@ -25,7 +25,8 @@ descartados e regras do canal com avatar. Siga esse método em toda pesquisa.
 - Toda classificação deixa uma nota no canal no formato da seção 2 (contagem e dois
   títulos de exemplo). O formato do canal vai na nota, não na tag.
 - Foco atual (desde 20/10/2026): **documentário explicativo "por que X é assim"**,
-  vídeo longo, narrado por avatar com imagens de IA, canal gringo. Na dúvida entre dois
+  vídeo longo, canal dark (com ou sem avatar) com cortes de vídeo e imagens de IA,
+  canal gringo. Na dúvida entre dois
   nichos, siga os casos de fronteira da seção 1 e explique na nota.
 - A fase anterior (casa & decoração) está em `arquivo/casa-2026-10/`.
 

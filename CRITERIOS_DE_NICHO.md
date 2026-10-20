@@ -5,7 +5,8 @@ Ele vale para quem cadastra pelo site, para o Claude Code e para a classificaç�
 automática do site (`docs/js/niche.js`), que segue as mesmas palavras-chave daqui.
 
 **Foco atual do projeto (desde 20/10/2026):** documentário explicativo em vídeo longo,
-no formato **"por que X é assim"**, narrado por avatar de IA com imagens de IA.
+no formato **"por que X é assim"**, para canal dark: narração com ou sem avatar de IA,
+cortes de vídeo e imagens de IA.
 Canal gringo (EUA, em inglês) primeiro. Canais de outros nichos só entram como
 referência e recebem a tag do nicho real.
 

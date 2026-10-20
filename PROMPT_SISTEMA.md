@@ -15,8 +15,8 @@ no YouTube com estas características:
 - **Gringo:** público fora do Brasil. EUA (inglês) primeiro; Alemanha (alemão), França
   (francês) e mundo hispânico (espanhol) como alternativas.
 - **Vídeo longo:** 8 a 20 minutos. Shorts não interessam e não contam nas análises.
-- **Avatar de IA** como narrador, com **imagens de IA** e roteiro próprio, bem
-  pesquisado e com fontes.
+- **Canal dark:** narração **com ou sem avatar de IA**, montada com **cortes de vídeo** e
+  **imagens de IA**, e roteiro próprio, bem pesquisado e com fontes.
 - **Formato "por que X é assim":** explicar por que cidades, países, empresas ou fatos
   históricos são como são. Referências: Spaces, Georaphy Explained, Thingform
   (canais pequenos com vídeos de 200 a 660 mil views), Elementar (PT) e Elephants in
@@ -118,7 +118,7 @@ Compare as finalistas numa tabela única, com nota de 1 a 5 em cada critério:
 | Demanda | O Trends e a mediana de views mostram interesse? |
 | Espaço | Canais pequenos ou novos estão crescendo nesse tema? |
 | Valor | O país e o tema pagam bem por view? (EUA > Alemanha > espanhol) |
-| Viável com avatar | Dá para contar com narração e imagens de IA, sem rosto real nem filmagem própria? |
+| Viável no formato dark | Dá para contar com narração, cortes de vídeo e imagens de IA, sem rosto real nem filmagem própria? |
 | Fôlego | Dá para fazer 50 vídeos sem se repetir? |
 
 Recomende **uma** opção, com o motivo em duas frases.
@@ -145,7 +145,7 @@ Recomende **uma** opção, com o motivo em duas frases.
 
 ---
 
-## 6. Regras para o canal com avatar
+## 6. Regras para o canal dark
 
 - O avatar **não se apresenta como arquiteto, urbanista, historiador ou economista** se
   não houver um profissional real por trás. Use uma persona que "pesquisou por você" e cita fontes.
@@ -153,6 +153,11 @@ Recomende **uma** opção, com o motivo em duas frases.
 - Nada de vídeos em massa e repetitivos: cada roteiro precisa de pesquisa e ponto de
   vista próprios, para não cair na regra de conteúdo inautêntico.
 - Não usar rosto, voz ou nome de pessoa real sem autorização e contrato.
+- **Cortes de vídeo:** prefira banco de imagens licenciado, material de domínio público
+  e trechos curtos de terceiros usados para comentar ou explicar (uso transformativo).
+  Nunca reaproveite vídeo alheio como base do episódio: a narração e o roteiro
+  precisam ser o conteúdo principal, para não cair em direitos autorais nem na regra de
+  conteúdo reutilizado.
 
 ---
 
