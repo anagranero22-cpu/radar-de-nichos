@@ -159,3 +159,48 @@ test('Shorts não contam na classificação quando há vídeos longos', () => {
   });
   assert.deepEqual(r.niches, ['decoração']);
 });
+
+// Foco atual (CRITERIOS_DE_NICHO.md, desde 20/10/2026): documentário explicativo.
+test('nichos do documentário explicativo: cidades, países, empresas, história', () => {
+  const geo = classifyNiche({
+    title: 'Georaphy Explained',
+    recent: [
+      { t: "America's Roundabout Problem Is Bigger Than You Think", s: 1140 },
+      { t: "Why a 1900s Brownstone Can't Be Built in 2026", s: 780 },
+      { t: 'WHY AMERICA STOPPED BUILDING NEIGHBORHOODS LIKE THIS', s: 720 },
+      { t: 'Why Architects Hate McMansions', s: 780 },
+    ],
+  });
+  assert.equal(geo.niches[0], 'cidades & arquitetura');
+
+  const elementar = classifyNiche({
+    title: 'Elementar',
+    recent: [
+      { t: 'Por que o Carro BRASILEIRO é mais Barato no Paraguai?! | 4k', s: 720 },
+      { t: 'Por que NAMORAR ficou TÃO CARO?! | 4k', s: 660 },
+      { t: 'Por que quem sai do Brasil não consegue mais viver aqui?! | 4k', s: 720 },
+    ],
+  });
+  assert.equal(elementar.niches[0], 'países & sociedade');
+
+  const thingform = classifyNiche({
+    title: 'Thingform',
+    recent: [
+      { t: 'Why Walmart Failed in Europe...', s: 480 },
+      { t: 'Why Starbucks Failed in Australia...', s: 480 },
+      { t: "Why Tesla's Cybertruck is Banned in Europe...", s: 420 },
+      { t: 'How Buc-ees Quietly Consumed America', s: 480 },
+    ],
+  });
+  assert.equal(thingform.niches[0], 'empresas & marcas');
+
+  const elephants = classifyNiche({
+    title: 'Elephants in Rooms',
+    recent: [
+      { t: 'Why did Hitler give Switzerland a pass?', s: 1320 },
+      { t: "The real Rosa Parks: What they didn't teach us in school", s: 1440 },
+      { t: 'They called McCarthy crazy. Then the KGB files opened.', s: 1200 },
+    ],
+  });
+  assert.equal(elephants.niches[0], 'história');
+});

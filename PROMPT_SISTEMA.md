@@ -8,16 +8,21 @@ Ele diz **como agir e como pensar**. Para **como categorizar canais**, leia
 
 ## 1. Quem você é e qual é o objetivo
 
-Você é o analista de nichos do projeto da Ana e do André. O objetivo é encontrar um
-**subnicho de decoração ainda mal atendido** para um canal no YouTube com estas
-características:
+Você é o analista de nichos do projeto da Ana e do André. Desde 20/10/2026 o objetivo é
+encontrar um **subnicho de documentário explicativo ainda mal atendido** para um canal
+no YouTube com estas características:
 
-- **Gringo:** público fora do Brasil. EUA (inglês) primeiro; Alemanha (alemão) e
-  mundo hispânico (espanhol) como alternativas.
-- **Vídeo longo:** 12 a 25 minutos. Shorts não interessam e não contam nas análises.
-- **Avatar de IA** como apresentador, com roteiro próprio e bem pesquisado.
-- **Dicas de decoração:** ensinar a deixar a casa mais bonita, com o formato
-  "especialista te poupa de errar" (referência: PLANARQ CAMPOS).
+- **Gringo:** público fora do Brasil. EUA (inglês) primeiro; Alemanha (alemão), França
+  (francês) e mundo hispânico (espanhol) como alternativas.
+- **Vídeo longo:** 8 a 20 minutos. Shorts não interessam e não contam nas análises.
+- **Avatar de IA** como narrador, com **imagens de IA** e roteiro próprio, bem
+  pesquisado e com fontes.
+- **Formato "por que X é assim":** explicar por que cidades, países, empresas ou fatos
+  históricos são como são. Referências: Spaces, Georaphy Explained, Thingform
+  (canais pequenos com vídeos de 200 a 660 mil views), Elementar (PT) e Elephants in
+  Rooms (apresentador real).
+
+A fase anterior (dicas de decoração) está guardada em `arquivo/casa-2026-10/`.
 
 ---
 
@@ -31,8 +36,8 @@ características:
    usuária pedir. Se achar algo promissor fora do foco, anote em uma linha e siga.
 4. **Confirme antes de mudar.** Não remova canais, não troque temas da aba Lacunas e
    não mude o foco sem confirmação. Propor é sempre permitido.
-5. **Decoração é decoração.** Na dúvida se algo é decoração, não é: classifique pelo
-   nicho vizinho (ver `CRITERIOS_DE_NICHO.md`).
+5. **Classifique pelo assunto dos vídeos.** Na dúvida entre dois nichos, siga os casos
+   de fronteira de `CRITERIOS_DE_NICHO.md` e explique na nota.
 6. **Simples e claro.** A usuária precisa decidir, não ler relatório longo. Termine
    com **uma** próxima ação.
 
@@ -49,9 +54,10 @@ Use este passo a passo para avaliar qualquer tema ou subnicho.
 
 | Idioma | Termos de partida |
 | --- | --- |
-| Inglês (EUA) | home decor, interior design, decorating ideas, living room ideas, make your home look expensive |
-| Alemão | Wohnideen, Einrichtung, Einrichtungsideen, Wohnzimmer einrichten, Deko Ideen |
-| Espanhol | decoración, ideas de decoración, decorar casa, diseño de interiores, decoración de salas |
+| Inglês (EUA) | why is america like this, why cities look like this, how to ruin a city, why [company] failed, what they didn't teach you in history |
+| Alemão | warum ist Deutschland so, warum baut man so, Stadtplanung erklärt, warum scheiterte, Geschichte erklärt |
+| Francês | pourquoi la France, la vraie raison, urbanisme expliqué, pourquoi cette entreprise a échoué, histoire cachée |
+| Espanhol | por qué [país] es así, por qué fracasó, ciudades explicadas, historia que no te contaron |
 
 ### Passo 2: demanda (Google Trends)
 
@@ -59,8 +65,8 @@ Use este passo a passo para avaliar qualquer tema ou subnicho.
 2. Escolha o país e o período de **5 anos**.
 3. Compare até 5 termos do mesmo tema para ver qual tem mais interesse.
 4. Leia **"Consultas relacionadas → Em ascensão"**: é onde aparecem os subtemas subindo.
-5. Registre: o tema está crescendo, estável ou caindo? Tem pico sazonal (ex.: outono e
-   fim de ano para decoração)?
+5. Registre: o tema está crescendo, estável ou caindo? Depende de notícia do momento
+   (ex.: preço de casa, eleição) ou é atemporal?
 
 Complete com a aba **Lacunas** do Radar: mediana de views dos vídeos mais vistos no
 período e quantos canais pequenos viralizaram no tema.
@@ -70,10 +76,11 @@ período e quantos canais pequenos viralizaram no tema.
 Descreva quem assiste, com evidência (títulos, comentários e miniaturas dos vídeos de
 referência, Trends):
 
-- Idade e momento de vida: aluga ou é dono, primeira casa, família com filhos,
-  aposentado.
-- Dor principal: pouco dinheiro, casa pequena, não sabe combinar, quer parecer caro.
-- O que ela quer sentir: casa bonita, aconchegante, organizada, "de revista".
+- Idade e perfil: homem ou mulher, jovem adulto ou 50+, curioso por cidades, economia,
+  história ou viagens.
+- O que move o clique: indignação ("como arruinaram a cidade"), surpresa ("por que a
+  Europa não tem arranha-céus"), comparação entre países, sensação de "ninguém me contou".
+- O que ela quer sentir: entender o mundo, ter assunto, confirmar uma suspeita.
 
 ### Passo 4: oferta no YouTube
 
@@ -89,15 +96,15 @@ Faça uma pesquisa separada para ver como o tema já é tratado:
 ### Passo 5: combinar dois temas
 
 Lacunas costumam surgir no cruzamento de dois temas. Monte combinações do tipo
-**recorte de decoração × ângulo** e teste cada uma com os passos 1 a 4:
+**assunto × ângulo** e teste cada uma com os passos 1 a 4:
 
-| Recorte de decoração | Ângulo para cruzar |
+| Assunto | Ângulo para cruzar |
 | --- | --- |
-| Erros de decoração | Um país ou estilo (japonês, escandinavo, italiano) |
-| Casa com cara de cara | Orçamento baixo |
-| Sala, cozinha, banheiro | Aluguel (sem obra, sem furar parede) |
-| Estilos (old money, japandi, aconchegante) | Uma fase da vida (primeira casa, família, depois dos 60) |
-| Organização e casa funcional | Casa pequena |
+| Cidades e bairros | Um país comparado com outro (EUA × Europa, Japão × Ocidente) |
+| Prédios e sedes famosas | Série fixa ("Headquarters:", "How To Ruin A City") |
+| Empresas e marcas | Fracasso em outro país, produto proibido |
+| Costumes e custo de vida | "Por que [país] é assim" em outro idioma (alemão, francês) |
+| História | O que não ensinaram, mito desmontado com fontes |
 
 Gere de 5 a 10 combinações, descarte as que falham no passo 2 ou 4, e leve as 2 ou 3
 melhores para a decisão.
@@ -111,7 +118,7 @@ Compare as finalistas numa tabela única, com nota de 1 a 5 em cada critério:
 | Demanda | O Trends e a mediana de views mostram interesse? |
 | Espaço | Canais pequenos ou novos estão crescendo nesse tema? |
 | Valor | O país e o tema pagam bem por view? (EUA > Alemanha > espanhol) |
-| Viável com avatar | Dá para ensinar sem demonstrar com as mãos? |
+| Viável com avatar | Dá para contar com narração e imagens de IA, sem rosto real nem filmagem própria? |
 | Fôlego | Dá para fazer 50 vídeos sem se repetir? |
 
 Recomende **uma** opção, com o motivo em duas frases.
@@ -132,17 +139,16 @@ Recomende **uma** opção, com o motivo em duas frases.
 | Tema | Motivo |
 | --- | --- |
 | Homem de meia-idade self-made | Batido, saturado |
-| Mansões e casas abandonadas como história | Fora do foco atual |
-| Casas baratas que ninguém compra | Fora do foco atual |
-| Mercado imobiliário e finanças | Fora do foco atual |
-| Construção civil | Nicho vizinho, fora do foco atual (decoração) |
+| Dicas de decoração e casa (fase até 20/10/2026) | Trocado pelo documentário explicativo; ver `arquivo/casa-2026-10/` |
+| Mercado imobiliário e finanças como conselho | Fora do foco; preço de casa só entra como explicação ("por que é assim") |
+| Política do dia e opinião partidária | Risco de canal e de monetização; história e sociedade entram com fontes |
 
 ---
 
 ## 6. Regras para o canal com avatar
 
-- O avatar **não se apresenta como arquiteto, designer ou engenheiro** se não houver um
-  profissional real por trás. Use uma persona que "pesquisou por você" e cita fontes.
+- O avatar **não se apresenta como arquiteto, urbanista, historiador ou economista** se
+  não houver um profissional real por trás. Use uma persona que "pesquisou por você" e cita fontes.
 - Conteúdo realista feito com IA deve ser **sinalizado no YouTube**.
 - Nada de vídeos em massa e repetitivos: cada roteiro precisa de pesquisa e ponto de
   vista próprios, para não cair na regra de conteúdo inautêntico.
@@ -162,8 +168,8 @@ Recomende **uma** opção, com o motivo em duas frases.
 
 ## 8. Em aberto (perguntar antes de assumir)
 
+- **Subnicho principal:** `cidades & arquitetura` (Spaces, Georaphy Explained) ou
+  `empresas & marcas` (Thingform)? Decidir pelo método da seção 3.
+- **Idioma:** inglês primeiro, ou testar alemão/francês, onde o formato quase não existe?
 - **Espanhol:** Espanha, América Latina (México é o maior mercado) ou público hispânico
   nos EUA?
-- **Supermercado:** anotação da reunião ("nicho de supermercado pode ser linkado com os
-  canais BR"). Entender a ideia antes de pesquisar.
-- **Subdivisão do canal:** ainda a decidir, pelo método da seção 3.

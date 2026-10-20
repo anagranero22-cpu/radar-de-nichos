@@ -16,17 +16,18 @@ descartados e regras do canal com avatar. Siga esse método em toda pesquisa.
 `CRITERIOS_DE_NICHO.md` e siga-o à risca.**
 
 - Use só as tags de nicho listadas na seção 1 do documento, com a grafia exata
-  (`decoração`, `organização da casa`, `arquitetura & reforma`, `construção civil`,
-  `transformação de casas`, `jardinagem`). Canal de fora desses nichos recebe a tag do
-  nicho real e nunca uma tag da casa.
+  (`cidades & arquitetura`, `países & sociedade`, `empresas & marcas`, `história`).
+  Canal de fora desses nichos recebe a tag do nicho real e nunca uma tag do foco.
 - Classifique pelos **8 vídeos longos mais recentes** (Shorts não contam), aplicando a
   regra dos 60% / 40% + 30% da seção 2. Não decida pelo nome do canal nem pela
   profissão de quem apresenta.
 - Canal com mais de 60% de Shorts não entra.
 - Toda classificação deixa uma nota no canal no formato da seção 2 (contagem e dois
   títulos de exemplo). O formato do canal vai na nota, não na tag.
-- Foco atual: **decoração**, canal gringo, vídeo longo. Na dúvida se um canal é
-  decoração, ele **não** é: classifique pelo nicho vizinho e explique na nota.
+- Foco atual (desde 20/10/2026): **documentário explicativo "por que X é assim"**,
+  vídeo longo, narrado por avatar com imagens de IA, canal gringo. Na dúvida entre dois
+  nichos, siga os casos de fronteira da seção 1 e explique na nota.
+- A fase anterior (casa & decoração) está em `arquivo/casa-2026-10/`.
 
 ## Como obter os vídeos de um canal
 

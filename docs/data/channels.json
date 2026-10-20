@@ -2,39 +2,57 @@
   "channels": [
     {
       "ref": "https://www.youtube.com/@Elementar/videos",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "países & sociedade"
+      ],
+      "notes": "[Classificação, 20/10/2026] países & sociedade: 4 de 4 vídeos longos (a coleta trouxe só 4 longos entre os 8 recentes; ex.: \"Por que quem sai do Brasil não consegue mais viver aqui?!\", \"Por que NAMORAR ficou TÃO CARO?!\"). 50% de Shorts. Formato: \"por que X?\" sobre o Brasil e o mundo, narração com imagens de arquivo, 11–12 min, PT.\n[Análise Claude, 20/10] Referência. 1,55 mi inscritos, canal de 2016. Mediana dos longos recentes 72 mil; pico de 385 mil (\"quem sai do Brasil\"). Mostra que o formato \"por que [país] é assim\" rende em português.",
+      "addedAt": "2026-10-20",
+      "language": "pt"
     },
     {
       "ref": "https://www.youtube.com/@geographyexplained343",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "cidades & arquitetura"
+      ],
+      "notes": "[Classificação, 20/10/2026] cidades & arquitetura: 6 de 8 vídeos longos (ex.: \"WHY AMERICA STOPPED BUILDING NEIGHBORHOODS LIKE THIS\", \"Why a 1900s Brownstone Can't Be Built in 2026\"); 1 países & sociedade, 1 história. 0% de Shorts. Formato: \"por que a cidade/o bairro é assim\", sem rosto, 12–19 min.\n[Análise Claude, 20/10] Forte. Só 2 mil inscritos e 11 vídeos, canal de 10 meses: 223 mil, 181 mil e 103 mil views em três vídeos (até 110× os inscritos), mediana de 13 mil. Posta pouco e irregular (último em 12/10).",
+      "addedAt": "2026-10-20",
+      "language": "en"
     },
     {
       "ref": "https://www.youtube.com/@UrbanMythosX",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "países & sociedade"
+      ],
+      "notes": "[Classificação, 20/10/2026] sem nicho definido: 3 vídeos longos entre 8 recentes, 1 cidades & arquitetura, 1 história, 1 países & sociedade (ex.: \"Why American Cities Look SO Different From European Cities\", \"25 American Traditions You Celebrate… But Don't Know Why\"). Tag pelo desempate da descrição (\"Stories Behind America\"). 62% de Shorts: pela regra, não entra.\n[Análise Claude, 20/10] Fraco. 185 inscritos, 183 vídeos em 4 meses; longos com 13 a 187 views. Sugestão: remover do catálogo (aguarda confirmação da Ana).",
+      "addedAt": "2026-10-20",
+      "language": "en"
     },
     {
       "ref": "https://www.youtube.com/@ElephantsInRooms",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "história"
+      ],
+      "notes": "[Classificação, 20/10/2026] história: 5 de 8 vídeos longos (ex.: \"The real Rosa Parks: What they didn't teach us in school\", \"They called McCarthy crazy. Then the KGB files opened.\"); 2 países & sociedade, 1 outro. 0% de Shorts. Formato: apresentador real (Ken LaCorte, ex-Fox News), temas polêmicos, 20–25 min.\n[Análise Claude, 20/10] Referência. 944 mil inscritos; mediana dos longos recentes 667 mil. Formato depende do rosto e da credibilidade do apresentador e de temas políticos: bom para ideias de pauta, difícil de copiar com avatar.",
+      "addedAt": "2026-10-20",
+      "language": "en"
     },
     {
       "ref": "https://www.youtube.com/@SpacesExplained",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "cidades & arquitetura"
+      ],
+      "notes": "[Classificação, 20/10/2026] cidades & arquitetura: 7 de 8 vídeos longos (ex.: \"Headquarters: Apple Park\", \"Dubai: How To Ruin A City\"); 1 outro (F1 Tracks). 0% de Shorts. Formato: animação 3D de prédios e cidades, sem rosto, 8–12 min. Séries fixas: \"Headquarters:\" e \"How To Ruin A City\".\n[Análise Claude, 20/10] Forte. 29,6 mil inscritos em 14 meses, 39 vídeos, 6,8 mi de views. Mediana dos longos recentes 37 mil; pico de 292 mil (Apple Park). Formato próximo do que dá para fazer com imagens de IA.",
+      "addedAt": "2026-10-20",
+      "language": "en"
     },
     {
       "ref": "https://www.youtube.com/@Thingform/videos",
-      "tags": [],
-      "notes": "Referência enviada pela Ana em 20/10/2026 (novo nicho: documentário longo). Classificação pendente.",
-      "addedAt": "2026-10-20"
+      "tags": [
+        "empresas & marcas"
+      ],
+      "notes": "[Classificação, 20/10/2026] empresas & marcas: 6 de 8 vídeos longos (ex.: \"Why Walmart Failed in Europe...\", \"Why Tesla's Cybertruck is Banned in Europe...\"); 2 cidades & arquitetura. 0% de Shorts. Formato: \"por que [marca] falhou em [país]\", sem rosto, 7–8 min, Reino Unido.\n[Análise Claude, 20/10] Forte. Só 4,2 mil inscritos e 12 vídeos: 661 mil (Walmart), 280 mil (skyscrapers na Europa) e 231 mil (Cybertruck), até 158× os inscritos. Mediana de 10,8 mil: vive de picos. Último upload em 04/09.",
+      "addedAt": "2026-10-20",
+      "language": "en"
     }
   ],
   "discovery": {
@@ -45,129 +63,126 @@
     "homeLang": "en",
     "queries": [
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "things that make your house look cheap",
+        "group": "cidades & arquitetura",
+        "q": "why american cities look like this",
         "lang": "en"
       },
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "luxury upgrades not worth it",
+        "group": "cidades & arquitetura",
+        "q": "why america stopped building",
         "lang": "en"
       },
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "what interior designers never do",
+        "group": "cidades & arquitetura",
+        "q": "how to ruin a city",
         "lang": "en"
       },
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "decorating tips from interior designer",
+        "group": "cidades & arquitetura",
+        "q": "why europe doesn't build skyscrapers",
         "lang": "en"
       },
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "home design mistakes to avoid",
+        "group": "cidades & arquitetura",
+        "q": "urban planning explained",
+        "lang": "en",
+        "local": "urbanisme expliqué",
+        "localLang": "fr"
+      },
+      {
+        "group": "cidades & arquitetura",
+        "q": "why suburbs are designed this way",
         "lang": "en"
       },
       {
-        "group": "Dicas de designer (formato PLANARQ)",
-        "q": "kitchen design mistakes",
+        "group": "cidades & arquitetura",
+        "q": "famous headquarters explained",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "interior design mistakes",
+        "group": "cidades & arquitetura",
+        "q": "why america builds with wood",
+        "lang": "en",
+        "local": "warum baut amerika mit holz",
+        "localLang": "de"
+      },
+      {
+        "group": "países & sociedade",
+        "q": "why is america like this",
+        "lang": "en",
+        "local": "warum ist deutschland so",
+        "localLang": "de"
+      },
+      {
+        "group": "países & sociedade",
+        "q": "why japan is so different",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "how to make your home look expensive on a budget",
+        "group": "países & sociedade",
+        "q": "por que o brasil é assim",
+        "lang": "pt"
+      },
+      {
+        "group": "países & sociedade",
+        "q": "why everything is so expensive now",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "living room decor mistakes",
+        "group": "países & sociedade",
+        "q": "cultural differences explained",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "bathroom design mistakes",
+        "group": "empresas & marcas",
+        "q": "why this company failed",
+        "lang": "en",
+        "local": "pourquoi cette entreprise a échoué",
+        "localLang": "fr"
+      },
+      {
+        "group": "empresas & marcas",
+        "q": "why brands fail in other countries",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "small apartment design tips",
+        "group": "empresas & marcas",
+        "q": "how this company took over america",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "decorating mistakes that make your home look cluttered",
+        "group": "empresas & marcas",
+        "q": "banned in europe but legal in america",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "budget home makeover",
+        "group": "empresas & marcas",
+        "q": "business case study documentary",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "rental apartment decor ideas",
+        "group": "história",
+        "q": "what they didn't teach you in history",
+        "lang": "en",
+        "local": "ce qu'on ne vous a pas appris en histoire",
+        "localLang": "fr"
+      },
+      {
+        "group": "história",
+        "q": "history myths debunked",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "home organization tips",
+        "group": "história",
+        "q": "cold war secrets",
         "lang": "en"
       },
       {
-        "group": "Erros & truques de decoração",
-        "q": "how to choose paint colors",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "home decor trends 2026",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "old money interior design",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "japandi interior design",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "cozy home decor ideas",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "interior design styles explained",
-        "lang": "en"
-      },
-      {
-        "group": "Estilos & tendências",
-        "q": "home tour interior design",
-        "lang": "en"
-      },
-      {
-        "group": "Alemanha: formato PLANARQ",
-        "q": "Einrichtungsfehler",
-        "lang": "de"
-      },
-      {
-        "group": "Alemanha: formato PLANARQ",
-        "q": "Zuhause billig wirken",
-        "lang": "de"
-      },
-      {
-        "group": "Alemanha: formato PLANARQ",
-        "q": "Wohnung teurer aussehen lassen",
-        "lang": "de"
+        "group": "história",
+        "q": "dark history",
+        "lang": "en",
+        "local": "dunkle Geschichte",
+        "localLang": "de"
       }
     ],
     "focus": "",

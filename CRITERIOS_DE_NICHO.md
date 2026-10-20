@@ -4,45 +4,45 @@ Este documento é a regra para classificar qualquer canal que entra no Radar de 
 Ele vale para quem cadastra pelo site, para o Claude Code e para a classificação
 automática do site (`docs/js/niche.js`), que segue as mesmas palavras-chave daqui.
 
-**Foco atual do projeto:** canal gringo (EUA, em inglês), vídeos longos, apresentado
-por avatar de IA, com **dicas de decoração**. Canais de outros nichos só entram como
-referência e nunca recebem a tag `decoração`.
+**Foco atual do projeto (desde 20/10/2026):** documentário explicativo em vídeo longo,
+no formato **"por que X é assim"**, narrado por avatar de IA com imagens de IA.
+Canal gringo (EUA, em inglês) primeiro. Canais de outros nichos só entram como
+referência e recebem a tag do nicho real.
+
+A fase anterior (casa & decoração) está guardada em `arquivo/casa-2026-10/`.
 
 ---
 
-## 1. Os nichos da casa
+## 1. Os nichos do documentário explicativo
 
 Use **exatamente** estes nomes como tag (minúsculas, com acento):
 
 | Tag | O que é | Exemplos de vídeo | Não é |
 | --- | --- | --- | --- |
-| `decoração` | Como deixar a casa mais bonita: design de interiores, móveis, cores, tapetes, cortinas, iluminação decorativa, bancadas e acabamentos escolhidos pela aparência, estilos (old money, japandi, aconchegante), "casa com cara de cara/barata", home tour com foco no interior. | "10 itens de luxo que não valem a pena na sua casa"; "12 Things That Make a Home Feel More Expensive"; "This 1783 Farmhouse Has 20 Patterns in One Room" | Obra, estrutura, custo de construção, planta baixa, reforma completa |
-| `organização da casa` | Casa funcional e organizada: destralhe, minimalismo, armazenamento, limpeza, soluções práticas para o dia a dia. | "Your House Isn't Messy. You Own Too Much"; "13 Genius German Home Ideas" | Escolha de móveis e cores (isso é decoração) |
-| `arquitetura & reforma` | Projeto e reforma: planta, distribuição dos ambientes, reforma de cozinha e banheiro, fachada, "como eu projetaria/reformaria". | "Não comece sua reforma antes de ver isso"; "House plan mistakes"; "Kitchen remodel mistakes" | Só trocar decoração (isso é decoração); levantar a casa do zero (isso é construção) |
-| `construção civil` | Construir a casa: obra, fundação, laje, telhado, alvenaria, concreto, isolamento, ar-condicionado e aquecimento, custos de construção, barndominium e casas alternativas, empreiteiros, defeitos de obra nova. | "Laje sem telhado dá problema?"; "Quanto custa construir em 2026"; "Can 2 Amateurs Frame a House in 48 Hours?"; "Warum Deutschland seine Häuser in Styropor packt" | Decoração e organização |
-| `transformação de casas` | Reforma mostrada em antes e depois ou timelapse, sem ensinar (geralmente sem fala, com casa abandonada que vira casa de luxo). | "Satisfying Abandoned House Makeover"; "The Most Satisfying Renovation (No Talking)" | Vídeo que ensina a decorar ou reformar |
-| `jardinagem` | Jardim, plantas, horta, paisagismo. | "Paisagismo para casa pequena" | Decoração de interiores |
+| `cidades & arquitetura` | Por que cidades, bairros, prédios e infraestrutura são como são: urbanismo, subúrbios, arranha-céus, sedes famosas, materiais de construção de um país, "como arruinar uma cidade". | "Why America Stopped Building Neighborhoods Like This"; "Why Doesn't Europe Build Skyscrapers?"; "Headquarters: Apple Park"; "Why Does America Build With Wood?" | Dicas para a sua casa (decoração, reforma); obra passo a passo (construção civil) |
+| `países & sociedade` | Por que um país ou um povo é assim: custo de vida, costumes, comportamento, migração, decisões de governo explicadas, comparação entre países. | "Por que quem sai do Brasil não consegue mais viver aqui?!"; "Por que NAMORAR ficou TÃO CARO?!"; "25 American Traditions You Celebrate… But Don't Know Why" | Notícia do dia e opinião política (notícias & política); vlog de viagem (viagem) |
+| `empresas & marcas` | Por que uma empresa ou marca deu certo ou errado: expansão para outro país, fracassos, estratégia, produtos proibidos ou polêmicos. | "Why Walmart Failed in Europe..."; "Why Tesla's Cybertruck is Banned in Europe..."; "How Buc-ees Quietly Consumed America" | Como abrir um negócio, renda extra, marketing (negócios); investimento (finanças) |
+| `história` | Fatos históricos revisitados: o que não ensinaram na escola, mitos desmontados, episódios polêmicos explicados com fontes. | "The real Rosa Parks: What they didn't teach us in school"; "Why did Hitler give Switzerland a pass?"; "They called McCarthy crazy. Then the KGB files opened." | História de um prédio ou cidade (cidades & arquitetura); história de uma marca (empresas & marcas) |
 
-Qualquer outro assunto (finanças, mercado imobiliário, mansões e casas abandonadas
-como história, casas baratas à venda, energia off-grid, lifestyle, receitas, comparação
-entre países) **não é nicho da casa**. Se um canal assim entrar como referência, ele
-recebe a tag do nicho real (ex.: `imóveis`, `energia & off-grid`, `história`),
+Qualquer outro assunto (decoração, construção civil, finanças, true crime, ciência,
+viagem, notícias) **não é nicho do foco**. Se um canal assim entrar como referência,
+ele recebe a tag do nicho real (ex.: `decoração`, `ciência`, `notícias & política`),
 nunca uma das tags acima.
 
 ### Casos de fronteira (decida assim)
 
-- **Bancada, piso, revestimento:** se o vídeo fala de aparência e escolha → `decoração`. Se fala de instalação, material e custo de obra → `construção civil`.
-- **"Faça sua casa parecer maior":** `decoração`.
-- **Reforma:** ensinando a planejar ou evitando erros → `arquitetura & reforma`. Só mostrando o antes e depois → `transformação de casas`.
-- **Ideias de casas de outros países:** soluções práticas → `organização da casa`; estilo e estética → `decoração`; como as casas são construídas → `construção civil`.
-- **Home tour:** foco no interior e no estilo → `decoração`; foco em como a casa foi construída → `construção civil`.
-- **Canal de arquiteto:** classifique pelo que os vídeos tratam, não pela profissão de quem apresenta.
+- **Moradia e preço de casa:** como os prédios e bairros são feitos → `cidades & arquitetura`. Economia, política e custo de vida → `países & sociedade`.
+- **Um país decide algo sobre uma cidade** (ex.: "Por que o Japão está criando uma nova capital?"): o foco é o desenho da cidade → `cidades & arquitetura`; o foco é o país e o motivo político → `países & sociedade`.
+- **Empresa num país** (ex.: "Why Walmart Failed in Europe"): o assunto é a empresa → `empresas & marcas`, mesmo que o vídeo explique a cultura do país.
+- **História de um lugar:** prédio, bairro ou cidade → `cidades & arquitetura`. Episódio, pessoa ou guerra → `história`.
+- **Tema polêmico atual** (ex.: "Everyone's autistic now"): sociedade e comportamento → `países & sociedade`; saúde explicada → `saúde`.
+- **Canal de apresentador famoso:** classifique pelo que os vídeos tratam, não por quem apresenta.
 
 ---
 
 ## 2. Como classificar um canal
 
-1. Abra os **8 vídeos longos mais recentes** do canal (com mais de 3 minutos). **Shorts não contam.**
+1. Abra os **8 vídeos longos mais recentes** do canal (com mais de 3 minutos). **Shorts não contam.** Se a coleta só trouxer menos de 8 vídeos longos, classifique com os que houver e diga isso na nota.
 2. Classifique cada vídeo pelo título (e pela miniatura, se o título não bastar) em um dos nichos da tabela, ou em "outro".
 3. Conte:
    - **60% ou mais** dos vídeos no mesmo nicho → o canal recebe **1 tag**: esse nicho.
@@ -56,11 +56,11 @@ nunca uma das tags acima.
 Uma linha no formato:
 
 ```
-[Classificação, DD/MM/AAAA] decoração: 6 de 8 vídeos longos (ex.: "título A", "título B"). Formato: listas de dicas de designer, 18–20 min.
+[Classificação, DD/MM/AAAA] cidades & arquitetura: 6 de 8 vídeos longos (ex.: "título A", "título B"). Formato: "por que X é assim" animado, 8–13 min.
 ```
 
-O **formato** (lista de dicas, home tour, antes e depois, outros países, referência
-grande) vai na nota, **não** como tag. Assim a página de Nichos compara só nichos.
+O **formato** (animação, narração sem rosto, apresentador real, lista, comparação
+entre países) vai na nota, **não** como tag. Assim a página de Nichos compara só nichos.
 
 ---
 
